@@ -21,6 +21,8 @@
     "outDir": "./dist",
     "paths": {
       "@components/*": ["components/*"],
+      "@pages/*": ["pages/*"],
+      "@assets/*": ["assets/*"],
       "@styles/*": ["styles/*"]
     },
     "typeRoots": ["typings/**/*.d.ts", "node_modules/@types"],
