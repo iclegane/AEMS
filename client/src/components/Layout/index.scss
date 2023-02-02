@@ -1,0 +1,23 @@
+.layout {
+  display: flex;
+  width: 100%;
+  height: 100%;
+
+  &__left-panel {
+    width: 260px;
+  }
+
+  &__window {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  &__top-panel {
+    height: 90px;
+  }
+
+  &__content {
+    flex: 1;
+  }
+}
