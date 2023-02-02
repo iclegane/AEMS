@@ -1,4 +1,5 @@
 import React from "react";
+import Navbar from "@components/Navbar/Navbar";
 import "./index.scss";
 
 interface Props {
@@ -9,7 +10,9 @@ const Layout: React.FC<Props> = ({ children }) => {
     return (
         <>
             <div className="layout">
-                <div className="layout__left-panel"></div>
+                <div className="layout__left-panel">
+                    <Navbar/>
+                </div>
                 <div className="layout__window">
                     <div className="layout__top-panel"></div>
                     <div className="layout__content">
