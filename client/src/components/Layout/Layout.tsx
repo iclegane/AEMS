@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "@components/Navbar/Navbar";
+import Sidebar from "@components/Sidebar/Sidebar";
 import "./index.scss";
 
 interface Props {
@@ -11,7 +11,7 @@ const Layout: React.FC<Props> = ({ children }) => {
         <>
             <div className="layout">
                 <div className="layout__left-panel">
-                    <Navbar/>
+                    <Sidebar/>
                 </div>
                 <div className="layout__window">
                     <div className="layout__top-panel"></div>
