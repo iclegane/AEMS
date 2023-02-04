@@ -1,14 +1,13 @@
 import React from "react";
-import Sidebar from "@components/Sidebar/Sidebar";
-import Topbar from "@components/Topbar/Topbar";
+import Sidebar from "@components/Sidebar";
+import Topbar from "@components/Topbar";
 import "./index.scss";
-
 
 interface Props {
     children: React.ReactNode;
 }
 
-const Layout: React.FC<Props> = ({ children }) => {
+export const Layout: React.FC<Props> = ({ children }) => {
     return (
         <>
             <div className="layout">
@@ -27,5 +26,3 @@ const Layout: React.FC<Props> = ({ children }) => {
         </>
     )
 }
-
-export default Layout;

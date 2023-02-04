@@ -1,8 +1,8 @@
 import React from "react";
-import Layout from "@components/Layout/Layout";
+import Layout from "@components/Layout";
 import './index.scss';
 
-const systemMainPage: React.FC = () => {
+export const SystemMainPage: React.FC = () => {
     return (
         <div className={'page page--system'}>
             <Layout>
@@ -11,5 +11,3 @@ const systemMainPage: React.FC = () => {
         </div>
     )
 }
-
-export default systemMainPage;

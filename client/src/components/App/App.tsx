@@ -1,6 +1,6 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import MainPage from "@pages/system/MainPage/MainPage";
+import MainPage from "@pages/system/MainPage";
 import '@styles/index.scss';
 
 const router = createBrowserRouter([
@@ -15,10 +15,8 @@ const router = createBrowserRouter([
     }
 ]);
 
-const App: React.FC = () => {
+export const App: React.FC = () => {
     return (
         <RouterProvider router={router} />
     )
 }
-
-export default App;

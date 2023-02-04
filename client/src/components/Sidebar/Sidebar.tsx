@@ -1,8 +1,8 @@
 import React from "react";
-import DashboardMenu from "@components/DashboardMenu/DashboardMenu";
+import DashboardMenu from "@components/DashboardMenu";
 import "./index.scss";
 
-const Sidebar: React.FC = () => {
+export const Sidebar: React.FC = () => {
     return (
         <>
             <div className="sidebar">
@@ -19,5 +19,3 @@ const Sidebar: React.FC = () => {
         </>
     )
 }
-
-export default Sidebar;

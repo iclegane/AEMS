@@ -1,8 +1,8 @@
 import React from "react";
-import './index.scss';
 import Icon from "@components/Icon";
+import './index.scss';
 
-const UserPanel: React.FC = () => {
+export const UserPanel: React.FC = () => {
     return (
         <>
             <div className="user-panel">
@@ -18,5 +18,3 @@ const UserPanel: React.FC = () => {
         </>
     )
 }
-
-export default UserPanel;

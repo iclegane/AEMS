@@ -1,9 +1,9 @@
 import React from "react";
-import UserPanel from "@components/UserPanel/UserPanel";
+import UserPanel from "@components/UserPanel";
 import Icon from "@components/Icon/";
 import './index.scss';
 
-const Topbar: React.FC = () => {
+export const Topbar: React.FC = () => {
     return (
         <>
             <div className="topbar">
@@ -28,5 +28,3 @@ const Topbar: React.FC = () => {
         </>
     )
 }
-
-export default Topbar;
