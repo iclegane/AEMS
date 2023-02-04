@@ -1,15 +1,15 @@
-import React from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import MainPage from "@pages/system/MainPage";
+import React from 'react';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import MainPage from '@pages/system/MainPage';
 import '@styles/index.scss';
 
 const router = createBrowserRouter([
     {
-        path: "/",
+        path: '/',
         element: 'Promo page',
     },
     {
-        path: "system",
+        path: 'system',
         element: <MainPage />,
         children: []
     }
@@ -18,5 +18,5 @@ const router = createBrowserRouter([
 export const App: React.FC = () => {
     return (
         <RouterProvider router={router} />
-    )
-}
+    );
+};
