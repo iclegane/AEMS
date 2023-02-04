@@ -1,0 +1,30 @@
+.sidebar {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 220px;
+  height: 100%;
+  background-color: var(--white);
+
+  &__header {
+    padding: 25px;
+  }
+
+  &__body {
+    margin-top: 25px;
+  }
+
+  &__footer {
+    margin-top: auto;
+  }
+
+  &__logo {
+    width: 110px;
+    height: 40px;
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+}

@@ -11,6 +11,7 @@ module.exports = merge(common, {
         static: {
             directory: path.join(__dirname + '/../', 'dist'),
         },
+        historyApiFallback: true,
         compress: false,
         open:false,
         hot: true,

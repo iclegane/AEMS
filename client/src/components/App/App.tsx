@@ -1,10 +1,22 @@
-import React from "react";
+import React from 'react';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import MainPage from '@pages/system/MainPage';
 import '@styles/index.scss';
 
-const App: React.FC = () => {
-    return (
-        <div>App</div>
-    )
-}
+const router = createBrowserRouter([
+    {
+        path: '/',
+        element: 'Promo page',
+    },
+    {
+        path: 'system',
+        element: <MainPage />,
+        children: []
+    }
+]);
 
-export default App;
+export const App: React.FC = () => {
+    return (
+        <RouterProvider router={router} />
+    );
+};
