@@ -11,6 +11,8 @@
   "plugins": ["prettier", "import"],
   "rules": {
     "indent": "off",
+    "eol-last": "error",
+    "no-console": "off",
     "linebreak-style": [
       "error",
       "unix"
