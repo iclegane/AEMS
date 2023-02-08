@@ -8,11 +8,15 @@
     "airbnb-base",
     "prettier"
   ],
+  "parserOptions": {
+    "ecmaVersion": 2022
+  },
   "plugins": ["prettier", "import"],
   "rules": {
     "indent": "off",
     "eol-last": "error",
     "no-console": "off",
+    "class-methods-use-this": "off",
     "linebreak-style": [
       "error",
       "unix"
