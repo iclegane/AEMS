@@ -23,18 +23,23 @@ const UserSchema = new Schema({
     },
     birth_date: {
         type: Date,
+        default: null
     },
     work_date: {
         type: Date,
+        default: null
     },
     phone: {
         type: String,
+        default: null
     },
     address: {
         type: String,
+        default: null
     },
     vacation_count: {
         type: Number,
+        default: null
     },
     gender_id: {
         type: Number,
@@ -55,7 +60,6 @@ const UserSchema = new Schema({
     skill_ids: {
         type: [Number],
         default: []
-
     }
 });
 
