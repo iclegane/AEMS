@@ -3,6 +3,8 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
+const errorMiddleware = require('./src/middlewares/ErrorMiddleware');
+const router = require('./src/router/index');
 
 
 dotenv.config();
@@ -12,6 +14,8 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
+app.use('/api', router);
+app.use(errorMiddleware);
 
 mongoose.set('strictQuery', false);
 
