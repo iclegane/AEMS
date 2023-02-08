@@ -1,7 +1,6 @@
-const UserService = require('../service/UserService');
 const {validationResult} = require('express-validator');
+const UserService = require('../service/UserService');
 const ApiError = require('../exceptions/ApiError');
-const {token} = require("morgan");
 
 
 class UserController {
@@ -11,7 +10,7 @@ class UserController {
             if (!errors.isEmpty()) {
                 return next(
                     ApiError.BadRequest('Valid error', errors.array())
-                )
+                );
             }
 
             const { email, password } = req.body;
@@ -24,7 +23,7 @@ class UserController {
 
             return res.json(userData);
         } catch (e) {
-            next(e)
+            next(e);
         }
     }
 
@@ -40,7 +39,7 @@ class UserController {
 
             return res.json(userData);
         } catch (e) {
-            next(e)
+            next(e);
         }
     }
 
@@ -52,7 +51,7 @@ class UserController {
 
             return res.json(token);
         } catch (e) {
-            next(e)
+            next(e);
         }
     }
 
@@ -67,7 +66,7 @@ class UserController {
 
             return res.json(userData);
         } catch (e) {
-            next(e)
+            next(e);
         }
     }
 
@@ -75,7 +74,7 @@ class UserController {
         try {
 
         } catch (e) {
-            next(e)
+            next(e);
         }
     }
 

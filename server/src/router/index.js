@@ -1,4 +1,4 @@
-const Router = require('express').Router;
+const {Router} = require('express');
 const {body} = require('express-validator');
 const userController = require('../controllers/UserController');
 const AuthMiddleware = require('../middlewares/AuthMiddleware');
@@ -25,4 +25,4 @@ router.get('*', (req, res) => {
     return res.sendStatus(404);
 });
 
-module.exports = router
+module.exports = router;

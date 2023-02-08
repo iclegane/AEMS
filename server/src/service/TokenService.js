@@ -15,7 +15,7 @@ class TokenService {
         return {
             accessToken,
             refreshToken
-        }
+        };
     }
 
     validateAccessToken(token) {
@@ -57,9 +57,9 @@ class TokenService {
     }
 
     async findToken(refreshToken) {
-        const tokenData = await tokenModel.findOne({refreshToken})
+        const tokenData = await tokenModel.findOne({refreshToken});
 
-        return tokenData
+        return tokenData;
     }
 }
 

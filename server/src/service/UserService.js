@@ -1,9 +1,9 @@
-const UserModel = require('../models/UserModel');
-const MailService = require('../service/MailService');
-const TokenService = require('../service/TokenService');
-const UserDto = require('../dtos/UserDto');
 const bcrypt = require('bcrypt');
 const uuid = require('uuid');
+const UserModel = require('../models/UserModel');
+const MailService = require('./MailService');
+const TokenService = require('./TokenService');
+const UserDto = require('../dtos/UserDto');
 const ApiError = require('../exceptions/ApiError');
 
 
@@ -34,7 +34,7 @@ class UserService {
         return {
             ...tokens,
             user: userDto
-        }
+        };
     }
 
     async login(email, password) {
@@ -55,7 +55,7 @@ class UserService {
         return {
             ...tokens,
             user: userDto
-        }
+        };
     }
 
     async logout(refreshToken) {
@@ -74,7 +74,7 @@ class UserService {
             throw ApiError.UnauthorizedError();
         }
 
-        const user = await UserModel.findById(userData.id)
+        const user = await UserModel.findById(userData.id);
         const userDto = new UserDto(user);
         const tokens = TokenService.generateTokens({...userDto});
         await TokenService.saveToken(user.id, tokens.refreshToken);
@@ -82,7 +82,7 @@ class UserService {
         return {
             ...tokens,
             user: userDto
-        }
+        };
     }
 
     async getAllUsers() {
