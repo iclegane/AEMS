@@ -14,7 +14,7 @@ export const IllustrationLayout: React.FC<Props> = ({ children , imageUrl}) => {
                 { children }
             </div>
             <div className="illustration-layout__picture-container">
-                <div style={{backgroundImage: `url(${imageUrl})`}} className="illustration-layout__picture"></div>
+                <div style={{backgroundImage: `url(${imageUrl})`}} className="illustration-layout__picture" />
             </div>
         </div>
     );

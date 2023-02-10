@@ -1,6 +1,6 @@
-import TRANSPORT from "../http";
-import {AxiosResponse} from "axios"
-import {IAuthResponse} from "../models/response/AuthResponse";
+import {AxiosResponse} from 'axios';
+import TRANSPORT from '../http';
+import {IAuthResponse} from '../models/response/AuthResponse';
 
 
 export default class AuthService {

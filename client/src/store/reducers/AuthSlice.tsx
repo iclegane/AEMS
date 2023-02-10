@@ -1,5 +1,5 @@
-import {createSlice, ActionReducerMapBuilder} from "@reduxjs/toolkit";
-import {login} from "../actions/AuthAction";
+import {createSlice, ActionReducerMapBuilder} from '@reduxjs/toolkit';
+import {login} from '../actions/AuthAction';
 
 
 interface IAuthState {
@@ -16,7 +16,7 @@ const initialState: IAuthState = {
     },
     isLoading: false,
     error: '',
-}
+};
 
 const authSlice = createSlice({
     name: 'auth',
@@ -25,19 +25,19 @@ const authSlice = createSlice({
     extraReducers:  (builder: ActionReducerMapBuilder<IAuthState>) => {
         builder.addCase(login.pending, (state) => {
             state.isLoading = true;
-        })
+        });
         builder.addCase(login.fulfilled, (state) => {
             state.isLoading = false;
             state.error = '';
             state.auth = {
                 isAuth: true,
-            }
-        })
+            };
+        });
         builder.addCase(login.rejected, (state, action) => {
             state.isLoading = false;
-            state.error = action.payload as string
-        })
+            state.error = action.payload as string;
+        });
     }
-})
+});
 
 export default authSlice.reducer;

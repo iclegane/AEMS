@@ -1,11 +1,11 @@
-import React, {useState} from "react";
+import React, {useState} from 'react';
 import {useFormik} from 'formik';
-import {IAuthFields} from "./types";
-import {SignInSchema} from "@utils/validationSchemes";
-import {useAppDispatch} from "../../../hooks/redux";
-import {login} from "../../../store/actions/AuthAction";
-import {useNavigate} from "react-router-dom";
-import {unwrapResult} from "@reduxjs/toolkit";
+import {SignInSchema} from '@utils/validationSchemes';
+import {useNavigate} from 'react-router-dom';
+import {unwrapResult} from '@reduxjs/toolkit';
+import {IAuthFields} from './types';
+import {useAppDispatch} from '../../../hooks/redux';
+import {login} from '../../../store/actions/AuthAction';
 
 
 export const AuthForm: React.FC = () => {
@@ -19,24 +19,24 @@ export const AuthForm: React.FC = () => {
     const values: IAuthFields = {
         email: '',
         password: ''
-    }
+    };
     const formik = useFormik({
         initialValues: values,
         initialStatus: false,
         validationSchema: SignInSchema,
-        onSubmit: async (values, actions) => {
+        onSubmit: async (formData, actions) => {
 
             setServerError(false);
             setServerErrorMessage('');
 
            try {
-               const resultAction = await dispatch(login(values));
-               unwrapResult(resultAction)
+               const resultAction = await dispatch(login(formData));
+               unwrapResult(resultAction);
 
-               navigate('/system')
+               navigate('/system');
            } catch (e) {
-               setServerError(true)
-               setServerErrorMessage('Неверный логин или пароль')
+               setServerError(true);
+               setServerErrorMessage('Неверный логин или пароль');
            } finally {
                actions.resetForm();
            }
@@ -48,25 +48,27 @@ export const AuthForm: React.FC = () => {
             <div className='form-group'>
                 <label htmlFor="email">Почтовый адрес</label>
                 <input
+                    id='email'
                     name='email'
                     type="email"
                     placeholder='example@gmail.com'
                     onChange={formik.handleChange}
                     value={formik.values.email}
                 />
-                {formik.errors.email ? <span className={'form__err-msg'}>{formik.errors.email}</span> : null}
+                {formik.errors.email ? <span className="form__err-msg">{formik.errors.email}</span> : null}
             </div>
 
             <div className='form-group'>
                 <label htmlFor="password">Пароль</label>
                 <input
+                    id='password'
                     name='password'
                     type="password"
                     placeholder='&#9679;&#9679;&#9679;&#9679;&#9679;'
                     onChange={formik.handleChange}
                     value={formik.values.password}
                 />
-                {formik.errors.password ? <span className={'form__err-msg'}>{formik.errors.password}</span> : null}
+                {formik.errors.password ? <span className="form__err-msg">{formik.errors.password}</span> : null}
             </div>
 
             <div className="form-group">
@@ -75,9 +77,9 @@ export const AuthForm: React.FC = () => {
 
             <button type="submit" className='button button--blue button--full-width button--center form__submit'>Отправить</button>
 
-            {serverError && <span className={'form__err-msg'}>{serverErrorMessage}</span>}
+            {serverError && <span className="form__err-msg">{serverErrorMessage}</span>}
 
             <div className="form__info">Don’t have account yet?</div>
         </form>
-    )
-}
+    );
+};

@@ -1,7 +1,7 @@
-import {createAsyncThunk} from "@reduxjs/toolkit";
-import AuthService from "../../service/AuthService";
-import {IAuthFields} from "../../components/Forms/AuthForm";
+import {createAsyncThunk} from '@reduxjs/toolkit';
 import axios from 'axios';
+import AuthService from '../../service/AuthService';
+import {IAuthFields} from '../../components/Forms/AuthForm';
 
 
 export const login = createAsyncThunk(
@@ -22,4 +22,4 @@ export const login = createAsyncThunk(
             return thunkAPI.rejectWithValue(msg);
         }
     }
-)
+);
