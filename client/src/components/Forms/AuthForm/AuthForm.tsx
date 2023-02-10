@@ -1,21 +1,45 @@
-import React from "react";
-import { useFormik } from 'formik';
-import { IAuthFields } from "./types";
-import { SignInSchema } from "@utils/validationSchemes";
+import React, {useState} from "react";
+import {useFormik} from 'formik';
+import {IAuthFields} from "./types";
+import {SignInSchema} from "@utils/validationSchemes";
+import {useAppDispatch} from "../../../hooks/redux";
+import {login} from "../../../store/actions/AuthAction";
+import {useNavigate} from "react-router-dom";
+import {unwrapResult} from "@reduxjs/toolkit";
 
 
 export const AuthForm: React.FC = () => {
+
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+
+    const [serverError, setServerError] = useState(false);
+    const [serverErrorMessage, setServerErrorMessage] = useState('');
 
     const values: IAuthFields = {
         email: '',
         password: ''
     }
-
     const formik = useFormik({
         initialValues: values,
+        initialStatus: false,
         validationSchema: SignInSchema,
-        onSubmit: values => {
-            console.log(values);
+        onSubmit: async (values, actions) => {
+
+            setServerError(false);
+            setServerErrorMessage('');
+
+           try {
+               const resultAction = await dispatch(login(values));
+               unwrapResult(resultAction)
+
+               navigate('/system')
+           } catch (e) {
+               setServerError(true)
+               setServerErrorMessage('Неверный логин или пароль')
+           } finally {
+               actions.resetForm();
+           }
         },
     });
 
@@ -50,6 +74,8 @@ export const AuthForm: React.FC = () => {
             </div>
 
             <button type="submit" className='button button--blue button--full-width button--center form__submit'>Отправить</button>
+
+            {serverError && <span className={'form__err-msg'}>{serverErrorMessage}</span>}
 
             <div className="form__info">Don’t have account yet?</div>
         </form>
