@@ -2,23 +2,23 @@ import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import MainPage from '@pages/system/MainPage';
 import AuthPage from '@pages/system/AuthPage';
+import ProfilePage from "@pages/system/ProfilePage";
 import '@styles/index.scss';
 
 
 const router = createBrowserRouter([
     {
         path: '/',
-        element: 'Promo page',
-    },
-    {
-        path: 'system',
-        element: <MainPage />,
-        children: []
-    },
-    {
-        path: 'login',
-        element: <AuthPage />,
-        children: []
+        errorElement: '404',
+        children: [
+            {path: '', element: 'Promo page'},
+            {path: 'login', element: <AuthPage />},
+            {path: 'system', element: <MainPage />,
+                children: [
+                    {path: 'profile', element: <ProfilePage />}
+                ]
+            }
+        ],
     }
 ]);
 
