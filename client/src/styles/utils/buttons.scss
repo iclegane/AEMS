@@ -1,5 +1,5 @@
 .button {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   background-color: inherit;
   padding: 11px 16px;
@@ -30,6 +30,15 @@
 
   &--round {
     border-radius: 50%;
+  }
+
+  &--full-width {
+    width: 100%;
+    flex: 1;
+  }
+
+  &--center {
+    justify-content: center;
   }
 
   &--icon-text {

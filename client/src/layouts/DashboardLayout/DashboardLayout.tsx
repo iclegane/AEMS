@@ -7,17 +7,17 @@ interface Props {
     children: React.ReactNode;
 }
 
-export const Layout: React.FC<Props> = ({ children }) => {
+export const DashboardLayout: React.FC<Props> = ({ children }) => {
     return (
-        <div className="layout">
-            <div className="layout__left-panel">
+        <div className="dashboard-layout">
+            <div className="dashboard-layout__left-panel">
                 <Sidebar/>
             </div>
-            <div className="layout__window">
+            <div className="dashboard-layout__window">
                 <div className="layout__top-panel">
                     <Topbar/>
                 </div>
-                <div className="layout__content">
+                <div className="dashboard-layout__content">
                     { children }
                 </div>
             </div>
