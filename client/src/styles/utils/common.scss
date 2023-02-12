@@ -10,6 +10,15 @@ body {
   line-height: 180%;
   color: $text;
   background: #FAFAFB;
+
+  * {
+    box-sizing: border-box;
+
+    &::after,
+    &::before {
+      box-sizing: border-box;
+    }
+  }
 }
 
 a {
@@ -64,4 +73,42 @@ img {
 
 .form-group {
   margin-bottom: 20px;
+}
+
+.field-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.field {
+  display: flex;
+  padding: 15px;
+  line-height: 19px;
+  font-size: 14px;
+
+  &__name {
+    flex: .4;
+    font-weight: 500;
+  }
+
+  &__value {
+    flex: 1;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.5019607843);
+  }
+
+  &--alternating {
+    &:not(:nth-child(even)) {
+      background: #FAFAFB;
+    }
+  }
+
+  &--column {
+    flex-direction: column;
+    padding: 0;
+
+    &:not(:first-child) {
+      margin-top: 15px;
+    }
+  }
 }
