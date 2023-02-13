@@ -87,6 +87,29 @@ class UserController {
             next(e);
         }
     }
+
+    async getUserInfo(req, res, next) {
+        try {
+            const userId = req.params.id;
+            const user = await UserService.getUserInfoById(userId);
+
+            return res.json(user);
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    async updateUserInfo(req, res, next) {
+        try {
+            const userId = req.params.id;
+            const updated = await UserService.editUser(userId, req.body)
+
+            return res.json(updated);
+        } catch (e) {
+            next(e);
+        }
+    }
+
 }
 
 module.exports = new UserController();
