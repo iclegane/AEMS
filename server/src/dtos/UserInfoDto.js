@@ -1,15 +1,26 @@
 class UserInfoDto {
     name;
+
     email;
+
     birth_date;
+
     work_date;
+
     phone;
+
     address;
+
     vacation_count;
+
     gender;
+
     underground;
+
     employment;
+
     post;
+
     skill;
 
     constructor(model) {
@@ -24,7 +35,7 @@ class UserInfoDto {
         this.underground = model.underground_id?.name || null;
         this.employment = model.employment_id?.name || null;
         this.post = model.post_id?.name || null;
-        this.skill = model.skill_ids.map((skill) => skill.name) || [];
+        this.skill = model.skill_ids.map((skill) => {return skill.name;}) || [];
     }
 }
 

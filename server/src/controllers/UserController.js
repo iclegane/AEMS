@@ -102,7 +102,7 @@ class UserController {
     async updateUserInfo(req, res, next) {
         try {
             const userId = req.params.id;
-            const updated = await UserService.editUser(userId, req.body)
+            const updated = await UserService.editUser(userId, req.body);
 
             return res.json(updated);
         } catch (e) {

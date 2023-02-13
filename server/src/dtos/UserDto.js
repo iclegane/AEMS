@@ -1,8 +1,12 @@
 class UserDto {
     id;
+
     email;
+
     role;
+
     post;
+
     isActivated;
 
     constructor(model) {

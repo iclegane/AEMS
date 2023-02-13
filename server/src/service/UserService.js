@@ -16,7 +16,7 @@ const ApiError = require('../exceptions/ApiError');
 
 class UserService {
     async registration(email, password) {
-        const candidate = await UserModel.findOne({email})
+        const candidate = await UserModel.findOne({email});
         if (candidate) {
             throw ApiError.BadRequest(`Пользователь с таким email - ${email} уже существует`);
         }
@@ -28,7 +28,7 @@ class UserService {
             email,
             password: hashPassword,
             emailActivationLink: emailActivationLinkID
-        })
+        });
             await user.populate('role_id', 'name');
 
         const emailActivationLink = `${process.env.API_URL}/api/activate/${emailActivationLinkID}`;
