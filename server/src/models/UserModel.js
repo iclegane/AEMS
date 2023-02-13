@@ -4,6 +4,7 @@ const { Schema, model } = require('mongoose');
 const UserSchema = new Schema({
     name: {
         type: String,
+        default: null,
     },
     email: {
         type: String,
@@ -41,24 +42,33 @@ const UserSchema = new Schema({
         type: Number,
         default: null
     },
-    gender_id: {
-        type: Number,
+    role_id: {
+        type: Schema.Types.ObjectId,
+        ref: 'Role',
         default: null
     },
-    metro_id: {
-        type: Number,
+    gender_id: {
+        type: Schema.Types.ObjectId,
+        ref: 'Gender',
+        default: null
+    },
+    underground_id: {
+        type: Schema.Types.ObjectId,
+        ref: 'Underground',
         default: null
     },
     employment_id: {
-        type: Number,
-        default: null,
+        type: Schema.Types.ObjectId,
+        ref: 'Employment',
+        default: null
     },
     post_id: {
-        type: Number,
+        type: Schema.Types.ObjectId,
+        ref: 'Post',
         default: null
     },
     skill_ids: {
-        type: [Number],
+        type: [{ type: Schema.Types.ObjectId, ref: 'Skill' }],
         default: []
     }
 });
