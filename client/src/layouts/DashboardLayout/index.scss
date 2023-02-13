@@ -18,6 +18,20 @@
   }
 
   &__content {
+    padding: 30px;
     flex: 1;
+  }
+}
+
+.dashboard-content-block {
+  padding: 30px;
+  border-radius: 15px;
+  background-color: white;
+
+  &__title {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 22px;
+    margin-bottom: 20px;
   }
 }
