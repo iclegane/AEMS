@@ -1,9 +1,11 @@
-import React from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import React, {useEffect} from 'react';
+import {createBrowserRouter, RouterProvider} from 'react-router-dom';
 import MainPage from '@pages/system/MainPage';
 import AuthPage from '@pages/system/AuthPage';
 import ProfilePage from "@pages/system/ProfilePage";
 import '@styles/index.scss';
+import {useAppDispatch} from "../../hooks/redux";
+import {checkAuth} from "../../store/actions/AuthAction";
 
 
 const router = createBrowserRouter([
@@ -23,6 +25,15 @@ const router = createBrowserRouter([
 ]);
 
 export const App: React.FC = () => {
+
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        if (localStorage.getItem('token')) {
+            dispatch(checkAuth())
+        }
+    }, []);
+
     return (
         <RouterProvider router={router} />
     );
