@@ -1,17 +1,17 @@
 import React from 'react';
 import './index.scss';
-import {useAppDispatch, useAppSelector} from "../../../hooks/redux";
-import {useProfileQuery} from "../../../service/PofileService";
-import {logout} from "../../../store/actions/AuthAction";
-import Icon from "../../../components/Icon";
-import {useNavigate} from "react-router-dom";
+import {useNavigate} from 'react-router-dom';
+import {useAppDispatch, useAppSelector} from '../../../hooks/redux';
+import {useProfileQuery} from '../../../service/PofileService';
+import {logout} from '../../../store/actions/AuthAction';
+import Icon from '../../../components/Icon';
 
 
 export const ProfilePage: React.FC = () => {
 
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const {auth} = useAppSelector(state => state.authReducer);
+    const {auth} = useAppSelector(state => {return state.authReducer;});
 
     if (!auth.user) {
         return null;
@@ -20,7 +20,7 @@ export const ProfilePage: React.FC = () => {
     const logoutHandler = () => {
         dispatch(logout());
         navigate('/login');
-    }
+    };
 
     const {data} = useProfileQuery({id: auth.user.id});
 
@@ -28,14 +28,14 @@ export const ProfilePage: React.FC = () => {
         <div className="profile gap-30">
             <div className="dashboard-content-block">
                 <div className='inline-flex gap-25'>
-                    <div className="profile__user-image"></div>
+                    <div className="profile__user-image" />
                     <div className="flex flex-column">
                         <div className="profile__user-name">John Doe</div>
                         <div className="profile__user-position">Backend developer</div>
                     </div>
                 </div>
-                <button type={'button'} className={'button button--icon profile__logout'} onClick={logoutHandler}>
-                    <Icon name={'logout'}/>
+                <button type="button" className="button button--icon profile__logout" onClick={logoutHandler}>
+                    <Icon name="logout"/>
                 </button>
             </div>
 
@@ -44,10 +44,10 @@ export const ProfilePage: React.FC = () => {
                     <div className="dashboard-content-block__title">Важное</div>
                     <div className="field-list">
                         {data && data.main.map((field, i) =>
-                            <div key={`profile-main-${i}`} className="field field--column">
+                            {return <div key={`profile-main-${i}`} className="field field--column">
                                 <div className="field__name">{field.name}</div>
                                 <div className="field__value">{field.value}</div>
-                            </div>
+                            </div>;}
                         )}
                     </div>
                 </div>
@@ -58,10 +58,10 @@ export const ProfilePage: React.FC = () => {
 
                         <div className="field-list">
                             {data && data.personal.map((field, i) =>
-                                <div key={`profile-personal-${i}`} className="field field--alternating">
+                                {return <div key={`profile-personal-${i}`} className="field field--alternating">
                                     <div className="field__name">{field.name}</div>
                                     <div className="field__value">{field.value}</div>
-                                </div>
+                                </div>;}
                             )}
                         </div>
                     </div>
@@ -70,10 +70,10 @@ export const ProfilePage: React.FC = () => {
 
                         <div className="field-list">
                             {data && data.contacts.map((field, i) =>
-                                <div key={`profile-contacts-${i}`} className="field field--alternating">
+                                {return <div key={`profile-contacts-${i}`} className="field field--alternating">
                                     <div className="field__name">{field.name}</div>
                                     <div className="field__value">{field.value}</div>
-                                </div>
+                                </div>;}
                             )}
                         </div>
                     </div>

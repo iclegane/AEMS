@@ -1,6 +1,6 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import {API_URL} from "../utils/constants";
-import {RootState} from "../store/store";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import {API_URL} from '../utils/constants';
+import {RootState} from '../store/store';
 
 type Field = {
     name: string;
@@ -21,25 +21,25 @@ export const ProfileService = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: API_URL,
         prepareHeaders: (headers, {getState}) => {
-            const isAuth = (getState() as RootState).authReducer.auth.isAuth;
+            const {isAuth} = (getState() as RootState).authReducer.auth;
 
             if (isAuth) {
-                headers.set('Authorization', `Bearer ${localStorage.getItem('token')}`)
+                headers.set('Authorization', `Bearer ${localStorage.getItem('token')}`);
             }
 
             return headers;
         },
-        credentials: "include",
+        credentials: 'include',
     }),
-    endpoints: (builder) => ({
+    endpoints: (builder) => {return {
         profile: builder.query<ProfileResponse, ProfileRequest>({
-            query: (id) => ({
+            query: (id) => {return {
                 url: 'profile',
                 method: 'POST',
                 body: id
-            }),
+            };},
         })
-    }),
-})
+    };},
+});
 
-export const { useProfileQuery } = ProfileService
+export const { useProfileQuery } = ProfileService;

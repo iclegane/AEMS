@@ -1,7 +1,7 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import axios from 'axios';
-import AuthService from '../../service/AuthService';
 import {IAuthFields} from '@components/Forms/AuthForm';
+import AuthService from '../../service/AuthService';
 
 
 export const login = createAsyncThunk(

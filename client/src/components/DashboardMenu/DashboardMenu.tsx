@@ -1,7 +1,7 @@
 import React from 'react';
 import Icon from '@components/Icon';
 import './index.scss';
-import {Link} from "react-router-dom";
+import {Link} from 'react-router-dom';
 
 export const DashboardMenu: React.FC = () => {
     return (
@@ -9,21 +9,21 @@ export const DashboardMenu: React.FC = () => {
             <div className="dashboard-menu__block">
                 <div className="dashboard-menu__title">Главное меню</div>
                 <div className="dashboard-menu__item-list">
-                    <Link to={'/system'} className='link dashboard-menu__item'>
+                    <Link to="/system" className='link dashboard-menu__item'>
                        <span className="link__icon">
                             <Icon name="category"/>
                         </span>
                         <span className='link__text'>Главная</span>
                     </Link>
 
-                    <Link to={'/system/profile'} className='link dashboard-menu__item'>
+                    <Link to="/system/profile" className='link dashboard-menu__item'>
                        <span className="link__icon">
                             <Icon name="user"/>
                         </span>
                         <span className='link__text'>Профиль</span>
                     </Link>
 
-                    <Link to={'/system/tasks'} className='link dashboard-menu__item'>
+                    <Link to="/system/tasks" className='link dashboard-menu__item'>
                        <span className="link__icon">
                             <Icon name="chart"/>
                         </span>

@@ -1,6 +1,6 @@
 import {combineReducers, configureStore} from '@reduxjs/toolkit';
 import authReducer from './reducers/AuthSlice';
-import {ProfileService} from "../service/PofileService";
+import {ProfileService} from '../service/PofileService';
 
 
 const rootReducer = combineReducers({
@@ -12,7 +12,7 @@ export const setupStore = () => {
     return configureStore( {
         reducer: rootReducer,
         middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(ProfileService.middleware),
+        {return getDefaultMiddleware().concat(ProfileService.middleware);},
     });
 };
 

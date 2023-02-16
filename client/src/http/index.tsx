@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {API_URL} from '@utils/constants';
-import AuthService from "../service/AuthService";
+import AuthService from '../service/AuthService';
 
 
 const TRANSPORT = axios.create({
@@ -29,7 +29,7 @@ TRANSPORT.interceptors.response.use((config) => {
 
             return TRANSPORT.request((originalRequest));
         } catch (e) {
-            console.log('user !auth')
+            console.log('user !auth');
         }
 
         throw error;
