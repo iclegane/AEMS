@@ -13,11 +13,11 @@ const router = createBrowserRouter([
         path: '/',
         errorElement: '404',
         children: [
-            {path: '', element: 'Promo page'},
+            {index: true, element: 'Promo page'},
             {path: 'login', element: <AuthPage />},
-            {path: 'system', element: <MainPage />,
+            {path: 'system', element: <MainPage title={'Main page'} />,
                 children: [
-                    {path: 'profile', element: <ProfilePage />}
+                    {path: 'profile', element: <ProfilePage title={'Profile page'} />}
                 ]
             }
         ],
