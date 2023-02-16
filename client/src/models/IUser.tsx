@@ -1,4 +1,8 @@
 export interface IUser {
-    id: number;
+    id: string;
     email:string;
+    name: string | null;
+    post: string | null;
+    role: string;
+    isActivated: boolean;
 }

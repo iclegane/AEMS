@@ -96,7 +96,7 @@ class UserService {
     }
 
     async getAllUsers() {
-        return UserModel.find();
+        return UserModel.find().lean();
     }
 
     async getUserInfoById(id) {

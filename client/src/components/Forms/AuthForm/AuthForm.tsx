@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {useFormik} from 'formik';
 import {SignInSchema} from '@utils/validationSchemes';
-import {useNavigate} from 'react-router-dom';
 import {unwrapResult} from '@reduxjs/toolkit';
 import {IAuthFields} from './types';
 import {useAppDispatch} from '../../../hooks/redux';
@@ -11,8 +10,6 @@ import {login} from '../../../store/actions/AuthAction';
 export const AuthForm: React.FC = () => {
 
     const dispatch = useAppDispatch();
-    const navigate = useNavigate();
-
     const [serverError, setServerError] = useState(false);
     const [serverErrorMessage, setServerErrorMessage] = useState('');
 
@@ -32,8 +29,6 @@ export const AuthForm: React.FC = () => {
            try {
                const resultAction = await dispatch(login(formData));
                unwrapResult(resultAction);
-
-               navigate('/system');
            } catch (e) {
                setServerError(true);
                setServerErrorMessage('Неверный логин или пароль');
