@@ -1,14 +1,18 @@
 import React from 'react';
-import Layout from '@layouts/DashboardLayout';
+import DashboardLayout from '@layouts/DashboardLayout';
 import './index.scss';
 import { Outlet } from 'react-router-dom';
+import {IPage} from "../../../models/IPage";
 
-export const SystemMainPage: React.FC = () => {
+
+export interface SystemMainPage extends IPage{}
+
+export const SystemMainPage: React.FC<SystemMainPage> = () => {
     return (
         <div className="page page--system">
-            <Layout>
+            <DashboardLayout>
                 <Outlet/>
-            </Layout>
+            </DashboardLayout>
         </div>
     );
 };
