@@ -29,10 +29,10 @@ export const logout = createAsyncThunk(
     'auth/logout',
     async (data, thunkAPI) => {
         try {
-            const response = await AuthService.logout();
+            await AuthService.logout();
             localStorage.removeItem('token');
 
-            return response;
+            return {};
         } catch (e: unknown) {
 
             if (axios.isAxiosError(e)) {

@@ -12,12 +12,17 @@ export const ProfilePage: React.FC = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const {auth} = useAppSelector(state => state.authReducer);
-    const {data} = useProfileQuery({id: auth.user.id});
+
+    if (!auth.user) {
+        return null;
+    }
 
     const logoutHandler = () => {
         dispatch(logout());
         navigate('/login');
     }
+
+    const {data} = useProfileQuery({id: auth.user.id});
 
     return (
         <div className="profile gap-30">
