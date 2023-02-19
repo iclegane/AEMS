@@ -6,32 +6,39 @@
   },
   "extends": [
     "airbnb-base",
+    "airbnb-typescript/base",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:eslint-comments/recommended",
+    "plugin:promise/recommended",
+    "plugin:unicorn/recommended",
     "prettier"
   ],
   "parserOptions": {
-    "ecmaVersion": 2022
+    "project": "./tsconfig.json"
   },
-  "plugins": ["prettier", "import"],
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint",
+    "eslint-comments",
+    "promise",
+    "unicorn"
+  ],
   "rules": {
-    "indent": "off",
-    "eol-last": "error",
-    "no-console": "off",
-    "class-methods-use-this": "off",
-    "linebreak-style": [
+    "no-prototype-builtins": "off",
+    "import/prefer-default-export": "off",
+    "import/no-default-export": "error",
+    "no-use-before-define": [
       "error",
-      "unix"
+      { "functions": false, "classes": true, "variables": true }
     ],
-    "quotes": [
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-use-before-define": [
       "error",
-      "single"
+      { "functions": false, "classes": true, "variables": true, "typedefs": true }
     ],
-    "semi": [
-      "error",
-      "always"
-    ],
-    "arrow-body-style": [
-      "error",
-      "always"
-    ]
+    "unicorn/prevent-abbreviations": "off",
+    "unicorn/no-array-for-each": "off",
+    "import/no-extraneous-dependencies": "off"
   }
 }

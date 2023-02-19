@@ -1,38 +1,40 @@
-const bcrypt = require('bcrypt');
-const uuid = require('uuid');
-const UserModel = require('../models/UserModel');
-const UndergroundModel = require('../models/UndergroundModel');
-const EmploymentModel = require('../models/EmploymentModel');
-const GenderModel = require('../models/GenderModel');
-const PostModel = require('../models/PostModel');
-const RoleModel = require('../models/RoleModel');
-const SkillModel = require('../models/SkillModel');
-const MailService = require('./MailService');
-const TokenService = require('./TokenService');
-const UserDto = require('../dtos/UserDto');
-const UserInfoDto = require('../dtos/UserInfoDto');
-const ApiError = require('../exceptions/ApiError');
+import bcrypt from 'bcrypt';
+import {v4 as uuidv4} from 'uuid';
+import UserModel from "../models/user/UserModel.js";
+import TokenService from '../service/TokenService.js';
+import UserDto, {IUserDto} from "../dtos/UserDto.js";
+import RoleModel from "../models/role/RoleModel.js";
+import {Query} from "mongoose";
+import {DeleteResult} from "mongodb";
+import ApiError from "../exceptions/ApiError.js";
 
+export interface IUserDataResponse {
+    accessToken: string;
+    refreshToken: string;
+    user: IUserDto;
+}
 
 class UserService {
-    async registration(email, password) {
+    async registration(email: string, password: string): Promise<IUserDataResponse> {
         const candidate = await UserModel.findOne({email});
         if (candidate) {
             throw ApiError.BadRequest(`Пользователь с таким email - ${email} уже существует`);
         }
 
         const hashPassword = await bcrypt.hash(password, 4);
-        const emailActivationLinkID = uuid.v4();
+        const emailActivationLinkID = uuidv4();
 
         const user = await UserModel.create({
             email,
             password: hashPassword,
+            role_id: '63e94f358dcc5fc1126630ee',
             emailActivationLink: emailActivationLinkID
         });
-            await user.populate('role_id', 'name');
+        await user.populate({path: 'role_id', model: RoleModel});
 
-        const emailActivationLink = `${process.env.API_URL}/api/activate/${emailActivationLinkID}`;
-        await MailService.sendActivationMail(email, emailActivationLink);
+        // todo: add mail service
+        // const emailActivationLink = `${process.env.API_URL}/api/activate/${emailActivationLinkID}`;
+        // await MailService.sendActivationMail(email, emailActivationLink);
 
         const userDto = new UserDto(user);
         const tokens = TokenService.generateTokens({...userDto});
@@ -44,9 +46,8 @@ class UserService {
         };
     }
 
-    async login(email, password) {
-        const user = await UserModel.findOne({ email })
-            .populate('role_id', 'name');
+    async login(email: string, password: string): Promise<IUserDataResponse> {
+        const user = await UserModel.findOne({ email }).populate({path: 'role_id', model: RoleModel});
         if (!user) {
             throw ApiError.BadRequest('User not found');
         }
@@ -66,11 +67,11 @@ class UserService {
         };
     }
 
-    async logout(refreshToken) {
+    async logout(refreshToken: string): Promise<Query<DeleteResult, any>> {
         return await TokenService.removeToken(refreshToken);
     }
 
-    async refresh(refreshToken) {
+    async refresh(refreshToken: string): Promise<IUserDataResponse> {
         if (!refreshToken) {
             throw ApiError.UnauthorizedError();
         }
@@ -82,8 +83,10 @@ class UserService {
             throw ApiError.UnauthorizedError();
         }
 
-        const user = await UserModel.findById(userData.id)
-            .populate('role_id', 'name');
+        const user = await UserModel.findById(userData.id);
+        if (!user) {
+            throw ApiError.UnauthorizedError();
+        }
 
         const userDto = new UserDto(user);
         const tokens = TokenService.generateTokens({...userDto});
@@ -95,29 +98,14 @@ class UserService {
         };
     }
 
-    async getAllUsers() {
-        return UserModel.find().lean();
-    }
-
-    async getUserInfoById(id) {
-        const user = await UserModel.findById(id)
-            .populate('underground_id', 'name')
-            .populate('gender_id', 'name')
-            .populate('employment_id', 'name')
-            .populate('post_id', 'name')
-            .populate('skill_ids', 'name');
+    async getUserInfoById(id: string) {
+        const user = await UserModel.findById(id);
         if (!user) {
             throw ApiError.BadRequest('User not found');
         }
 
-        return new UserInfoDto(user);
-    }
-
-    async editUser(id, fields) {
-        const user = await UserModel.findByIdAndUpdate(id, fields, {new: true});
-
-        return user;
+        return new UserDto(user);
     }
 }
 
-module.exports = new UserService();
+export default new UserService();

@@ -1,7 +1,9 @@
-const ApiError = require('../exceptions/ApiError');
-const TokenService = require('../service/TokenService');
+import {NextFunction, Request, Response} from "express";
+import ApiError from "../exceptions/ApiError.js";
+import TokenService from "../service/TokenService.js";
 
-module.exports = function(req, res, next) {
+
+export const AuthMiddleware = (req: Request, res: Response, next: NextFunction) => {
     try {
         const authorizationHeader = req.headers.authorization;
 
@@ -19,6 +21,7 @@ module.exports = function(req, res, next) {
             return next(ApiError.UnauthorizedError());
         }
 
+        // @ts-ignore
         req.user = userData;
 
         next();

@@ -1,7 +1,7 @@
-const ApiError = require('../exceptions/ApiError');
+import {Request, Response, NextFunction} from "express";
+import ApiError from './../exceptions/ApiError.js';
 
-
-module.exports = function (err, req, res, next) {
+export function errorMiddleware (err: any, req: Request, res: Response, next: NextFunction) {
 
     console.log(err);
 
@@ -15,4 +15,4 @@ module.exports = function (err, req, res, next) {
     return res.status(500).json({
         message: 'Server error'
     });
-};
+}
