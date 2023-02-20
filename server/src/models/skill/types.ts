@@ -1,4 +1,4 @@
-import {Types, Model, Document} from "mongoose";
+import {Model, Document} from 'mongoose';
 
 
 export interface ISkillDB {
@@ -7,4 +7,4 @@ export interface ISkillDB {
 
 export interface ISkillDocument extends ISkillDB, Document {}
 
-export interface ISkillModel extends Model<ISkillDocument> {}
+export type ISkillModel = Model<ISkillDocument>

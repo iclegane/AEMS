@@ -1,5 +1,5 @@
-import mongoose, {Schema, model, Types} from "mongoose";
-import {IRoleDB, IRoleDocument} from "./types";
+import mongoose, {Schema} from 'mongoose';
+import {IRoleDB, IRoleDocument} from './types';
 
 
 const RoleSchema = new Schema<IRoleDB>({

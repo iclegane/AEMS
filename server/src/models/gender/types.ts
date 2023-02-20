@@ -1,4 +1,4 @@
-import {Types, Model, Document} from "mongoose";
+import {Model, Document} from 'mongoose';
 
 
 export interface IGenderDB {
@@ -7,4 +7,4 @@ export interface IGenderDB {
 
 export interface IGenderDocument extends IGenderDB, Document {}
 
-export interface IGenderModel extends Model<IGenderDocument> {}
+export type IGenderModel = Model<IGenderDocument>

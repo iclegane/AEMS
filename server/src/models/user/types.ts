@@ -1,10 +1,11 @@
-import {Types, Model, Document} from "mongoose";
-import {IRoleDB, IRoleDocument} from "../role/types";
-import {IEmploymentDB} from "../employment/types";
-import {IUndergroundDB} from "../underground/types";
-import {IGenderDB, IGenderDocument} from "../gender/types";
-import {IPostDB} from "../post/types";
-import {ISkillDB} from "../skill/types";
+import {Types, Model, Document} from 'mongoose';
+import {IRoleDocument} from '../role/types';
+import {IEmploymentDB} from '../employment/types';
+import {IUndergroundDB} from '../underground/types';
+import {IGenderDocument} from '../gender/types';
+import {IPostDB} from '../post/types';
+import {ISkillDB} from '../skill/types';
+
 
 export interface IUserDB {
     name: string | null;
@@ -35,4 +36,4 @@ export interface IUserPopulated {
 }
 
 export interface IUserDocument extends IUserDB, Document {}
-export interface IUserModel extends Model<IUserDocument> {}
+export type IUserModel = Model<IUserDocument>

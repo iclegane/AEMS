@@ -1,4 +1,4 @@
-export function env(name: string): string {
+export default function env(name: string): string {
     const value = process.env[name];
 
     if (!value) {

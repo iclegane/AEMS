@@ -1,4 +1,4 @@
-import {Types, Model, Document} from "mongoose";
+import {Model, Document} from 'mongoose';
 
 
 export interface IRoleDB {
@@ -7,4 +7,4 @@ export interface IRoleDB {
 
 export interface IRoleDocument extends IRoleDB, Document {}
 
-export interface IRoleModel extends Model<IRoleDocument> {}
+export type IRoleModel = Model<IRoleDocument>

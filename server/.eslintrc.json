@@ -11,7 +11,7 @@
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "plugin:eslint-comments/recommended",
     "plugin:promise/recommended",
-    "plugin:unicorn/recommended",
+//    "plugin:unicorn/recommended",
     "prettier"
   ],
   "parserOptions": {
@@ -21,13 +21,18 @@
   "plugins": [
     "@typescript-eslint",
     "eslint-comments",
-    "promise",
-    "unicorn"
+    "promise"
+//    "unicorn"
   ],
   "rules": {
+    "quotes": ["error", "single"],
+    "semi": ["error", "always"],
+    "eol-last": ["error", "always"],
     "no-prototype-builtins": "off",
-    "import/prefer-default-export": "off",
-    "import/no-default-export": "error",
+    "import/newline-after-import": ["error", { "count": 2 }],
+    "class-methods-use-this": "off",
+//    "import/prefer-default-export": "off",
+//    "import/no-default-export": "error",
     "no-use-before-define": [
       "error",
       { "functions": false, "classes": true, "variables": true }
@@ -37,8 +42,8 @@
       "error",
       { "functions": false, "classes": true, "variables": true, "typedefs": true }
     ],
-    "unicorn/prevent-abbreviations": "off",
-    "unicorn/no-array-for-each": "off",
+//    "unicorn/prevent-abbreviations": "off",
+//    "unicorn/no-array-for-each": "off",
     "import/no-extraneous-dependencies": "off"
   }
 }

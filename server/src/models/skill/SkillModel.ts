@@ -1,5 +1,5 @@
-import mongoose, {Schema, model, Types} from "mongoose";
-import {ISkillDB, ISkillDocument} from "./types";
+import mongoose, {Schema} from 'mongoose';
+import {ISkillDB, ISkillDocument} from './types';
 
 
 const SkillSchema = new Schema<ISkillDB>({

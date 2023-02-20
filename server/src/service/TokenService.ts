@@ -1,9 +1,9 @@
-import jwt, {JwtPayload} from 'jsonwebtoken'
+import jwt from 'jsonwebtoken';
+import {Document, Query} from 'mongoose';
+import {DeleteResult} from 'mongodb';
 import TokenModel from '../models/token/TokenModel.js';
-import {IUserDto} from "../dtos/UserDto";
-import {Document, Query} from "mongoose";
-import {ITokenDB} from "../models/token/types";
-import {DeleteResult} from "mongodb";
+import {IUserDto} from '../dtos/UserDto';
+import {ITokenDB} from '../models/token/types';
 
 
 class TokenService {
@@ -32,9 +32,10 @@ class TokenService {
     validateAccessToken(token: string): IUserDto | null {
         try {
             // todo: fixed process env
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             return jwt.verify(token, process.env.JWT_ACCESS_SECRET) as IUserDto;
-        } catch (e) {
+        } catch {
             return null;
         }
     }
@@ -42,11 +43,12 @@ class TokenService {
     validateRefreshToken(token: string): IUserDto | null {
         try {
             // todo: fixed process env
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             const userData = jwt.verify(token, process.env.JWT_REFRESH_SECRET) as IUserDto;
 
             return userData;
-        } catch (e) {
+        } catch {
             return null;
         }
     }
@@ -60,7 +62,7 @@ class TokenService {
             return tokenData.save();
         }
 
-        return await TokenModel.create({user: userId, refreshToken});
+        return TokenModel.create({user: userId, refreshToken});
     }
 
     // todo: change any type on real

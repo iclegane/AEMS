@@ -1,8 +1,11 @@
-import {Request, Response, NextFunction} from "express";
-import ApiError from './../exceptions/ApiError.js';
+import {Request, Response} from 'express';
+import ApiError from '../exceptions/ApiError.js';
 
-export function errorMiddleware (err: any, req: Request, res: Response, next: NextFunction) {
 
+export default function errorMiddleware (err: unknown, req: Request, res: Response) {
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     console.log(err);
 
     if (err instanceof ApiError) {

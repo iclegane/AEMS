@@ -1,4 +1,4 @@
-import {Types, Model, Document} from "mongoose";
+import {Model, Document} from 'mongoose';
 
 
 export interface IUndergroundDB {
@@ -7,4 +7,4 @@ export interface IUndergroundDB {
 
 export interface IUndergroundDocument extends IUndergroundDB, Document {}
 
-export interface IUndergroundModel extends Model<IUndergroundDocument> {}
+export type IUndergroundModel = Model<IUndergroundDocument>

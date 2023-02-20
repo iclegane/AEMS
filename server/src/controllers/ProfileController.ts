@@ -1,20 +1,24 @@
-import TokenService from "../service/TokenService.js";
-import UserService from "../service/UserService.js";
-import {NextFunction, Request, Response} from "express";
+import {NextFunction, Request, Response} from 'express';
+import UserService from '../service/UserService.js';
 
 
 class ProfileController {
-    async getProfileInfo(req: Request, res: Response, next: NextFunction) {
+    getProfileInfo = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const userID = req.body.id;
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+            const userID = req.body.id as string;
+
+
             // todo: add user friendly dto
             const user = await UserService.getUserInfoById(userID);
 
-            return res.json(user)
-        } catch (e) {
-            next(e)
+            return res.json(user);
+        } catch (error) {
+            next(error);
         }
-    }
-}
+
+        return undefined;
+    };
+};
 
 export default new ProfileController();

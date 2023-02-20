@@ -8,7 +8,7 @@
     "build": "ts-node ./src/index.ts",
     "dev": "nodemon --config ./nodemon.json",
     "eslint": "eslint ./src --ext .js,.jsx,.ts,.tsx",
-    "eslint:fix": "eslint --fix ./src --ext .js"
+    "eslint:fix": "eslint --fix ./src --ext .ts"
   },
   "keywords": [],
   "author": "",

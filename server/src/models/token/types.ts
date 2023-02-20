@@ -1,4 +1,4 @@
-import {Types, Model, Document} from "mongoose";
+import {Types, Model, Document} from 'mongoose';
 
 
 export interface ITokenDB {
@@ -8,4 +8,4 @@ export interface ITokenDB {
 
 export interface ITokenDocument extends ITokenDB, Document {}
 
-export interface ITokenModel extends Model<ITokenDocument> {}
+export type ITokenModel = Model<ITokenDocument>

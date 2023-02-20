@@ -1,4 +1,4 @@
-import {Types, Model, Document} from "mongoose";
+import {Model, Document} from 'mongoose';
 
 
 export interface IPostDB {
@@ -7,4 +7,4 @@ export interface IPostDB {
 
 export interface IPostDocument extends IPostDB, Document {}
 
-export interface IPostModel extends Model<IPostDocument> {}
+export type IPostModel = Model<IPostDocument>

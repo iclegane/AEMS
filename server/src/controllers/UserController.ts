@@ -1,11 +1,16 @@
-import {Response, Request, NextFunction} from "express";
+import {Response, Request, NextFunction} from 'express';
 import {validationResult} from 'express-validator';
-import ApiError from "../exceptions/ApiError.js";
+import ApiError from '../exceptions/ApiError.js';
 import UserService from '../service/UserService.js';
 
 
+export interface IAuthQuery {
+    email: string;
+    password: string;
+}
+
 class UserController {
-    async registration(req: Request, res: Response, next: NextFunction) {
+    registration = async (req: Request<never, never, IAuthQuery>, res: Response, next: NextFunction) => {
         try {
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
@@ -23,12 +28,14 @@ class UserController {
             });
 
             return res.json(userData);
-        } catch (e) {
-            next(e);
+        } catch (error) {
+            next(error);
         }
-    }
 
-    async login(req: Request, res: Response, next: NextFunction) {
+        return undefined;
+    };
+
+    login = async (req: Request<never, never, IAuthQuery>, res: Response, next: NextFunction) => {
         try {
             const {email, password} = req.body;
             const userData = await UserService.login(email, password);
@@ -39,45 +46,47 @@ class UserController {
             });
 
             return res.json(userData);
-        } catch (e) {
-            next(e);
+        } catch (error) {
+            next(error);
         }
-    }
 
-    async logout(req: Request, res: Response, next: NextFunction) {
+        return undefined;
+    };
+
+    logout = async (req: Request, res: Response, next: NextFunction) => {
         try {
+
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             const {refreshToken} = req.cookies;
-            const token = await UserService.logout(refreshToken);
+
+            const token = await UserService.logout(refreshToken as string);
             res.clearCookie('refreshToken');
 
             return res.json(token);
-        } catch (e) {
-            next(e);
+        } catch (error) {
+            next(error);
         }
-    }
 
-    async refresh(req: Request, res: Response, next: NextFunction) {
+        return undefined;
+    };
+
+    refresh = async (req: Request, res: Response, next: NextFunction) => {
         try {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             const {refreshToken} = req.cookies;
-            const userData = await UserService.refresh(refreshToken);
+            const userData = await UserService.refresh(refreshToken as string);
             res.cookie('refreshToken', userData.refreshToken, {
                 maxAge: 30 * 24 * 60 * 60 * 1000,
                 httpOnly: true,
             });
 
             return res.json(userData);
-        } catch (e) {
-            next(e);
+        } catch (error) {
+            next(error);
         }
-    }
 
-    async activate(req: Request, res: Response, next: NextFunction) {
-        try {
-
-        } catch (e) {
-            next(e);
-        }
-    }
+        return undefined;
+    };
 }
 
 export default new UserController();

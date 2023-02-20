@@ -1,7 +1,9 @@
-import {ValidationError} from "express-validator";
+import {ValidationError} from 'express-validator';
+
 
 class ApiError extends Error {
     status;
+
     errors;
 
     constructor(status: number, message: string, errors: ValidationError[] = []) {
@@ -19,4 +21,4 @@ class ApiError extends Error {
     }
 }
 
-export default ApiError
+export default ApiError;

@@ -1,12 +1,13 @@
 import bcrypt from 'bcrypt';
 import {v4 as uuidv4} from 'uuid';
-import UserModel from "../models/user/UserModel.js";
+import {Query} from 'mongoose';
+import {DeleteResult} from 'mongodb';
+import UserModel from '../models/user/UserModel.js';
 import TokenService from '../service/TokenService.js';
-import UserDto, {IUserDto} from "../dtos/UserDto.js";
-import RoleModel from "../models/role/RoleModel.js";
-import {Query} from "mongoose";
-import {DeleteResult} from "mongodb";
-import ApiError from "../exceptions/ApiError.js";
+import UserDto, {IUserDto} from '../dtos/UserDto.js';
+import RoleModel from '../models/role/RoleModel.js';
+import ApiError from '../exceptions/ApiError.js';
+
 
 export interface IUserDataResponse {
     accessToken: string;
@@ -38,7 +39,7 @@ class UserService {
 
         const userDto = new UserDto(user);
         const tokens = TokenService.generateTokens({...userDto});
-        await TokenService.saveToken(user.id, tokens.refreshToken);
+        await TokenService.saveToken(user.id as string, tokens.refreshToken);
 
         return {
             ...tokens,
@@ -59,7 +60,7 @@ class UserService {
 
         const userDto = new UserDto(user);
         const tokens = TokenService.generateTokens({...userDto});
-        await TokenService.saveToken(user.id, tokens.refreshToken);
+        await TokenService.saveToken(user.id as string, tokens.refreshToken);
 
         return {
             ...tokens,
@@ -68,7 +69,7 @@ class UserService {
     }
 
     async logout(refreshToken: string): Promise<Query<DeleteResult, any>> {
-        return await TokenService.removeToken(refreshToken);
+        return TokenService.removeToken(refreshToken);
     }
 
     async refresh(refreshToken: string): Promise<IUserDataResponse> {
@@ -77,7 +78,7 @@ class UserService {
         }
 
         const userData = TokenService.validateRefreshToken(refreshToken);
-        const tokenFromDb = TokenService.findToken(refreshToken);
+        const tokenFromDb = await TokenService.findToken(refreshToken);
 
         if (!tokenFromDb || !userData) {
             throw ApiError.UnauthorizedError();
@@ -90,7 +91,7 @@ class UserService {
 
         const userDto = new UserDto(user);
         const tokens = TokenService.generateTokens({...userDto});
-        await TokenService.saveToken(user.id, tokens.refreshToken);
+        await TokenService.saveToken(user.id as string, tokens.refreshToken);
 
         return {
             ...tokens,

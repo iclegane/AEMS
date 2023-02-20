@@ -1,10 +1,10 @@
-import * as dotenv from 'dotenv'
-import express from "express";
-import cors from "cors";
-import cookieParser from "cookie-parser";
-import mongoose from "mongoose";
-import {errorMiddleware} from "./middlewares/ErrorMiddleware.js";
-import {router} from "./router/index.js";
+import * as dotenv from 'dotenv';
+import express from 'express';
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
+import mongoose from 'mongoose';
+import errorMiddleware from './middlewares/ErrorMiddleware.js';
+import router from './router/index.js';
 
 
 dotenv.config();
@@ -34,9 +34,9 @@ const server = async () => {
         app.listen(PORT, () => {
             console.log(`Server started on PORT = ${PORT}`);
         });
-    } catch(e) {
-        console.log(e);
+    } catch(error) {
+        console.log(error);
     }
 };
 
-server();
+await server();
