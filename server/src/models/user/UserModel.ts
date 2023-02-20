@@ -1,7 +1,8 @@
-const { Schema, model } = require('mongoose');
+import mongoose, {Schema} from 'mongoose';
+import {IUserDB, IUserDocument} from './types';
 
 
-const UserSchema = new Schema({
+const UserSchema = new Schema<IUserDB>({
     name: {
         type: String,
         default: null,
@@ -21,6 +22,7 @@ const UserSchema = new Schema({
     },
     emailActivationLink: {
         type: String,
+        default: null,
     },
     birth_date: {
         type: Date,
@@ -28,7 +30,7 @@ const UserSchema = new Schema({
     },
     work_date: {
         type: Date,
-        default: null
+        default: new Date()
     },
     phone: {
         type: String,
@@ -45,7 +47,7 @@ const UserSchema = new Schema({
     role_id: {
         type: Schema.Types.ObjectId,
         ref: 'Role',
-        default: null
+        required: true,
     },
     gender_id: {
         type: Schema.Types.ObjectId,
@@ -73,4 +75,4 @@ const UserSchema = new Schema({
     }
 });
 
-module.exports = model('User', UserSchema);
+export default mongoose.model<IUserDocument>('User', UserSchema);

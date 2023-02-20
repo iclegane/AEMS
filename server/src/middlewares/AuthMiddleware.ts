@@ -1,7 +1,9 @@
-const ApiError = require('../exceptions/ApiError');
-const TokenService = require('../service/TokenService');
+import {NextFunction, Request, Response} from 'express';
+import ApiError from '../exceptions/ApiError.js';
+import TokenService from '../service/TokenService.js';
 
-module.exports = function(req, res, next) {
+
+const AuthMiddleware = (req: Request, res: Response, next: NextFunction) => {
     try {
         const authorizationHeader = req.headers.authorization;
 
@@ -19,10 +21,16 @@ module.exports = function(req, res, next) {
             return next(ApiError.UnauthorizedError());
         }
 
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         req.user = userData;
 
         next();
-    } catch (e) {
+    } catch {
         return next(ApiError.UnauthorizedError());
     }
+
+    return undefined;
 };
+
+export default AuthMiddleware;
