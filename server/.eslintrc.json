@@ -29,6 +29,7 @@
     "semi": ["error", "always"],
     "eol-last": ["error", "always"],
     "no-prototype-builtins": "off",
+    "@typescript-eslint/no-misused-promises": "off",
     "import/newline-after-import": ["error", { "count": 2 }],
     "class-methods-use-this": "off",
 //    "import/prefer-default-export": "off",
