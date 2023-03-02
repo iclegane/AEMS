@@ -1,6 +1,7 @@
 import React from 'react';
 import DashboardMenu from '@components/DashboardMenu';
 import './index.scss';
+// @ts-ignore
 import LogoPath from '@assets/icons/logo.svg';
 
 

@@ -1,16 +1,8 @@
-import React, {Dispatch, SetStateAction, useState} from 'react';
+import React, {useState} from 'react';
+import SortPanelItem, {ISortItem} from './SortPanelItem';
+import {ISortPanel} from './types';
 import './index.scss';
-import SortPanelItem from './SortPanelItem';
-import {ISortItem} from './SortPanelItem/SortPanelItem';
-import {ISort} from '../../pages/system/TasksPage/TasksPage';
 
-
-export interface SortPanel {
-    sortManager: {
-        sort: ISort | null
-        setSort: Dispatch<SetStateAction<ISort | null>>
-    }
-}
 
 const items: ISortItem[] = [
     {
@@ -45,7 +37,7 @@ const items: ISortItem[] = [
         type: null
     }];
 
-export const SortPanel: React.FC<SortPanel> = (props) => {
+export const SortPanel: React.FC<ISortPanel> = (props) => {
 
     const {sort, setSort} = props.sortManager;
 

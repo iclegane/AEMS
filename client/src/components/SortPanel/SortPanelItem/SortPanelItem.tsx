@@ -1,15 +1,8 @@
 import React, {Dispatch, SetStateAction} from 'react';
 import {sortTypes} from '../../../api/tasks';
 import {ISort} from '../../../pages/system/TasksPage/TasksPage';
+import {ISortItem} from './types';
 
-
-export interface ISortItem {
-
-    field: string;
-    name: string;
-    isSortable: boolean;
-    type: sortTypes | null;
-}
 
 export const SortPanelItem: React.FC<ISortItem & {
     setSort: Dispatch<SetStateAction<ISort | null>>

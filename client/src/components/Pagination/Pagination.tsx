@@ -1,14 +1,9 @@
-import React, {Dispatch} from 'react';
-import './index.scss';
+import React from 'react';
 import Icon from '../Icon';
-import {IPaginationItem, PaginationItem} from './PaginationItem/PaginationItem';
+import PaginationItem, {IPaginationItem} from './PaginationItem';
+import {IPagination} from './types';
+import './index.scss';
 
-
-export interface IPagination {
-    page: number;
-    pages: number;
-    setPage: Dispatch<React.SetStateAction<number>>
-}
 
 const createItems = (page: number, pages: number): IPaginationItem[] => {
     return Array.from({length: pages},(v, i) => {return ++i;}).map((number) => {

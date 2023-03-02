@@ -1,10 +1,6 @@
 import React from 'react';
+import {IPaginationItem} from './types';
 
-
-export interface IPaginationItem {
-    number: number;
-    isActive: boolean;
-}
 
 export const PaginationItem: React.FC<IPaginationItem & {
     callback: (item: IPaginationItem['number']) => void;

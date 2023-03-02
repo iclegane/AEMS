@@ -1,19 +1,10 @@
 import React from 'react';
-import './index.scss';
 import moment from 'moment';
 import {Link} from 'react-router-dom';
 import {truncate} from '../../utils/truncate';
+import {ITask} from './types';
+import './index.scss';
 
-
-export interface ITask {
-    id: number;
-    index: number;
-    name: string;
-    createdAt: string;
-    deadline: string;
-    status: string;
-    manager: string | null;
-}
 
 export const Task: React.FC<ITask> = (props) => {
 
