@@ -2,11 +2,12 @@ import {NextFunction, Request, Response} from 'express';
 import TaskService from '../service/Task/TaskService.js';
 import ApiError from '../exceptions/ApiError.js';
 import {ITaskAddQuery, ITaskListQuery, ITaskUpdateQuery} from '../service/Task/types.js';
+import {SortTypes} from '../types/sort.js';
 
 
 class TaskController {
     list = async (req: Request<never, never, ITaskListQuery>, res: Response, next: NextFunction) => {
-        const { page = 1, limit = 10 } = req.query;
+        const { page = 1, limit = 10, sortField = 'name', sortType = 'asc' } = req.query;
 
         try {
             const data = await TaskService.list({
@@ -14,6 +15,9 @@ class TaskController {
                 options: {
                     page: Number(page),
                     limit: Number(limit),
+                    sortField: String(sortField),
+                    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+                    sortType: String(sortType) as SortTypes,
                 }
             });
 
@@ -22,7 +26,7 @@ class TaskController {
             const total = {
                 tasks: data.tasks,
                 totalPage,
-                page,
+                page: Number(page),
                 count: data.count
             };
 
