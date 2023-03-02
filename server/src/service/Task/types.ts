@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import {ITaskPopulate} from '../../models/task/types';
 
 
@@ -18,6 +19,8 @@ export interface ITaskListQuery {
     options: {
         limit: number;
         page: number;
+        sortField: string;
+        sortType: 'asc' | 'desc';
     };
 }
 

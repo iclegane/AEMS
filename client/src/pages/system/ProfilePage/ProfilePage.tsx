@@ -22,7 +22,7 @@ export const ProfilePage: React.FC = () => {
         navigate('/login');
     };
 
-    const {data} = useProfileQuery({id: auth.user.id});
+   const {data} = useProfileQuery({id: auth.user.id});
 
     return (
         <div className="profile gap-30">
@@ -43,7 +43,7 @@ export const ProfilePage: React.FC = () => {
                 <div className="dashboard-content-block profile__important">
                     <div className="dashboard-content-block__title">Важное</div>
                     <div className="field-list">
-                        {data && data.main.map((field, i) =>
+                        {data && data.main?.map((field, i) =>
                             {return <div key={`profile-main-${i}`} className="field field--column">
                                 <div className="field__name">{field.name}</div>
                                 <div className="field__value">{field.value}</div>
@@ -57,7 +57,7 @@ export const ProfilePage: React.FC = () => {
                         <div className="dashboard-content-block__title">Персональные данные</div>
 
                         <div className="field-list">
-                            {data && data.personal.map((field, i) =>
+                            {data && data.personal?.map((field, i) =>
                                 {return <div key={`profile-personal-${i}`} className="field field--alternating">
                                     <div className="field__name">{field.name}</div>
                                     <div className="field__value">{field.value}</div>
@@ -69,7 +69,7 @@ export const ProfilePage: React.FC = () => {
                         <div className="dashboard-content-block__title">Контакты</div>
 
                         <div className="field-list">
-                            {data && data.contacts.map((field, i) =>
+                            {data && data.contacts?.map((field, i) =>
                                 {return <div key={`profile-contacts-${i}`} className="field field--alternating">
                                     <div className="field__name">{field.name}</div>
                                     <div className="field__value">{field.value}</div>

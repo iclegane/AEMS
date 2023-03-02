@@ -3,6 +3,7 @@ import Sidebar from '@components/Sidebar';
 import Topbar from '@components/Topbar';
 import './index.scss';
 
+
 interface Props {
     children: React.ReactNode;
 }

@@ -14,6 +14,7 @@ class TaskService {
         const tasks = await TaskModel.find(filter)
             .limit(options.limit)
             .skip((options.page - 1) * options.limit)
+            .sort([[options.sortField, options.sortType]])
             .populate<Pick<ITaskPopulate, 'status'>>('statusID', 'id name')
             .populate<Pick<ITaskPopulate, 'manager'>>('managerID', 'id name')
             .populate<Pick<ITaskPopulate, 'performer'>>('performerID', 'id name')

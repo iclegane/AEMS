@@ -1,0 +1,37 @@
+.task {
+  display: block;
+  position: relative;
+  background-color: #FFF;
+  border-radius: 10px;
+
+  &:not(:last-child) {
+    margin-bottom: 15px;
+  }
+
+  &:hover {
+    cursor: pointer;
+    box-shadow: 1px 17px 44px rgba(3, 2, 41, 0.07);
+  }
+
+  &__wrapper {
+    padding: 25px;
+  }
+
+  &__field {
+    &--index {
+      width: 50px;
+    }
+    &--name {
+      width: 250px;
+    }
+    &--deadline,  &--createAt{
+      width: 100px;
+    }
+    &--status {
+      width: 150px;
+    }
+    &--manager {
+      width: 90px;
+    }
+  }
+}

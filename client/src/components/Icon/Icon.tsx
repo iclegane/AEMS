@@ -4,6 +4,7 @@ import React from 'react';
 import Icons from '@assets/icons/interface/interface-sprite.svg';
 import {IIcon} from './types';
 
+
 export const Icon: React.FC<IIcon> = ({name}) => {
     return (
         <svg className="icon">

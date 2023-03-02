@@ -25,7 +25,11 @@
       "@layouts/*": ["layouts/*"],
       "@utils/*": ["utils/*"],
       "@assets/*": ["assets/*"],
-      "@styles/*": ["styles/*"]
+      "@styles/*": ["styles/*"],
+      "@api/*": ["api/*"],
+      "@hooks/*": ["hooks/*"],
+      "@service/*": ["service/*"],
+      "@store/*": ["store/*"],
     },
     "typeRoots": ["typings/**/*.d.ts", "node_modules/@types"],
   },
