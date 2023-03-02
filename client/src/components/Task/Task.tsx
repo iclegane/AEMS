@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 import './index.scss';
-import moment from "moment";
-import {Link} from "react-router-dom";
-import {truncate} from "../../utils/truncate";
+import moment from 'moment';
+import {Link} from 'react-router-dom';
+import {truncate} from '../../utils/truncate';
 
 
 export interface ITask {
@@ -33,5 +33,5 @@ export const Task: React.FC<ITask> = (props) => {
                 </div>
             </div>
         </Link>
-    )
-}
+    );
+};

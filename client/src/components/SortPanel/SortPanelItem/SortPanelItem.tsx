@@ -1,6 +1,7 @@
-import React, {Dispatch, SetStateAction} from "react";
-import {sortTypes} from "../../../api/tasks";
-import {ISort} from "../../../pages/system/TasksPage/TasksPage";
+import React, {Dispatch, SetStateAction} from 'react';
+import {sortTypes} from '../../../api/tasks';
+import {ISort} from '../../../pages/system/TasksPage/TasksPage';
+
 
 export interface ISortItem {
 
@@ -20,28 +21,28 @@ export const SortPanelItem: React.FC<ISortItem & {
         if (!type) return 'asc';
 
         return type === 'desc' ? 'asc' : 'desc';
-    }
+    };
 
-    const clickHandler = (field: ISortItem['field'], type: ISortItem["type"]) => {
+    const clickHandler = (field: ISortItem['field'], type: ISortItem['type']) => {
         const toggleType = toggleSortType(type);
         setSort({
             field,
             type: toggleType
-        })
-    }
+        });
+    };
 
     return(
         <div className={`sort-panel__field sort-panel__field--${field}`}>
             {isSortable &&
                 <button
-                    type={"button"}
-                    onClick={() => clickHandler(field, type)}
+                    type="button"
+                    onClick={() => {return clickHandler(field, type);}}
                     className={`button button--text sort-panel__item ${type ? `sort-panel__item--${type}` : ''}`}>{name}</button>
             }
 
             {!isSortable &&
-                <span className={'sort-panel__item sort-panel__item--not-sortable'}>{name}</span>
+                <span className="sort-panel__item sort-panel__item--not-sortable">{name}</span>
             }
         </div>
-    )
-}
+    );
+};

@@ -1,5 +1,5 @@
-import {api} from "./base";
-import {ISort} from "../pages/system/TasksPage/TasksPage";
+import {api} from './base';
+import {ISort} from '../pages/system/TasksPage/TasksPage';
 
 
 export interface Task {
@@ -38,10 +38,10 @@ export interface IGetTaskParams {
 }
 
 export const postsApi = api.injectEndpoints({
-    endpoints: (build) => ({
+    endpoints: (build) => {return {
         getTasks: build.query<TaskResponse, IGetTaskParams>({
             query: (params) => {
-                const {sort, limit, page} = {...params}
+                const {sort, limit, page} = {...params};
  
                 return {
                     url: 'tasks',
@@ -51,10 +51,10 @@ export const postsApi = api.injectEndpoints({
                         sortField: sort?.field,
                         sortType: sort?.type,
                     }
-                }
+                };
             }
         })
-    })
+    };}
 });
 
 

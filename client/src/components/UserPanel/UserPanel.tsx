@@ -2,6 +2,7 @@ import React from 'react';
 import Icon from '@components/Icon';
 import './index.scss';
 
+
 export const UserPanel: React.FC = () => {
     return (
         <div className="user-panel">

@@ -3,6 +3,7 @@ import DashboardMenu from '@components/DashboardMenu';
 import './index.scss';
 import LogoPath from '@assets/icons/logo.svg';
 
+
 export const Sidebar: React.FC = () => {
     return (
         <div className="sidebar">

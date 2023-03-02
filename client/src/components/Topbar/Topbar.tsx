@@ -3,6 +3,7 @@ import UserPanel from '@components/UserPanel';
 import Icon from '@components/Icon/';
 import './index.scss';
 
+
 export const Topbar: React.FC = () => {
     return (
         <div className="topbar">

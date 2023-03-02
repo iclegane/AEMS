@@ -6,8 +6,8 @@ import ProfilePage from '@pages/system/ProfilePage';
 import '@styles/index.scss';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux';
 import {checkAuth} from '../../store/actions/AuthAction';
-import TasksPage from "../../pages/system/TasksPage";
-import TaskPage from "../../pages/system/TaskPage";
+import TasksPage from '../../pages/system/TasksPage';
+import TaskPage from '../../pages/system/TaskPage';
 
 
 const router = createBrowserRouter([
@@ -28,7 +28,7 @@ const router = createBrowserRouter([
     }
 ]);
 
-let didInit: boolean = false;
+let didInit = false;
 
 export const App: React.FC = () => {
 

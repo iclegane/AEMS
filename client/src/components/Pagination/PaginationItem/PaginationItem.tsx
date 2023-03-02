@@ -1,4 +1,5 @@
-import React from "react";
+import React from 'react';
+
 
 export interface IPaginationItem {
     number: number;
@@ -12,8 +13,8 @@ export const PaginationItem: React.FC<IPaginationItem & {
     const {number, isActive, callback} = props;
 
     const onClickHandler = () => {
-        callback(number)
-    }
+        callback(number);
+    };
 
     return (
         <button
@@ -21,5 +22,5 @@ export const PaginationItem: React.FC<IPaginationItem & {
             className='button'
             disabled={isActive}
         >{number}</button>
-    )
-}
+    );
+};

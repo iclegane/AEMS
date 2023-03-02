@@ -1,8 +1,8 @@
-import React, {Dispatch, SetStateAction, useState} from "react";
+import React, {Dispatch, SetStateAction, useState} from 'react';
 import './index.scss';
-import SortPanelItem from "./SortPanelItem";
-import {ISortItem} from "./SortPanelItem/SortPanelItem";
-import {ISort} from "../../pages/system/TasksPage/TasksPage";
+import SortPanelItem from './SortPanelItem';
+import {ISortItem} from './SortPanelItem/SortPanelItem';
+import {ISort} from '../../pages/system/TasksPage/TasksPage';
 
 
 export interface SortPanel {
@@ -60,16 +60,16 @@ export const SortPanel: React.FC<SortPanel> = (props) => {
         <div className="sort-panel">
             <div className="flex justify-content-sb align-items-c">
                 {sortItems && sortItems.map((item) =>
-                    <SortPanelItem
+                    {return <SortPanelItem
                         key={item.name}
                         name={item.name}
                         field={item.field}
                         isSortable={item.isSortable}
                         type={item.type}
                         setSort={setSort}
-                    />
+                    />;}
                 )}
             </div>
         </div>
-    )
-}
+    );
+};

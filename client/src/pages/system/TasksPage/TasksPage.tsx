@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import './index.scss';
-import {sortTypes, useGetTasksQuery} from "../../../api/tasks";
-import Task from "@components/Task";
-import SortPanel from "../../../components/SortPanel";
-import Pagination from "../../../components/Pagination";
+import Task from '@components/Task';
+import {sortTypes, useGetTasksQuery} from '../../../api/tasks';
+import SortPanel from '../../../components/SortPanel';
+import Pagination from '../../../components/Pagination';
 
 
 export interface ISort {
@@ -15,7 +15,7 @@ export const TasksPage: React.FC = () => {
 
     const [page, setPage] = useState(1);
     const [limit] = useState(5);
-    const [sort, setSort] = useState<ISort | null>(null)
+    const [sort, setSort] = useState<ISort | null>(null);
 
 
     const { data, isLoading } = useGetTasksQuery({
@@ -25,11 +25,11 @@ export const TasksPage: React.FC = () => {
     });
 
     if (isLoading) {
-        return <div>loading</div>
+        return <div>loading</div>;
     }
 
     if (!data) {
-        return <div>Not found</div>
+        return <div>Not found</div>;
     }
 
     return (
@@ -39,7 +39,7 @@ export const TasksPage: React.FC = () => {
             <SortPanel sortManager={{sort,setSort}}/>
 
             {data.tasks && data.tasks.map((task, index) =>
-                <Task
+                {return <Task
                     id={task._id}
                     key={task._id}
                     index={++index}
@@ -48,7 +48,7 @@ export const TasksPage: React.FC = () => {
                     deadline={task.deadline}
                     status={task.statusID.name}
                     manager={task.managerID?.name || null}
-                />
+                />;}
             )}
 
             <Pagination
