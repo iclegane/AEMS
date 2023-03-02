@@ -6,6 +6,8 @@ import ProfilePage from '@pages/system/ProfilePage';
 import '@styles/index.scss';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux';
 import {checkAuth} from '../../store/actions/AuthAction';
+import TasksPage from "../../pages/system/TasksPage";
+import TaskPage from "../../pages/system/TaskPage";
 
 
 const router = createBrowserRouter([
@@ -17,12 +19,16 @@ const router = createBrowserRouter([
             {path: 'login', element: <AuthPage />},
             {path: 'system', element: <MainPage title="Main page" />,
                 children: [
-                    {path: 'profile', element: <ProfilePage title="Profile page" />}
+                    {path: 'profile', element: <ProfilePage/>},
+                    {path: 'tasks', element: <TasksPage/>},
+                    {path: 'tasks/:id', element: <TaskPage/>}
                 ]
             }
         ],
     }
 ]);
+
+let didInit: boolean = false;
 
 export const App: React.FC = () => {
 
@@ -30,10 +36,13 @@ export const App: React.FC = () => {
     const {isLoading} = useAppSelector(state => {return state.authReducer;});
 
     useEffect(() => {
-        if (localStorage.getItem('token')) {
-            dispatch(checkAuth());
+        if (!didInit) {
+            didInit = true;
+            if (localStorage.getItem('token')) {
+                dispatch(checkAuth());
+            }
         }
-    }, [dispatch]);
+    }, []);
 
     if (isLoading) {
         return null;
