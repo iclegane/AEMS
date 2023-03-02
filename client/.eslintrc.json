@@ -36,6 +36,7 @@
     "quotes": ["error", "single"],
     "semi": ["error", "always"],
     "arrow-body-style": ["error", "always"],
+    "no-param-reassign": ["error", { "props": false }],
     "no-restricted-exports": ["error", { "restrictedNamedExports": ["namedFrom"] }],
     "@typescript-eslint/ban-types": "warn",
     "@typescript-eslint/no-empty-function": "warn",
