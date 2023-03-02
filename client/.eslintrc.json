@@ -38,6 +38,7 @@
     "arrow-body-style": ["error", "always"],
     "no-param-reassign": ["error", { "props": false }],
     "no-restricted-exports": ["error", { "restrictedNamedExports": ["namedFrom"] }],
+    "eol-last": ["error", "always"],
     "@typescript-eslint/ban-types": "warn",
     "@typescript-eslint/no-empty-function": "warn",
     "@typescript-eslint/ban-ts-comment": "warn",
@@ -60,6 +61,7 @@
         "ts": "never",
         "tsx": "never"
       }
-    ]
+    ],
+    "import/newline-after-import": ["error", { "count": 2 }]
   }
 }
