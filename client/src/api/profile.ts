@@ -1,4 +1,4 @@
-import {api} from "./base";
+import {api} from './base';
 
 
 interface IGetProfileResponse {
@@ -23,15 +23,15 @@ interface IGetProfileResponse {
 }
 
 export const profileApi = api.injectEndpoints({
-    endpoints: build => ({
+    endpoints: build => {return {
         getProfile: build.query<IGetProfileResponse, {}>({
-            query: () => ({
+            query: () => {return {
                 url: 'profile',
                 method: 'POST'
-            }),
+            };},
             providesTags: ['Profile']
         })
-    })
+    };}
 });
 
 export const {

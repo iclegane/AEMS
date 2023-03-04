@@ -1,4 +1,3 @@
-import mongoose from 'mongoose';
 import {ITaskPopulate} from '../../models/task/types';
 
 

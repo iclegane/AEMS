@@ -1,6 +1,6 @@
 import {createApi, fetchBaseQuery, retry} from '@reduxjs/toolkit/query/react';
 import {API_URL} from '../utils/constants';
-import {RootState} from "../store/store";
+import {RootState} from '../store/store';
 
 
 const baseQuery = fetchBaseQuery({
@@ -23,9 +23,9 @@ export const api = createApi({
     reducerPath: 'splitApi',
     baseQuery: baseQueryWithRetry,
     tagTypes: ['Tasks', 'Profile'],
-    endpoints: () => ({}),
+    endpoints: () => {return {};},
 });
 
 export const enhancedApi = api.enhanceEndpoints({
-    endpoints: () => ({}),
+    endpoints: () => {return {};},
 });
