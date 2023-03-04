@@ -2,16 +2,18 @@ import React from 'react';
 import './index.scss';
 import {useNavigate} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../../../hooks/redux';
-import {useProfileQuery} from '../../../service/PofileService';
 import {logout} from '../../../store/actions/AuthAction';
 import Icon from '../../../components/Icon';
+import {useGetProfileQuery} from "../../../api/profile";
+import {fieldsEnum} from "../../../utils/enums";
+import { v4 as uuidv4 } from 'uuid';
 
 
 export const ProfilePage: React.FC = () => {
 
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const {auth} = useAppSelector(state => {return state.authReducer;});
+    const {auth} = useAppSelector(state => state.authReducer);
 
     if (!auth.user) {
         return null;
@@ -22,7 +24,13 @@ export const ProfilePage: React.FC = () => {
         navigate('/login');
     };
 
-   const {data} = useProfileQuery({id: auth.user.id});
+    const {data, isError} = useGetProfileQuery({});
+
+    if (isError) {
+       return (
+           <div>Error</div>
+       )
+    }
 
     return (
         <div className="profile gap-30">
@@ -38,16 +46,19 @@ export const ProfilePage: React.FC = () => {
                     <Icon name="logout"/>
                 </button>
             </div>
-
             <div className="flex gap-30">
                 <div className="dashboard-content-block profile__important">
                     <div className="dashboard-content-block__title">Важное</div>
                     <div className="field-list">
-                        {data && data.main?.map((field, i) =>
-                            {return <div key={`profile-main-${i}`} className="field field--column">
-                                <div className="field__name">{field.name}</div>
-                                <div className="field__value">{field.value}</div>
-                            </div>;}
+                        {data && Object.entries(data.important).map(([key, value]) =>
+                            <div key={uuidv4()} className="field field--column">
+                                <div className="field__name">{fieldsEnum[key as keyof typeof fieldsEnum] || ''}</div>
+                                <div className="field__value">
+                                    {(Array.isArray(value) && value.map((el) => <span key={uuidv4()} className='badge'>{el}</span>)) || (value
+                                        || 'Не заполненно')
+                                    }
+                                </div>
+                            </div>
                         )}
                     </div>
                 </div>
@@ -55,25 +66,31 @@ export const ProfilePage: React.FC = () => {
                 <div className="flex flex-column flex-grow-1 gap-30">
                     <div className="dashboard-content-block">
                         <div className="dashboard-content-block__title">Персональные данные</div>
-
                         <div className="field-list">
-                            {data && data.personal?.map((field, i) =>
-                                {return <div key={`profile-personal-${i}`} className="field field--alternating">
-                                    <div className="field__name">{field.name}</div>
-                                    <div className="field__value">{field.value}</div>
-                                </div>;}
+                            {data && Object.entries(data.personal).map(([key, value]) =>
+                                <div key={uuidv4()} className="field field--alternating">
+                                    <div className="field__name">{fieldsEnum[key as keyof typeof fieldsEnum] || ''}</div>
+                                    <div className="field__value">
+                                        {(Array.isArray(value) && value.map((el) => <span key={uuidv4()} className='badge'>{el}</span>)) ||
+                                            (value || 'Не заполненно')
+                                        }
+                                    </div>
+                                </div>
                             )}
                         </div>
                     </div>
                     <div className="dashboard-content-block">
                         <div className="dashboard-content-block__title">Контакты</div>
-
                         <div className="field-list">
-                            {data && data.contacts?.map((field, i) =>
-                                {return <div key={`profile-contacts-${i}`} className="field field--alternating">
-                                    <div className="field__name">{field.name}</div>
-                                    <div className="field__value">{field.value}</div>
-                                </div>;}
+                            {data && Object.entries(data.contacts).map(([key, value]) =>
+                                <div key={uuidv4()} className="field field--alternating">
+                                    <div className="field__name">{fieldsEnum[key as keyof typeof fieldsEnum] || ''}</div>
+                                    <div className="field__value">
+                                        {(Array.isArray(value) && value.map((el) => <span key={uuidv4()} className='badge'>{el}</span>)) ||
+                                            (value || 'Не заполненно')
+                                        }
+                                    </div>
+                                </div>
                             )}
                         </div>
                     </div>
