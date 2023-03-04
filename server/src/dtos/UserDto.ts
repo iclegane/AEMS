@@ -3,7 +3,7 @@ import {IUserDocument} from '../models/user/types';
 
 
 export interface IUserDto {
-    id: Types.ObjectId;
+    id: string;
     email: string;
     role: Types.ObjectId;
     post: Types.ObjectId | null;
@@ -22,8 +22,7 @@ class UserDto {
     isActivated;
 
     constructor(model: IUserDocument) {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,no-underscore-dangle
-        this.id = model._id;
+        this.id = model.id as string;
         this.role = model.role_id;
         this.email = model.email;
         this.post = model.post_id;

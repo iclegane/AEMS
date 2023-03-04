@@ -1,10 +1,10 @@
 import {Types, Model, Document} from 'mongoose';
 import {IRoleDocument} from '../role/types';
-import {IEmploymentDB} from '../employment/types';
-import {IUndergroundDB} from '../underground/types';
+import {IEmploymentDocument} from '../employment/types';
+import {IUndergroundDocument} from '../underground/types';
 import {IGenderDocument} from '../gender/types';
-import {IPostDB} from '../post/types';
-import {ISkillDB} from '../skill/types';
+import {IPostDocument} from '../post/types';
+import {ISkillDocument} from '../skill/types';
 
 
 export interface IUserDB {
@@ -29,10 +29,10 @@ export interface IUserDB {
 export interface IUserPopulated {
     role_id: IRoleDocument;
     gender_id: IGenderDocument | null;
-    underground_id: IUndergroundDB | null;
-    employment_id: IEmploymentDB | null;
-    post_id: IPostDB | null;
-    skill_ids: ISkillDB[] | [];
+    underground_id: IUndergroundDocument | null;
+    employment_id: IEmploymentDocument | null;
+    post_id: IPostDocument | null;
+    skill_ids: ISkillDocument[] | [];
 }
 
 export interface IUserDocument extends IUserDB, Document {}

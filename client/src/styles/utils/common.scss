@@ -107,6 +107,10 @@ img {
     flex-direction: column;
     padding: 0;
 
+    .field__name {
+      margin-bottom: 5px;
+    }
+
     &:not(:first-child) {
       margin-top: 15px;
     }
