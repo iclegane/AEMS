@@ -1,23 +1,24 @@
 import {NextFunction, Request, Response} from 'express';
-import UserService from '../service/UserService.js';
+import ApiError from '../exceptions/ApiError.js';
+import ProfileService from '../service/Profile/ProfileService.js';
+import TokenService from '../service/TokenService.js';
 
 
 class ProfileController {
-    getProfileInfo = async (req: Request, res: Response, next: NextFunction) => {
+    getProfileInfo = async (req: Request<never, never, {id: string}>, res: Response, next: NextFunction) => {
         try {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-            const userID = req.body.id as string;
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+            const {refreshToken} = req.cookies;
+            const userData = TokenService.validateRefreshToken(refreshToken as string);
+            if (!userData) throw ApiError.BadRequest('User id is empty');
 
+            const {id} = userData;
+            const info = await ProfileService.getProfileData(id);
 
-            // todo: add user friendly dto
-            const user = await UserService.getUserInfoById(userID);
-
-            return res.json(user);
+            res.json(info);
         } catch (error) {
             next(error);
         }
-
-        return undefined;
     };
 };
 

@@ -98,15 +98,6 @@ class UserService {
             user: userDto
         };
     }
-
-    async getUserInfoById(id: string) {
-        const user = await UserModel.findById(id);
-        if (!user) {
-            throw ApiError.BadRequest('User not found');
-        }
-
-        return new UserDto(user);
-    }
 }
 
 export default new UserService();
