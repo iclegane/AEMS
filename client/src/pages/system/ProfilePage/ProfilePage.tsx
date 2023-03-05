@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './index.scss';
 import {useNavigate} from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
@@ -7,30 +7,36 @@ import {logout} from '../../../store/actions/AuthAction';
 import Icon from '../../../components/Icon';
 import {useGetProfileQuery} from '../../../api/profile';
 import {fieldsEnum} from '../../../utils/enums';
+import ReactModal from 'react-modal';
+import PersonalForm from "../../../components/Forms/Profile/PersonalForm";
 
+
+type ProfileEditTypes = 'personal' | 'contacts' | null;
 
 export const ProfilePage: React.FC = () => {
+
+    const [open, setOpen] = useState(false);
+    const [type, setType] = useState<ProfileEditTypes>(null);
 
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const {auth} = useAppSelector(state => {return state.authReducer;});
 
-    if (!auth.user) {
-        return null;
-    }
+    if (!auth.user) return null;
 
     const logoutHandler = () => {
         dispatch(logout());
         navigate('/login');
     };
 
+    const onChangeBlock = (type: ProfileEditTypes) => {
+        setType(type);
+        setOpen((prevState) => !prevState);
+    }
+
     const {data, isError} = useGetProfileQuery({});
 
-    if (isError) {
-       return (
-           <div>Error</div>
-       );
-    }
+    if (isError) return <div>Error</div>
 
     return (
         <div className="profile gap-30">
@@ -65,6 +71,13 @@ export const ProfilePage: React.FC = () => {
 
                 <div className="flex flex-column flex-grow-1 gap-30">
                     <div className="dashboard-content-block">
+                        <button
+                            type={'button'}
+                            className={'button button--text profile__change-btn'}
+                            onClick={() => onChangeBlock('personal')}
+                        >
+                            <Icon name={'edit'}/>
+                        </button>
                         <div className="dashboard-content-block__title">Персональные данные</div>
                         <div className="field-list">
                             {data && Object.entries(data.personal).map(([key, value]) =>
@@ -80,6 +93,13 @@ export const ProfilePage: React.FC = () => {
                         </div>
                     </div>
                     <div className="dashboard-content-block">
+                        <button
+                            type={'button'}
+                            className={'button button--text profile__change-btn'}
+                            onClick={() => onChangeBlock('contacts')}
+                        >
+                            <Icon name={'edit'}/>
+                        </button>
                         <div className="dashboard-content-block__title">Контакты</div>
                         <div className="field-list">
                             {data && Object.entries(data.contacts).map(([key, value]) =>
@@ -96,6 +116,30 @@ export const ProfilePage: React.FC = () => {
                     </div>
                 </div>
             </div>
+            <ReactModal
+                isOpen={open}
+                className={'default-modal__content'}
+                overlayClassName={'default-modal'}
+                shouldCloseOnOverlayClick={true}
+                shouldCloseOnEsc={true}
+                onRequestClose={() => setOpen(false)}
+                contentLabel="Profile"
+                appElement={document.getElementById('root') || undefined}
+            >
+                {type === 'personal' &&
+                    <>
+                        <h2>Персональные данные</h2>
+                        <PersonalForm/>
+                    </>
+                }
+
+                {type === 'contacts' &&
+                    <>
+                        <h2>Контакты</h2>
+                    </>
+                }
+
+            </ReactModal>
         </div>
     );
 };
