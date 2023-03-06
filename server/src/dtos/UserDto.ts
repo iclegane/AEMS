@@ -1,17 +1,26 @@
-import {Types} from 'mongoose';
-import {IUserDocument} from '../models/user/types';
+import {IUserDocument, IUserPopulated} from '../models/user/types';
+import {IRoleDocument} from '../models/role/types';
+import {IPostDocument} from '../models/post/types';
+import {Replace} from '../types/utils';
 
 
 export interface IUserDto {
     id: string;
-    email: string;
-    role: Types.ObjectId;
-    post: Types.ObjectId | null;
-    isActivated: boolean;
+    name: IUserDocument['name'];
+    email: IUserDocument['email'];
+    role: IRoleDocument['name'];
+    post: IPostDocument['name'] | null;
 }
+
+type UserDtoPopulated = Replace<IUserDocument, {
+    role_id: IUserPopulated['role_id'];
+    post_id: IUserPopulated['post_id'];
+}>
 
 class UserDto {
     id;
+
+    name;
 
     email;
 
@@ -19,14 +28,12 @@ class UserDto {
 
     post;
 
-    isActivated;
-
-    constructor(model: IUserDocument) {
+    constructor(model: UserDtoPopulated) {
         this.id = model.id as string;
-        this.role = model.role_id;
+        this.name = model.name;
         this.email = model.email;
-        this.post = model.post_id;
-        this.isActivated = model.isActivated;
+        this.role = model.role_id.name;
+        this.post = model.post_id?.name ? model.post_id.name : null;
     }
 }
 

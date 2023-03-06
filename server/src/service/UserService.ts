@@ -7,6 +7,9 @@ import TokenService from '../service/TokenService.js';
 import UserDto, {IUserDto} from '../dtos/UserDto.js';
 import RoleModel from '../models/role/RoleModel.js';
 import ApiError from '../exceptions/ApiError.js';
+import PostModel from '../models/post/PostModel.js';
+import {IRoleDocument} from '../models/role/types.js';
+import {IPostDocument} from '../models/post/types.js';
 
 
 export interface IUserDataResponse {
@@ -17,7 +20,7 @@ export interface IUserDataResponse {
 
 class UserService {
     async registration(email: string, password: string): Promise<IUserDataResponse> {
-        const candidate = await UserModel.findOne({email});
+        const candidate = await UserModel.findOne({email}).exec();
         if (candidate) {
             throw ApiError.BadRequest(`Пользователь с таким email - ${email} уже существует`);
         }
@@ -25,13 +28,19 @@ class UserService {
         const hashPassword = await bcrypt.hash(password, 4);
         const emailActivationLinkID = uuidv4();
 
-        const user = await UserModel.create({
+        const roleID = await RoleModel.findOne({name: 'User'}).exec();
+        if (!roleID) throw ApiError.BadRequest('Need add role');
+
+        const create = await UserModel.create({
             email,
             password: hashPassword,
-            role_id: '63e94f358dcc5fc1126630ee',
+            role_id: roleID,
             emailActivationLink: emailActivationLinkID
         });
-        await user.populate({path: 'role_id', model: RoleModel});
+        const user = await UserModel.findById(create.id)
+            .populate<{role_id: IRoleDocument}>({path: 'role_id', model: RoleModel})
+            .populate<{post_id: IPostDocument}>({path: 'post_id', model: PostModel}).exec();
+        if (!user) throw ApiError.BadRequest('Create error');
 
         // todo: add mail service
         // const emailActivationLink = `${process.env.API_URL}/api/activate/${emailActivationLinkID}`;
@@ -48,7 +57,9 @@ class UserService {
     }
 
     async login(email: string, password: string): Promise<IUserDataResponse> {
-        const user = await UserModel.findOne({ email }).populate({path: 'role_id', model: RoleModel});
+        const user = await UserModel.findOne({ email })
+            .populate<{role_id: IRoleDocument}>({path: 'role_id', model: RoleModel})
+            .populate<{post_id: IPostDocument}>({path: 'post_id', model: PostModel}).exec();
         if (!user) {
             throw ApiError.BadRequest('User not found');
         }
@@ -84,7 +95,9 @@ class UserService {
             throw ApiError.UnauthorizedError();
         }
 
-        const user = await UserModel.findById(userData.id);
+        const user = await UserModel.findById(userData.id)
+            .populate<{role_id: IRoleDocument}>({path: 'role_id', model: RoleModel})
+            .populate<{post_id: IPostDocument}>({path: 'post_id', model: PostModel}).exec();
         if (!user) {
             throw ApiError.UnauthorizedError();
         }

@@ -7,8 +7,15 @@ import RoleModel from '../../models/role/RoleModel.js';
 import SkillModel from '../../models/skill/SkillModel.js';
 import UndergroundModel from '../../models/underground/UndergroundModel.js';
 import ApiError from '../../exceptions/ApiError.js';
-import {IUserProfile, IUserProfileDto} from './types';
+import {IUpdateProfileRequest, IUserProfile, IUserProfileDto} from './types';
+import {IGenderDocument, IGenderModel} from '../../models/gender/types';
 
+
+interface IToUpdate {
+    name?: string;
+    birth_date?: Date;
+    gender_id?: IGenderDocument['id'];
+}
 
 class ProfileService {
     async getProfileData(id: string) {
@@ -68,6 +75,36 @@ class ProfileService {
         };
 
         return ProfileDto;
+    }
+
+    async updateProfileData(id: string, data: IUpdateProfileRequest) {
+        
+        const {personal} = data;
+        const toUpdate: IToUpdate = {};
+
+        if (personal?.name) {
+            const name = personal.name.trim().match(/(?:[A-Za-z]+\s){2}[A-Za-z]+/);
+            if (name) {
+                const [value] = name;
+                toUpdate.name = value;
+            }
+        }
+
+        if (personal?.birth_date) {
+            toUpdate.birth_date = personal.birth_date;
+        }
+
+        if (personal?.gender) {
+            const gender = await GenderModel.findOne({name: personal.gender});
+            if (gender) {
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+                toUpdate.gender_id = gender.id;
+            }
+        }
+
+        const update = await UserModel.findByIdAndUpdate(id, toUpdate);
+
+        return update;
     }
 }
 
