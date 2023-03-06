@@ -15,7 +15,6 @@ export interface IUserProfileDto {
     important: {
         employment: Omit<IUserProfile['employment_id'], 'name'> | null;
         post: Omit<IUserProfile['post_id'], 'name'> | null;
-        // todo: fix this
         skills: ISkillDB['name'][] | [];
     }
     personal: {
@@ -30,5 +29,13 @@ export interface IUserProfileDto {
         email: IUserProfile['email'];
         phone: IUserProfile['phone'];
         underground: Omit<IUserProfile['underground_id'], 'name'> | null;
+    }
+}
+
+export interface IUpdateProfileRequest {
+    personal?: {
+        name?: IUserProfile['name'];
+        birth_date?: IUserProfile['birth_date'];
+        gender?: IUserProfile['gender_id'];
     }
 }
