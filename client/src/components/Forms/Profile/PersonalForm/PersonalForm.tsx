@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
-import {useAppDispatch} from "../../../../hooks/redux";
+import React from 'react';
 import {useFormik} from "formik";
 import {ProfilePersonalSchema} from "../../../../utils/validationSchemes";
+import {useUpdateProfileMutation} from "../../../../api/profile";
 
 
 interface IPersonalForm {
@@ -12,10 +12,7 @@ interface IPersonalForm {
 
 export const PersonalForm: React.FC = () => {
 
-    const dispatch = useAppDispatch();
-    const [serverError, setServerError] = useState(false);
-    const [serverErrorMessage, setServerErrorMessage] = useState('');
-
+    const [UpdateProfile] =  useUpdateProfileMutation();
     const values: IPersonalForm = {
         name: '',
         birth_date: '',
@@ -25,8 +22,16 @@ export const PersonalForm: React.FC = () => {
         initialValues: values,
         initialStatus: false,
         validationSchema: ProfilePersonalSchema,
-        onSubmit: async (formData, actions) => {
-            console.log(formData)
+        onSubmit: async (formData) => {
+            try {
+                let data = await UpdateProfile({
+                    personal: formData
+                });
+
+                console.log(data)
+            } catch (error) {
+                console.log(error)
+            }
         },
     });
 
