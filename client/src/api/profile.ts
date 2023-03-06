@@ -22,6 +22,17 @@ interface IGetProfileResponse {
     }
 }
 
+interface IUpdateProfileRequest {
+    important?: {
+    }
+    personal?: {
+        name: string;
+        birth_date: string;
+        gender: string;
+    }
+    contacts?: {}
+}
+
 export const profileApi = api.injectEndpoints({
     endpoints: build => {return {
         getProfile: build.query<IGetProfileResponse, {}>({
@@ -30,10 +41,21 @@ export const profileApi = api.injectEndpoints({
                 method: 'POST'
             };},
             providesTags: ['Profile']
+        }),
+        updateProfile: build.mutation({
+            query: (request: IUpdateProfileRequest) => {return {
+                url: 'profile',
+                method: 'PUT',
+                body: {
+                    data: request
+                },
+            };},
+            invalidatesTags: ["Profile"]
         })
     };}
 });
 
 export const {
-    useGetProfileQuery
+    useGetProfileQuery,
+    useUpdateProfileMutation
 } = profileApi;
