@@ -1,8 +1,7 @@
 export interface IUser {
     id: string;
+    name: string;
     email:string;
-    name: string | null;
     post: string | null;
     role: string;
-    isActivated: boolean;
 }
