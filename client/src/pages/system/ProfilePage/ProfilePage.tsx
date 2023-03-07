@@ -1,17 +1,17 @@
 import React, {useState} from 'react';
-import './index.scss';
 import {useNavigate} from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
+import ReactModal from 'react-modal';
 import {useAppDispatch, useAppSelector} from '../../../hooks/redux';
 import {logout} from '../../../store/actions/AuthAction';
 import Icon from '../../../components/Icon';
 import {useGetProfileQuery} from '../../../api/profile';
 import {fieldsEnum} from '../../../utils/enums';
-import ReactModal from 'react-modal';
-import PersonalForm from "../../../components/Forms/Profile/PersonalForm";
+import PersonalForm from '../../../components/Forms/Profile/PersonalForm';
+import ContactForm from '../../../components/Forms/Profile/ContactForm';
+import {ProfileEditTypes} from './types';
+import './index.scss';
 
-
-type ProfileEditTypes = 'personal' | 'contacts' | null;
 
 export const ProfilePage: React.FC = () => {
 
@@ -31,12 +31,12 @@ export const ProfilePage: React.FC = () => {
 
     const onChangeBlock = (type: ProfileEditTypes) => {
         setType(type);
-        setOpen((prevState) => !prevState);
-    }
+        setOpen((prevState) => {return !prevState;});
+    };
 
     const {data, isError} = useGetProfileQuery({});
 
-    if (isError) return <div>Error</div>
+    if (isError) return <div>Error</div>;
 
     return (
         <div className="profile gap-30">
@@ -68,15 +68,14 @@ export const ProfilePage: React.FC = () => {
                         )}
                     </div>
                 </div>
-
                 <div className="flex flex-column flex-grow-1 gap-30">
                     <div className="dashboard-content-block">
                         <button
-                            type={'button'}
-                            className={'button button--text profile__change-btn'}
-                            onClick={() => onChangeBlock('personal')}
+                            type="button"
+                            className="button button--text profile__change-btn"
+                            onClick={() => {return onChangeBlock('personal');}}
                         >
-                            <Icon name={'edit'}/>
+                            <Icon name="edit"/>
                         </button>
                         <div className="dashboard-content-block__title">Персональные данные</div>
                         <div className="field-list">
@@ -94,11 +93,11 @@ export const ProfilePage: React.FC = () => {
                     </div>
                     <div className="dashboard-content-block">
                         <button
-                            type={'button'}
-                            className={'button button--text profile__change-btn'}
-                            onClick={() => onChangeBlock('contacts')}
+                            type="button"
+                            className="button button--text profile__change-btn"
+                            onClick={() => {return onChangeBlock('contacts');}}
                         >
-                            <Icon name={'edit'}/>
+                            <Icon name="edit"/>
                         </button>
                         <div className="dashboard-content-block__title">Контакты</div>
                         <div className="field-list">
@@ -118,27 +117,34 @@ export const ProfilePage: React.FC = () => {
             </div>
             <ReactModal
                 isOpen={open}
-                className={'default-modal__content'}
-                overlayClassName={'default-modal'}
-                shouldCloseOnOverlayClick={true}
-                shouldCloseOnEsc={true}
-                onRequestClose={() => setOpen(false)}
+                className="default-modal__content"
+                overlayClassName="default-modal"
+                shouldCloseOnOverlayClick
+                shouldCloseOnEsc
+                onRequestClose={() => {return setOpen(false);}}
                 contentLabel="Profile"
                 appElement={document.getElementById('root') || undefined}
             >
                 {type === 'personal' &&
                     <>
                         <h2>Персональные данные</h2>
-                        <PersonalForm/>
+                        <PersonalForm data={{
+                            name: data?.personal.name,
+                            birth_date: data?.personal.birth_date,
+                            gender: data?.personal.gender,
+                        }}/>
                     </>
                 }
 
                 {type === 'contacts' &&
                     <>
                         <h2>Контакты</h2>
+                        <ContactForm data={{
+                            address: data?.contacts.address,
+                            phone: data?.contacts.phone
+                        }}/>
                     </>
                 }
-
             </ReactModal>
         </div>
     );

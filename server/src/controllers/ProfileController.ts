@@ -2,15 +2,17 @@ import {NextFunction, Request, Response} from 'express';
 import ApiError from '../exceptions/ApiError.js';
 import ProfileService from '../service/Profile/ProfileService.js';
 import TokenService from '../service/TokenService.js';
-import {IUpdateProfileRequest, IUserProfileDto} from '../service/Profile/types';
+import {IUpdateProfileRequest} from '../service/Profile/types';
+import {ProfilePersonalSchema} from '../utils/validations.js';
 
 
 class ProfileController {
     getProfileInfo = async (req: Request<never, never, never>, res: Response, next: NextFunction) => {
         try {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            const {refreshToken} = req.cookies;
-            const userData = TokenService.validateRefreshToken(refreshToken as string);
+            const {refreshToken} = req.cookies as {refreshToken: string | undefined};
+            if (!refreshToken) throw ApiError.BadRequest('Token not found');
+
+            const userData = TokenService.validateRefreshToken(refreshToken);
             if (!userData) throw ApiError.BadRequest('User id is empty');
 
             const {id} = userData;
@@ -24,18 +26,24 @@ class ProfileController {
 
     updateProfileInfo = async (req: Request<never, never, {data: IUpdateProfileRequest}>, res: Response, next: NextFunction) => {
         try {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            const {refreshToken} = req.cookies;
-            const userData = TokenService.validateRefreshToken(refreshToken as string);
+            const {refreshToken} = req.cookies as {refreshToken: string | undefined};
+            if (!refreshToken) throw ApiError.BadRequest('Token not found');
+
+            const userData = TokenService.validateRefreshToken(refreshToken);
             if (!userData) throw ApiError.BadRequest('User id is empty');
             const {id} = userData;
 
             const {data} = req.body;
             if (!data) throw ApiError.BadRequest('Nothing to update');
 
-            const update = await ProfileService.updateProfileData(id, data);
+            await ProfilePersonalSchema.validate({
+                ...data.personal,
+                ...data.contacts
+            });
 
-            res.json(update);
+            await ProfileService.updateProfileData(id, data);
+
+            res.json(id);
         } catch (error) {
             next(error);
         }
