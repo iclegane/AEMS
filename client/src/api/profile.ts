@@ -50,7 +50,7 @@ export const profileApi = api.injectEndpoints({
                     data: request
                 },
             };},
-            invalidatesTags: ["Profile"]
+            invalidatesTags: ['Profile']
         })
     };}
 });

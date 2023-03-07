@@ -1,8 +1,8 @@
 import React from 'react';
-import {useFormik} from "formik";
-import {ProfilePersonalSchema} from "../../../../utils/validationSchemes";
-import {useUpdateProfileMutation} from "../../../../api/profile";
-import {IContactForm} from "./types";
+import {useFormik} from 'formik';
+import {ProfilePersonalSchema} from '../../../../utils/validationSchemes';
+import {useUpdateProfileMutation} from '../../../../api/profile';
+import {IContactForm} from './types';
 
 
 export const ContactForm: React.FC<{data: IContactForm}> = (props) => {
