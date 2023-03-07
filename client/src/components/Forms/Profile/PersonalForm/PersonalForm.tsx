@@ -1,42 +1,38 @@
 import React from 'react';
+import moment from "moment";
 import {useFormik} from "formik";
 import {ProfilePersonalSchema} from "../../../../utils/validationSchemes";
 import {useUpdateProfileMutation} from "../../../../api/profile";
+import {IPersonalForm, IPersonalValues} from "./types";
 
 
-interface IPersonalForm {
-    name: string;
-    birth_date: string;
-    gender: string;
-}
+export const PersonalForm: React.FC<{data: IPersonalForm}> = (props) => {
 
-export const PersonalForm: React.FC = () => {
+    const {name, birth_date, gender} = props.data;
 
     const [UpdateProfile] =  useUpdateProfileMutation();
-    const values: IPersonalForm = {
-        name: '',
-        birth_date: '',
-        gender: ''
+    const values: IPersonalValues = {
+        name: name || '',
+        birth_date: birth_date ? moment(birth_date, 'DD.MM.YYYY').format('YYYY-MM-DD') : '',
+        gender: gender || ''
     };
+
     const formik = useFormik({
         initialValues: values,
         initialStatus: false,
         validationSchema: ProfilePersonalSchema,
         onSubmit: async (formData) => {
             try {
-                let data = await UpdateProfile({
-                    personal: formData
-                });
+                await UpdateProfile({personal: formData});
 
-                console.log(data)
             } catch (error) {
-                console.log(error)
+
             }
         },
     });
 
     return(
-        <form className='form' style={{width: 320}} onSubmit={formik.handleSubmit}>
+        <form className='form' onSubmit={formik.handleSubmit}>
             <div className='form-group'>
                 <label htmlFor="name">Имя</label>
                 <input
@@ -55,8 +51,6 @@ export const PersonalForm: React.FC = () => {
                     id='birth_date'
                     name='birth_date'
                     type="date"
-                    min={'1940-01-01'}
-                    max={'2023-01-01'}
                     onChange={formik.handleChange}
                     value={formik.values.birth_date}
                 />
@@ -70,8 +64,8 @@ export const PersonalForm: React.FC = () => {
                     onChange={formik.handleChange}
                     value={formik.values.gender}
                 >
-                    <option value="1">Мужской</option>
-                    <option value="2">Женский</option>
+                    <option value="Мужской">Мужской</option>
+                    <option value="Женский">Женский</option>
                 </select>
             </div>
             <button type='submit' className='button button--blue form__submit'>Изменить</button>
