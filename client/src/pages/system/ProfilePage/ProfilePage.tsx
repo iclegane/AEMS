@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import './index.scss';
 import {useNavigate} from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import {useAppDispatch, useAppSelector} from '../../../hooks/redux';
@@ -9,9 +8,10 @@ import {useGetProfileQuery} from '../../../api/profile';
 import {fieldsEnum} from '../../../utils/enums';
 import ReactModal from 'react-modal';
 import PersonalForm from "../../../components/Forms/Profile/PersonalForm";
+import ContactForm from "../../../components/Forms/Profile/ContactForm";
+import {ProfileEditTypes} from "./types";
+import './index.scss';
 
-
-type ProfileEditTypes = 'personal' | 'contacts' | null;
 
 export const ProfilePage: React.FC = () => {
 
@@ -68,7 +68,6 @@ export const ProfilePage: React.FC = () => {
                         )}
                     </div>
                 </div>
-
                 <div className="flex flex-column flex-grow-1 gap-30">
                     <div className="dashboard-content-block">
                         <button
@@ -129,16 +128,23 @@ export const ProfilePage: React.FC = () => {
                 {type === 'personal' &&
                     <>
                         <h2>Персональные данные</h2>
-                        <PersonalForm/>
+                        <PersonalForm data={{
+                            name: data?.personal.name,
+                            birth_date: data?.personal.birth_date,
+                            gender: data?.personal.gender,
+                        }}/>
                     </>
                 }
 
                 {type === 'contacts' &&
                     <>
                         <h2>Контакты</h2>
+                        <ContactForm data={{
+                            address: data?.contacts.address,
+                            phone: data?.contacts.phone
+                        }}/>
                     </>
                 }
-
             </ReactModal>
         </div>
     );
