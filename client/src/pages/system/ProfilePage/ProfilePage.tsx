@@ -44,8 +44,8 @@ export const ProfilePage: React.FC = () => {
                 <div className='inline-flex gap-25'>
                     <div className="profile__user-image" />
                     <div className="flex flex-column">
-                        <div className="profile__user-name">John Doe</div>
-                        <div className="profile__user-position">Backend developer</div>
+                        <div className="profile__user-name">{auth.user.name}</div>
+                        <div className="profile__user-position">{auth.user.post}</div>
                     </div>
                 </div>
                 <button type="button" className="button button--icon profile__logout" onClick={logoutHandler}>
