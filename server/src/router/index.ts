@@ -19,10 +19,10 @@ router.get('/user/refresh', UserController.refresh);
 router.post('/profile', AuthMiddleware, ProfileController.getProfileInfo);
 router.put('/profile', AuthMiddleware, ProfileController.updateProfileInfo);
 
-router.get('/tasks', TaskController.list);
-router.get('/tasks/:id', TaskController.detail);
-router.post('/tasks/add', TaskController.add);
-router.put('/tasks/:id', TaskController.update);
+router.get('/tasks', AuthMiddleware,  TaskController.list);
+router.get('/tasks/:id', AuthMiddleware, TaskController.detail);
+router.post('/tasks/add', AuthMiddleware, TaskController.add);
+router.put('/tasks/:id', AuthMiddleware, TaskController.update);
 
 
 router.get('*', (req: Request, res: Response) => res.sendStatus(404));
