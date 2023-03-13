@@ -1,0 +1,23 @@
+.pagination {
+  position: relative;
+  margin-top: 15px;
+  &__btn {
+
+    svg.icon {
+      width: 20px;
+      height: 20px;
+    }
+
+    &--prev svg.icon {
+      transform: rotate(90deg);
+    }
+    &--next svg.icon {
+      transform: rotate(-90deg);
+    }
+  }
+  &__list {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+  }
+}
