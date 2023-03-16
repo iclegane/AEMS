@@ -7,7 +7,7 @@ import {IPage} from '../../../models/IPage';
 
 export type SystemMainPage = IPage
 
-export const SystemMainPage: React.FC<SystemMainPage> = () => {
+export const MainPage: React.FC<SystemMainPage> = () => {
     return (
         <div className="page page--system">
             <DashboardLayout>

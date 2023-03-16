@@ -78,6 +78,27 @@ img {
 .field-list {
   display: flex;
   flex-direction: column;
+
+  &--alternating {
+    .field:not(:nth-child(even)) {
+      background: #FAFAFB;
+    }
+  }
+
+  &--column {
+    .field {
+      flex-direction: column;
+      padding: 0;
+
+      &__name {
+        margin-bottom: 5px;
+      }
+
+      &:not(:first-child) {
+        margin-top: 15px;
+      }
+    }
+  }
 }
 
 .field {
