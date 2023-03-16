@@ -1,7 +1,7 @@
 import React from 'react';
 import Icon from '@components/Icon';
 import './index.scss';
-import {useAppSelector} from "../../hooks/redux";
+import {useAppSelector} from '../../hooks/redux';
 
 
 export const UserPanel: React.FC = () => {

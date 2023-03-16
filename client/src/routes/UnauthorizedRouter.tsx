@@ -1,6 +1,6 @@
-import React from "react";
-import {createBrowserRouter} from "react-router-dom";
-import AuthPage from "../pages/system/AuthPage";
+import React from 'react';
+import {createBrowserRouter} from 'react-router-dom';
+import AuthPage from '../pages/system/AuthPage';
 
 
 const UnauthorizedRouter = createBrowserRouter([

@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {RouterProvider} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux';
 import {checkAuth} from '../../store/actions/AuthAction';
-import UserRouter from "../../routes/UserRouter";
+import UserRouter from '../../routes/UserRouter';
 import '@styles/index.scss';
 
 

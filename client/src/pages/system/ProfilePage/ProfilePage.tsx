@@ -8,8 +8,8 @@ import {useGetProfileQuery} from '../../../api/profile';
 import PersonalForm from '../../../components/Forms/Profile/PersonalForm';
 import ContactForm from '../../../components/Forms/Profile/ContactForm';
 import {ProfileEditTypes} from './types';
-import FieldList from "../../../components/FieldList";
-import {profileFormatData} from "../../../utils/profileFormatData";
+import FieldList from '../../../components/FieldList';
+import {profileFormatData} from '../../../utils/profileFormatData';
 import './index.scss';
 
 
@@ -56,7 +56,7 @@ export const ProfilePage: React.FC = () => {
                 <div className="dashboard-content-block profile__important">
                     <div className="dashboard-content-block__title">Важное</div>
                     {data && data.important && (
-                        <FieldList type={'column'} elements={profileFormatData(data.important)}/>
+                        <FieldList type="column" elements={profileFormatData(data.important)}/>
                     )}
                 </div>
                 <div className="flex flex-column flex-grow-1 gap-30">
@@ -70,7 +70,7 @@ export const ProfilePage: React.FC = () => {
                         </button>
                         <div className="dashboard-content-block__title">Персональные данные</div>
                         {data && data.personal && (
-                            <FieldList view={"alternating"} elements={profileFormatData(data.personal)}/>
+                            <FieldList view="alternating" elements={profileFormatData(data.personal)}/>
                         )}
                     </div>
                     <div className="dashboard-content-block">
@@ -83,7 +83,7 @@ export const ProfilePage: React.FC = () => {
                         </button>
                         <div className="dashboard-content-block__title">Контакты</div>
                         {data && data.contacts && (
-                            <FieldList view={"alternating"} elements={profileFormatData(data.contacts)}/>
+                            <FieldList view="alternating" elements={profileFormatData(data.contacts)}/>
                         )}
                     </div>
                 </div>

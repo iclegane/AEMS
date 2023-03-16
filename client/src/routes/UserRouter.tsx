@@ -1,10 +1,10 @@
-import React from "react";
-import {createBrowserRouter} from "react-router-dom";
-import TasksPage from "../pages/system/TasksPage";
-import TaskPage from "../pages/system/TaskPage";
-import AuthPage from "../pages/system/AuthPage";
-import ProfilePage from "../pages/system/ProfilePage";
-import MainPage from "../pages/system/MainPage";
+import React from 'react';
+import {createBrowserRouter} from 'react-router-dom';
+import TasksPage from '../pages/system/TasksPage';
+import TaskPage from '../pages/system/TaskPage';
+import AuthPage from '../pages/system/AuthPage';
+import ProfilePage from '../pages/system/ProfilePage';
+import MainPage from '../pages/system/MainPage';
 
 
 const UserRouter = createBrowserRouter([

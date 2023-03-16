@@ -1,12 +1,12 @@
-import React from "react";
-import {IFieldList} from "./types";
-import FieldItem from "./FieldItem";
-import {v4 as uuidv4} from "uuid";
+import React from 'react';
+import {v4 as uuidv4} from 'uuid';
+import {IFieldList} from './types';
+import FieldItem from './FieldItem';
 
 
 export const FieldList: React.FC<IFieldList> = ({type, view, elements}) => {
 
-    let styles = [];
+    const styles = [];
 
     if (type) styles.push('field-list--column');
 
@@ -14,13 +14,13 @@ export const FieldList: React.FC<IFieldList> = ({type, view, elements}) => {
 
     return (
         <div className={`field-list ${styles.join(' ')}`}>
-            {elements && elements.map((el) => (
+            {elements && elements.map((el) => {return (
                 <FieldItem
                     key={uuidv4()}
                     name={el.name}
                     value={el.value}
                 />
-            ))}
+            );})}
         </div>
-    )
-}
+    );
+};
