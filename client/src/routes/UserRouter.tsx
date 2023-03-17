@@ -5,6 +5,7 @@ import TaskPage from '../pages/system/TaskPage';
 import AuthPage from '../pages/system/AuthPage';
 import ProfilePage from '../pages/system/ProfilePage';
 import MainPage from '../pages/system/MainPage';
+import VacationPage from "../pages/system/Vacation";
 
 
 const UserRouter = createBrowserRouter([
@@ -18,7 +19,8 @@ const UserRouter = createBrowserRouter([
                 children: [
                     {path: 'profile', element: <ProfilePage/>},
                     {path: 'tasks', element: <TasksPage/>},
-                    {path: 'tasks/:id', element: <TaskPage/>}
+                    {path: 'tasks/:id', element: <TaskPage/>},
+                    {path: 'vacation', element: <VacationPage/>}
                 ]
             }
         ],
