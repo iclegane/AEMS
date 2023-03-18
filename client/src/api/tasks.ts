@@ -3,23 +3,16 @@ import {ISort} from '../pages/system/TasksPage/TasksPage';
 
 
 export interface Task {
-    _id: number;
+    id: number;
     name: string;
     description: string;
-    createdAt: string;
+    created: string;
+    updated: string;
     deadline: string;
-    performerID: {
-        id: string;
-        name: string;
-    } | null;
-    managerID: {
-        id: string;
-        name: string;
-    } | null;
-    statusID: {
-        id: string;
-        name: string;
-    };
+    body: string,
+    performer?: string;
+    manager?: string;
+    status?: string;
 }
 
 type TaskResponse = {
@@ -53,11 +46,33 @@ export const postsApi = api.injectEndpoints({
                     }
                 };
             }
+        }),
+        getTask: build.query<Task, string>({
+            query: (id) => {
+                return {
+                    url: `tasks/${id}`,
+                    method: 'GET'
+                }
+            }
+        }),
+        updateTask: build.mutation({
+            query: (props) => {
+                return {
+                    url: `tasks/:${props.taskID}`,
+                    method: 'PUT',
+                    body: {
+                        taskID: props.taskID,
+                        fields: props.fields
+                    },
+                }
+            }
         })
     };}
 });
 
 
 export const {
-    useGetTasksQuery
+    useGetTasksQuery,
+    useGetTaskQuery,
+    useUpdateTaskMutation
 } = postsApi;

@@ -4,7 +4,8 @@ import TaskStatusModel from '../../models/task/status/TaskStatusModel.js';
 import UserModel from '../../models/user/UserModel.js';
 import ApiError from '../../exceptions/ApiError.js';
 import {ITaskPopulate} from '../../models/task/types.js';
-import {ITaskAddQuery, ITaskDetailResponse, ITaskListQuery, ITaskListResponse, ITaskUpdateQuery} from './types.js';
+import {ITaskAddQuery, ITaskListQuery, ITaskListResponse, ITaskUpdateQuery} from './types.js';
+import TaskDto from '../../dtos/TaskDto/TaskDto.js';
 
 
 class TaskService {
@@ -15,15 +16,15 @@ class TaskService {
             .limit(options.limit)
             .skip((options.page - 1) * options.limit)
             .sort([[options.sortField, options.sortType]])
-            .populate<Pick<ITaskPopulate, 'status'>>('statusID', 'id name')
-            .populate<Pick<ITaskPopulate, 'manager'>>('managerID', 'id name')
-            .populate<Pick<ITaskPopulate, 'performer'>>('performerID', 'id name')
+            .populate<{statusID: ITaskPopulate['status']}>('statusID', 'id name')
+            .populate<{managerID: ITaskPopulate['manager']}>('managerID', 'id name')
+            .populate<{performerID: ITaskPopulate['performer']}>('performerID', 'id name')
             .exec();
 
-        const count = await TaskModel.count();
+        const count = await TaskModel.count().exec();
 
         return {
-            tasks,
+            tasks: tasks.map((task) => new TaskDto(task)),
             count,
         };
     }
@@ -87,12 +88,16 @@ class TaskService {
         return updatedData;
     }
 
-    async detail(id: string): Promise<ITaskDetailResponse | null> {
+    async detail(id: string): Promise<TaskDto | null> {
         const taskID = new Types.ObjectId(id);
-        return TaskModel.findById(taskID)
-            .populate<Pick<ITaskPopulate, 'status'>>('statusID', 'id name')
-            .populate<Pick<ITaskPopulate, 'manager'>>('managerID', 'id name')
-            .populate<Pick<ITaskPopulate, 'performer'>>('performerID', 'id name');
+        const task = await TaskModel.findById({_id: taskID})
+            .populate<{statusID: ITaskPopulate['status']}>('statusID', 'id name')
+            .populate<{managerID: ITaskPopulate['manager']}>('managerID', 'id name')
+            .populate<{performerID: ITaskPopulate['performer']}>('performerID', 'id name')
+            .exec();
+        if (!task) throw ApiError.BadRequest('task not found');
+
+        return new TaskDto(task);
     }
 }
 
