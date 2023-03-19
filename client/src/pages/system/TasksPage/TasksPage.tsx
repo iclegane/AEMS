@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import './index.scss';
 import Task from '@components/Task';
+import {v4 as uuidv4} from 'uuid';
 import {sortTypes, useGetTasksQuery} from '../../../api/tasks';
 import SortPanel from '../../../components/SortPanel';
 import Pagination from '../../../components/Pagination';
-import {v4 as uuidv4} from "uuid";
 
 
 export interface ISort {

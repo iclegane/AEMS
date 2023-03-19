@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import './index.scss';
-import Calendar from "react-calendar";
+import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import '../../../styles/utils/calendar.css';
-import moment from "moment";
+import moment from 'moment';
 
 
 export const VacationPage: React.FC = () => {
@@ -11,30 +11,30 @@ export const VacationPage: React.FC = () => {
     const [date, setDate] = useState<string[]>([]);
 
     const handleOnChange = (dates: Date[]) => {
-        let range = dates.map((date) => {
-            return moment(date).format('DD.MM.YYYY')
-        })
+        const range = dates.map((date) => {
+            return moment(date).format('DD.MM.YYYY');
+        });
 
         setDate(range);
-    }
+    };
 
     const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
 
         if (date.length) {
-            console.log('sub')
+            console.log('sub');
         }
-    }
+    };
 
     return (
-        <div className={'flex gap-30'}>
-            <div className={'flex flex-column gap-30'}>
+        <div className="flex gap-30">
+            <div className="flex flex-column gap-30">
                 <div className="dashboard-content-block">
                     <div className="dashboard-content-block__title">Календарь</div>
                     <Calendar
                         onChange={handleOnChange}
-                        selectRange={true}
-                        returnValue={'range'}
+                        selectRange
+                        returnValue="range"
                         minDate={new Date()}
                     />
                 </div>
@@ -46,7 +46,7 @@ export const VacationPage: React.FC = () => {
                     <small>После оформление документ будет передан менеджеру</small>
                     <br/>
                     <br/>
-                    <button onClick={onSubmit} type={'button'} className={'button button--default'}>Оформить документ</button>
+                    <button onClick={onSubmit} type="button" className="button button--default">Оформить документ</button>
                 </div>
             </div>
         </div>

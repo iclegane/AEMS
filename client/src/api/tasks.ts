@@ -50,9 +50,9 @@ export const postsApi = api.injectEndpoints({
                 return {
                     url: `tasks/${id}`,
                     method: 'GET'
-                }
+                };
             },
-            providesTags: (_task, _err, id) => [{ type: 'Tasks', id }],
+            providesTags: (_task, _err, id) => {return [{ type: 'Tasks', id }];},
         }),
         updateTask: build.mutation<Task, Partial<Task>>({
             query: ({id, ...patch}) => {
@@ -60,9 +60,9 @@ export const postsApi = api.injectEndpoints({
                     url: `tasks/${id}`,
                     method: 'PUT',
                     body: patch,
-                }
+                };
             },
-            invalidatesTags: (task) => [{ type: 'Tasks', id: task?.id }],
+            invalidatesTags: (task) => {return [{ type: 'Tasks', id: task?.id }];},
         })
     };}
 });

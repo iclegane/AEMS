@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import './index.scss';
-import {useParams} from "react-router-dom";
-import {Task, useGetTaskQuery, useUpdateTaskMutation} from "../../../api/tasks";
-import FieldList from "../../../components/FieldList";
-import {IFieldItem} from "../../../components/FieldList/FieldItem";
-import {TaskSelectStatuses} from "../../../components/TaskSelectStatuses/TaskSelectStatuses";
+import {useParams} from 'react-router-dom';
+import {Task, useGetTaskQuery, useUpdateTaskMutation} from '../../../api/tasks';
+import FieldList from '../../../components/FieldList';
+import {IFieldItem} from '../../../components/FieldList/FieldItem';
+import {TaskSelectStatuses} from '../../../components/TaskSelectStatuses/TaskSelectStatuses';
 
 
 const taskItems = (task: Task): IFieldItem[] => {
@@ -35,7 +35,7 @@ const taskItems = (task: Task): IFieldItem[] => {
             value: task.performer || '',
         },
     ];
-}
+};
 
 export const TaskPage: React.FC = () => {
 
@@ -48,7 +48,7 @@ export const TaskPage: React.FC = () => {
     const [UpdateTask] = useUpdateTaskMutation();
 
     const {data, isSuccess, isLoading} = useGetTaskQuery(id);
-    if (isLoading) return <div>loading...</div>
+    if (isLoading) return <div>loading...</div>;
     if (!isSuccess) return null;
 
     const onSelectHandle = (opt: {value?: string | undefined, label?: string | undefined}) => {
@@ -57,20 +57,20 @@ export const TaskPage: React.FC = () => {
             return {
                 ...prevState,
                 status: opt.value
-            }
-        })
-    }
+            };
+        });
+    };
 
     const save = async () => {
         try {
             await UpdateTask({
                 id,
                 status: updateData.status
-            })
+            });
 
-            setChanged(false)
+            setChanged(false);
         } catch (e) {
-            console.log(e)
+            console.log(e);
         }
     };
 
@@ -80,7 +80,7 @@ export const TaskPage: React.FC = () => {
                 <div className='flex flex-column gap-30'>
                     <div className="dashboard-content-block">
                         <div className="dashboard-content-block__title">Инфо</div>
-                        <FieldList type={'column'} elements={taskItems(data)}/>
+                        <FieldList type="column" elements={taskItems(data)}/>
                     </div>
                     <div className="dashboard-content-block">
                         <div className="dashboard-content-block__title">Изменить</div>
@@ -93,13 +93,13 @@ export const TaskPage: React.FC = () => {
                 <div className="dashboard-content-block flex-grow-1">
                     <div className="dashboard-content-block__title">{data.name}</div>
                     <div>{data.description}</div>
-                    <div dangerouslySetInnerHTML={{__html: data.body}}></div>
+                    <div dangerouslySetInnerHTML={{__html: data.body}} />
                 </div>
             </div>
             {isChanged && (
                 <div className='flex'>
                     <div className="dashboard-content-block flex-grow-1">
-                        <button type={'button'} onClick={save} className={'button button--default'}>Сохранить</button>
+                        <button type="button" onClick={save} className="button button--default">Сохранить</button>
                     </div>
                 </div>
             )}

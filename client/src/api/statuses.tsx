@@ -1,5 +1,6 @@
 import {api} from './base';
 
+
 type Status = {
     id: string;
     name: string;
@@ -8,14 +9,14 @@ type Status = {
 export const statusApi = api.injectEndpoints({
     endpoints: (build) => {return {
         getStatuses: build.query<Status[], unknown>({
-            query: (params) => {
+            query: () => {
                 return {
                     url: 'statuses',
                     method: 'GET'
                 };
             }
         }),
-    }}
+    };}
 });
 
 export const {
