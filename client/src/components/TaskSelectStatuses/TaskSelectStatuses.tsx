@@ -3,9 +3,12 @@ import Select from 'react-select';
 import {useGetStatusesQuery} from "../../api/statuses";
 
 
-export const TaskSelectStatuses: React.FC<{
+interface ITaskSelectStatuses {
     onSelect: (opt: any) => void
-}> = (props) => {
+    current?: string;
+}
+
+export const TaskSelectStatuses: React.FC<ITaskSelectStatuses> = ({onSelect, current}) => {
 
     const {data, isSuccess} = useGetStatusesQuery(null);
     if (!isSuccess) return null;
@@ -15,12 +18,12 @@ export const TaskSelectStatuses: React.FC<{
         label: status.name
     }));
 
-    const currentItem = {...items.find((opt) => opt.label === 'Инициализация')}
+    const currentItem = {...items.find((opt) => opt.label === current)}
 
     return (
         <Select
             defaultValue={currentItem}
-            onChange={(opt) => props.onSelect(opt)}
+            onChange={(opt) => onSelect(opt)}
             options={items}
         />
     )

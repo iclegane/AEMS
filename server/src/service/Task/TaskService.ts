@@ -29,7 +29,7 @@ class TaskService {
         };
     }
 
-    async add(query: ITaskAddQuery): Promise<ITaskPopulate> {
+    async add(query: ITaskAddQuery) {
         const taskStatus = await TaskStatusModel.findOne({name: 'Инициализация'});
         if (!taskStatus) {
             throw ApiError.BadRequest('Невозможно инициализировать статус задачи');
@@ -58,34 +58,37 @@ class TaskService {
             throw ApiError.BadRequest('Задача не сформирована');
         }
 
-        return populateTask;
+        return 'populateTask';
     }
 
-    async update(query: ITaskUpdateQuery): Promise<ITaskPopulate> {
-        const task = await TaskModel.findById(query.taskID);
+    async update(query: ITaskUpdateQuery): Promise<TaskDto | null> {
+        const task = await TaskModel.findById(query.id);
         if (!task) {
             throw ApiError.BadRequest('Task not found');
         }
 
-        if (query.fields.statusID) {
-            const status = await TaskStatusModel.findById(query.fields.statusID);
+        if (query.fields.status) {
+            const status = await TaskStatusModel.findById(query.fields.status);
             if (!status) {
                 throw ApiError.BadRequest('Status not found');
             }
         }
 
-        const updatedData = await TaskModel.findByIdAndUpdate({_id: query.taskID}, query.fields,{
+        const updatedData = await TaskModel.findByIdAndUpdate({_id: query.id}, {
+            statusID: query.fields.status
+        },{
             strict: true,
             new: true,
         })
-            .populate<Pick<ITaskPopulate, 'status'>>('statusID', 'id name')
-            .populate<Pick<ITaskPopulate, 'manager'>>('managerID', 'id name')
-            .populate<Pick<ITaskPopulate, 'performer'>>('performerID', 'id name');
+            .populate<{statusID: ITaskPopulate['status']}>('statusID', 'id name')
+            .populate<{managerID: ITaskPopulate['manager']}>('managerID', 'id name')
+            .populate<{performerID: ITaskPopulate['performer']}>('performerID', 'id name')
+            .exec();
         if (!updatedData) {
             throw ApiError.BadRequest('Update error');
         }
 
-        return updatedData;
+        return  new TaskDto(updatedData);
     }
 
     async detail(id: string): Promise<TaskDto | null> {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './index.scss';
 import {useParams} from "react-router-dom";
 import {Task, useGetTaskQuery, useUpdateTaskMutation} from "../../../api/tasks";
@@ -9,7 +9,7 @@ import {TaskSelectStatuses} from "../../../components/TaskSelectStatuses/TaskSel
 
 const taskItems = (task: Task): IFieldItem[] => {
 
-    const items = [
+    return [
         {
             name: 'Дата создания',
             value: task.created,
@@ -35,29 +35,44 @@ const taskItems = (task: Task): IFieldItem[] => {
             value: task.performer || '',
         },
     ];
-
-    return items;
 }
 
 export const TaskPage: React.FC = () => {
 
+    const [isChanged, setChanged] = useState(false);
+    const [updateData, setUpdateData] = useState<Partial<Task>>({});
+
     const { id } = useParams();
     if (!id) return null;
 
-    const [UpdateTask] = useUpdateTaskMutation()
+    const [UpdateTask] = useUpdateTaskMutation();
 
     const {data, isSuccess, isLoading} = useGetTaskQuery(id);
     if (isLoading) return <div>loading...</div>
     if (!isSuccess) return null;
 
-    const onSelectHandle = async (opt: any) => {
-        await UpdateTask({
-            taskID: id,
-            fields: {
-                statusID: opt.value
+    const onSelectHandle = (opt: {value?: string | undefined, label?: string | undefined}) => {
+        setChanged(true);
+        setUpdateData((prevState) => {
+            return {
+                ...prevState,
+                status: opt.value
             }
-        });
+        })
     }
+
+    const save = async () => {
+        try {
+            await UpdateTask({
+                id,
+                status: updateData.status
+            })
+
+            setChanged(false)
+        } catch (e) {
+            console.log(e)
+        }
+    };
 
     return (
         <div className='flex flex-column gap-30'>
@@ -70,6 +85,7 @@ export const TaskPage: React.FC = () => {
                     <div className="dashboard-content-block">
                         <div className="dashboard-content-block__title">Изменить</div>
                         <TaskSelectStatuses
+                            current={data.status}
                             onSelect={onSelectHandle}
                         />
                     </div>
@@ -80,11 +96,13 @@ export const TaskPage: React.FC = () => {
                     <div dangerouslySetInnerHTML={{__html: data.body}}></div>
                 </div>
             </div>
-            <div className='flex'>
-                <div className="dashboard-content-block flex-grow-1">
-                    <button type={'button'} className={'button button--default'}>Сохранить</button>
+            {isChanged && (
+                <div className='flex'>
+                    <div className="dashboard-content-block flex-grow-1">
+                        <button type={'button'} onClick={save} className={'button button--default'}>Сохранить</button>
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 };

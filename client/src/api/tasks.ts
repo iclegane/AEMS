@@ -3,7 +3,7 @@ import {ISort} from '../pages/system/TasksPage/TasksPage';
 
 
 export interface Task {
-    id: number;
+    id: string;
     name: string;
     description: string;
     created: string;
@@ -33,9 +33,7 @@ export interface IGetTaskParams {
 export const postsApi = api.injectEndpoints({
     endpoints: (build) => {return {
         getTasks: build.query<TaskResponse, IGetTaskParams>({
-            query: (params) => {
-                const {sort, limit, page} = {...params};
- 
+            query: ({sort, limit, page}) => {
                 return {
                     url: 'tasks',
                     params: {
@@ -53,19 +51,18 @@ export const postsApi = api.injectEndpoints({
                     url: `tasks/${id}`,
                     method: 'GET'
                 }
-            }
+            },
+            providesTags: (_task, _err, id) => [{ type: 'Tasks', id }],
         }),
-        updateTask: build.mutation({
-            query: (props) => {
+        updateTask: build.mutation<Task, Partial<Task>>({
+            query: ({id, ...patch}) => {
                 return {
-                    url: `tasks/:${props.taskID}`,
+                    url: `tasks/${id}`,
                     method: 'PUT',
-                    body: {
-                        taskID: props.taskID,
-                        fields: props.fields
-                    },
+                    body: patch,
                 }
-            }
+            },
+            invalidatesTags: (task) => [{ type: 'Tasks', id: task?.id }],
         })
     };}
 });

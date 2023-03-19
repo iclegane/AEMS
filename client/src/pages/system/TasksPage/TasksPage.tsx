@@ -45,7 +45,7 @@ export const TasksPage: React.FC = () => {
                     key={uuidv4()}
                     index={++index}
                     name={task.name}
-                    createdAt={task.created}
+                    created={task.created}
                     deadline={task.deadline}
                     status={task.status || ''}
                     manager={task.manager || ''}

@@ -29,9 +29,9 @@ export interface ITaskAddQuery {
 }
 
 export interface ITaskUpdateQuery {
-    taskID: string;
+    id: string;
     fields: {
-        statusID?: string;
+        status?: string;
         name?: string
     }
 }
