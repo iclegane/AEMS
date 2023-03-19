@@ -72,11 +72,13 @@ class TaskController {
 
     update = async (req: Request<never, never, ITaskUpdateQuery>, res: Response, next: NextFunction) => {
         try {
-            const {taskID, fields} = req.body;
+            const {id} = req.params;
 
             const task = await TaskService.update({
-                taskID,
-                fields
+                id,
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                fields: {...req.body}
             });
 
             res.json(task);

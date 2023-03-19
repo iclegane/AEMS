@@ -1,13 +1,9 @@
-import {ITaskPopulate} from '../../models/task/types';
+import TaskDto from '../../dtos/TaskDto/TaskDto';
 
 
 export interface ITaskListResponse {
-    tasks: ITaskPopulate[] | [];
+    tasks: TaskDto[];
     count: number;
-}
-
-export interface ITaskDetailResponse extends ITaskPopulate {
-    body: JSON;
 }
 
 export interface ITaskListQuery {
@@ -33,9 +29,9 @@ export interface ITaskAddQuery {
 }
 
 export interface ITaskUpdateQuery {
-    taskID: string;
+    id: string;
     fields: {
-        statusID?: string;
+        status?: string;
         name?: string
     }
 }

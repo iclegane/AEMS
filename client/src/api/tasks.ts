@@ -3,23 +3,16 @@ import {ISort} from '../pages/system/TasksPage/TasksPage';
 
 
 export interface Task {
-    _id: number;
+    id: string;
     name: string;
     description: string;
-    createdAt: string;
+    created: string;
+    updated: string;
     deadline: string;
-    performerID: {
-        id: string;
-        name: string;
-    } | null;
-    managerID: {
-        id: string;
-        name: string;
-    } | null;
-    statusID: {
-        id: string;
-        name: string;
-    };
+    body: string,
+    performer?: string;
+    manager?: string;
+    status?: string;
 }
 
 type TaskResponse = {
@@ -40,9 +33,7 @@ export interface IGetTaskParams {
 export const postsApi = api.injectEndpoints({
     endpoints: (build) => {return {
         getTasks: build.query<TaskResponse, IGetTaskParams>({
-            query: (params) => {
-                const {sort, limit, page} = {...params};
- 
+            query: ({sort, limit, page}) => {
                 return {
                     url: 'tasks',
                     params: {
@@ -53,11 +44,32 @@ export const postsApi = api.injectEndpoints({
                     }
                 };
             }
+        }),
+        getTask: build.query<Task, string>({
+            query: (id) => {
+                return {
+                    url: `tasks/${id}`,
+                    method: 'GET'
+                };
+            },
+            providesTags: (_task, _err, id) => {return [{ type: 'Tasks', id }];},
+        }),
+        updateTask: build.mutation<Task, Partial<Task>>({
+            query: ({id, ...patch}) => {
+                return {
+                    url: `tasks/${id}`,
+                    method: 'PUT',
+                    body: patch,
+                };
+            },
+            invalidatesTags: (task) => {return [{ type: 'Tasks', id: task?.id }];},
         })
     };}
 });
 
 
 export const {
-    useGetTasksQuery
+    useGetTasksQuery,
+    useGetTaskQuery,
+    useUpdateTaskMutation
 } = postsApi;

@@ -4,6 +4,7 @@ import UserController from '../controllers/UserController.js';
 import AuthMiddleware from '../middlewares/AuthMiddleware.js';
 import ProfileController from '../controllers/ProfileController.js';
 import TaskController from '../controllers/TaskController.js';
+import TaskStatusController from '../controllers/TaskStatusController.js';
 
 
 const router = Router();
@@ -24,6 +25,7 @@ router.get('/tasks/:id', AuthMiddleware, TaskController.detail);
 router.post('/tasks/add', AuthMiddleware, TaskController.add);
 router.put('/tasks/:id', AuthMiddleware, TaskController.update);
 
+router.get('/statuses',  TaskStatusController.list);
 
 router.get('*', (req: Request, res: Response) => res.sendStatus(404));
 

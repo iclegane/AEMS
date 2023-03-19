@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import './index.scss';
 import Task from '@components/Task';
+import {v4 as uuidv4} from 'uuid';
 import {sortTypes, useGetTasksQuery} from '../../../api/tasks';
 import SortPanel from '../../../components/SortPanel';
 import Pagination from '../../../components/Pagination';
@@ -40,14 +41,14 @@ export const TasksPage: React.FC = () => {
 
             {data.tasks && data.tasks.map((task, index) =>
                 {return <Task
-                    id={task._id}
-                    key={task._id}
+                    id={task.id}
+                    key={uuidv4()}
                     index={++index}
                     name={task.name}
-                    createdAt={task.createdAt}
+                    created={task.created}
                     deadline={task.deadline}
-                    status={task.statusID.name}
-                    manager={task.managerID?.name || null}
+                    status={task.status || ''}
+                    manager={task.manager || ''}
                 />;}
             )}
 
