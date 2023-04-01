@@ -5,6 +5,7 @@ import {Task, useGetTaskQuery, useUpdateTaskMutation} from '../../../api/tasks';
 import FieldList from '../../../components/FieldList';
 import {IFieldItem} from '../../../components/FieldList/FieldItem';
 import {TaskSelectStatuses} from '../../../components/TaskSelectStatuses/TaskSelectStatuses';
+import Page from '../../../components/Page';
 
 
 const taskItems = (task: Task): IFieldItem[] => {
@@ -37,7 +38,12 @@ const taskItems = (task: Task): IFieldItem[] => {
     ];
 };
 
-export const TaskPage: React.FC = () => {
+
+interface TaskPageProps {
+    title: string;
+}
+
+export const TaskPage: React.FC<React.PropsWithChildren<TaskPageProps>> = ({ title, children, ...rest }) => {
 
     const [isChanged, setChanged] = useState(false);
     const [updateData, setUpdateData] = useState<Partial<Task>>({});
@@ -75,34 +81,36 @@ export const TaskPage: React.FC = () => {
     };
 
     return (
-        <div className='flex flex-column gap-30'>
-            <div className='flex gap-30'>
-                <div className='flex flex-column gap-30'>
-                    <div className="dashboard-content-block">
-                        <div className="dashboard-content-block__title">Инфо</div>
-                        <FieldList type="column" elements={taskItems(data)}/>
+        <Page title={title}>
+            <div className='flex flex-column gap-30'>
+                <div className='flex gap-30'>
+                    <div className='flex flex-column gap-30'>
+                        <div className="dashboard-content-block">
+                            <div className="dashboard-content-block__title">Инфо</div>
+                            <FieldList type="column" elements={taskItems(data)}/>
+                        </div>
+                        <div className="dashboard-content-block">
+                            <div className="dashboard-content-block__title">Изменить</div>
+                            <TaskSelectStatuses
+                                current={data.status}
+                                onSelect={onSelectHandle}
+                            />
+                        </div>
                     </div>
-                    <div className="dashboard-content-block">
-                        <div className="dashboard-content-block__title">Изменить</div>
-                        <TaskSelectStatuses
-                            current={data.status}
-                            onSelect={onSelectHandle}
-                        />
-                    </div>
-                </div>
-                <div className="dashboard-content-block flex-grow-1">
-                    <div className="dashboard-content-block__title">{data.name}</div>
-                    <div>{data.description}</div>
-                    <div dangerouslySetInnerHTML={{__html: data.body}} />
-                </div>
-            </div>
-            {isChanged && (
-                <div className='flex'>
                     <div className="dashboard-content-block flex-grow-1">
-                        <button type="button" onClick={save} className="button button--default">Сохранить</button>
+                        <div className="dashboard-content-block__title">{data.name}</div>
+                        <div>{data.description}</div>
+                        <div dangerouslySetInnerHTML={{__html: data.body}} />
                     </div>
                 </div>
-            )}
-        </div>
+                {isChanged && (
+                    <div className='flex'>
+                        <div className="dashboard-content-block flex-grow-1">
+                            <button type="button" onClick={save} className="button button--default">Сохранить</button>
+                        </div>
+                    </div>
+                )}
+            </div>
+        </Page>
     );
 };

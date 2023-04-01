@@ -1,18 +1,20 @@
 import React from 'react';
-import DashboardLayout from '@layouts/DashboardLayout';
 import './index.scss';
-import { Outlet } from 'react-router-dom';
-import {IPage} from '../../../models/IPage';
+import Page from '../../../components/Page';
 
 
-export type SystemMainPage = IPage
+interface UsersPageProps {
+    title: string;
+}
 
-export const MainPage: React.FC<SystemMainPage> = () => {
+export const MainPage: React.FC<React.PropsWithChildren<UsersPageProps>> = ({ title, children, ...rest }) => {
     return (
-        <div className="page page--system">
-            <DashboardLayout>
-                <Outlet/>
-            </DashboardLayout>
-        </div>
+        <Page title={title}>
+            <div className="users gap-30">
+                <div className="dashboard-content-block">
+                    Main Page content
+                </div>
+            </div>
+        </Page>
     );
 };

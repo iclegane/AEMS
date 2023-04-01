@@ -1,12 +1,18 @@
 import React from 'react';
 import './index.scss';
+import Page from '../../../components/Page';
 
 
-export const UsersPage: React.FC = () => {
+interface UsersPageProps {
+    title: string;
+}
+
+export const UsersPage: React.FC<React.PropsWithChildren<UsersPageProps>> = ({ title, children, ...rest }) => {
     return (
-        <div className="users gap-30">
-            <div className="dashboard-content-block">
+        <Page title={title}>
+            <div className="users gap-30">
+                <div className="dashboard-content-block" />
             </div>
-        </div>
+        </Page>
     );
 };
