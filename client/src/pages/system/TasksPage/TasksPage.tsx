@@ -5,7 +5,7 @@ import {v4 as uuidv4} from 'uuid';
 import {sortTypes, useGetTasksQuery} from '../../../api/tasks';
 import SortPanel from '../../../components/SortPanel';
 import Pagination from '../../../components/Pagination';
-import Page from "../../../components/Page";
+import Page from '../../../components/Page';
 
 
 export interface ISort {

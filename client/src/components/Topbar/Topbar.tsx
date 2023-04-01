@@ -2,13 +2,13 @@ import React from 'react';
 import UserPanel from '@components/UserPanel';
 import Icon from '@components/Icon/';
 import './index.scss';
-import {useSelector} from "react-redux";
-import {RootState} from "../../store/store";
+import {useSelector} from 'react-redux';
+import {RootState} from '../../store/store';
 
 
 export const Topbar: React.FC = () => {
 
-    const title = useSelector((state: RootState) => state.pageTitle.title);
+    const title = useSelector((state: RootState) => {return state.pageTitle.title;});
 
     return (
         <div className="topbar">

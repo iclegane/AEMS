@@ -1,6 +1,6 @@
 import React from 'react';
 import './index.scss';
-import Page from "../../../components/Page";
+import Page from '../../../components/Page';
 
 
 interface UsersPageProps {

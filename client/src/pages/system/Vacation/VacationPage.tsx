@@ -4,7 +4,7 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import '../../../styles/utils/calendar.css';
 import moment from 'moment';
-import Page from "../../../components/Page";
+import Page from '../../../components/Page';
 
 
 interface VacationPageProps {

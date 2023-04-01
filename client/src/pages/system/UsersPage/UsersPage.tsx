@@ -1,6 +1,6 @@
 import React from 'react';
 import './index.scss';
-import Page from "../../../components/Page";
+import Page from '../../../components/Page';
 
 
 interface UsersPageProps {
@@ -11,9 +11,7 @@ export const UsersPage: React.FC<React.PropsWithChildren<UsersPageProps>> = ({ t
     return (
         <Page title={title}>
             <div className="users gap-30">
-                <div className="dashboard-content-block">
-
-                </div>
+                <div className="dashboard-content-block" />
             </div>
         </Page>
     );

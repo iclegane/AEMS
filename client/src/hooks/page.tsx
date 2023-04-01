@@ -1,14 +1,14 @@
-import {useDispatch, useSelector} from "react-redux";
-import {useEffect, useMemo} from "react";
-import {setPageTitle} from "../store/reducers/TitleSlice";
-import {RootState} from "../store/store";
+import {useDispatch, useSelector} from 'react-redux';
+import {useEffect, useMemo} from 'react';
+import {setPageTitle} from '../store/reducers/TitleSlice';
+import {RootState} from '../store/store';
 
 
 export function usePageTitle(title: string) {
     const dispatch = useDispatch();
 
     const setTitle = useMemo(() => {
-        return (title: string) => dispatch(setPageTitle(title));
+        return (title: string) => {return dispatch(setPageTitle(title));};
     }, [dispatch]);
 
     useEffect(() => {
@@ -18,7 +18,7 @@ export function usePageTitle(title: string) {
         };
     }, [title, setTitle, dispatch]);
 
-    const pageTitle = useSelector((state: RootState) => state.pageTitle.title);
+    const pageTitle = useSelector((state: RootState) => {return state.pageTitle.title;});
 
     useEffect(() => {
         document.title = pageTitle;

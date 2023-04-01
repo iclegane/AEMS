@@ -11,7 +11,7 @@ import {ProfileEditTypes} from './types';
 import FieldList from '../../../components/FieldList';
 import {profileFormatData} from '../../../utils/profileFormatData';
 import './index.scss';
-import Page from "../../../components/Page";
+import Page from '../../../components/Page';
 
 
 interface ProfilePageProps {

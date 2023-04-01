@@ -1,5 +1,5 @@
-import React, {ReactNode} from "react";
-import {usePageTitle} from "../../hooks/page";
+import React, {ReactNode} from 'react';
+import {usePageTitle} from '../../hooks/page';
 
 
 interface PageProps {
@@ -15,5 +15,5 @@ export const Page: React.FC<PageProps> = ({ title, children }) => {
         <>
             {children}
         </>
-    )
-}
+    );
+};
