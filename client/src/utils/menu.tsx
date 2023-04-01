@@ -42,12 +42,12 @@ export const menu: menuBlock[] = [
         items: [
             {
                 text: 'Календарь',
-                href: '/',
+                href: '/system/calendar',
                 icon: 'calendar',
             },
             {
                 text: 'Сотрудники',
-                href: '/',
+                href: '/system/users',
                 icon: 'users',
             }
         ],
@@ -57,12 +57,12 @@ export const menu: menuBlock[] = [
         items: [
             {
                 text: 'Файлы',
-                href: '/',
+                href: '/system/files',
                 icon: 'file',
             },
             {
                 text: 'Настройки',
-                href: '/',
+                href: '/system/settings',
                 icon: 'setting',
             },
         ],
