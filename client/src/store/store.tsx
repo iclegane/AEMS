@@ -1,10 +1,12 @@
 import {combineReducers, configureStore} from '@reduxjs/toolkit';
 import authReducer from './reducers/AuthSlice';
+import pageTitleReducer from './reducers/TitleSlice';
 import {api} from '../api/base';
 
 
 const rootReducer = combineReducers({
     authReducer,
+    pageTitle: pageTitleReducer,
     [api.reducerPath]: api.reducer,
 });
 
