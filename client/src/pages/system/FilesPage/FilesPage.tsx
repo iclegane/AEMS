@@ -1,12 +1,20 @@
 import React from 'react';
 import './index.scss';
+import Page from "../../../components/Page";
 
 
-export const FilesPage: React.FC = () => {
+interface FilesPageProps {
+    title: string;
+}
+
+export const FilesPage: React.FC<React.PropsWithChildren<FilesPageProps>> = ({ title, children, ...rest }) => {
     return (
-        <div className="files gap-30">
-            <div className="dashboard-content-block">
+        <Page title={title}>
+            <div className="files gap-30">
+                <div className="dashboard-content-block">
+
+                </div>
             </div>
-        </div>
+        </Page>
     );
 };
