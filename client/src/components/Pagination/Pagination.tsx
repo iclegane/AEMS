@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback, useMemo} from 'react';
 import Icon from '../Icon';
 import PaginationItem, {IPaginationItem} from './PaginationItem';
 import {IPagination} from './types';
@@ -6,35 +6,31 @@ import './index.scss';
 
 
 const createItems = (page: number, pages: number): IPaginationItem[] => {
-    return Array.from({length: pages},(v, i) => {return ++i;}).map((number) => {
-        return {
-            number,
-            isActive: number === page,
-        };
-    });
+    return Array.from({ length: pages }, (_, i) => ({
+        number: i + 1,
+        isActive: i + 1 === page,
+    }));
 };
 
-export const Pagination: React.FC<IPagination> = (props) => {
+export const Pagination = React.memo<IPagination>(({ page, setPage, pages }) => {
 
-    const {page, setPage, pages} = props;
-
-    const to = (page: IPaginationItem['number']) => {
+    const to = useCallback((page: IPaginationItem['number']) => {
         setPage(page);
-    };
+    }, [setPage]);
 
-    const prev = () => {
+    const prev = useCallback(() => {
         setPage((prevState) => {
-            return (prevState - 1 < 1) ? prevState: prevState - 1;
+            return prevState - 1 < 1 ? prevState : prevState - 1;
         });
-    };
+    }, [setPage]);
 
-    const next = () => {
+    const next = useCallback(() => {
         setPage((prevState) => {
-            return (prevState + 1 > pages) ? prevState: prevState + 1;
+            return prevState + 1 > pages ? prevState : prevState + 1;
         });
-    };
+    }, [setPage, pages]);
 
-    const items = createItems(page, pages);
+    const items = useMemo(() => createItems(page, pages), [page, pages]);
 
     return(
         <div className='pagination'>
@@ -66,4 +62,4 @@ export const Pagination: React.FC<IPagination> = (props) => {
             </div>
         </div>
     );
-};
+});
