@@ -1,10 +1,9 @@
 import React from 'react';
-import {v4 as uuidv4} from 'uuid';
 import {IFieldList} from './types';
 import FieldItem from './FieldItem';
 
 
-export const FieldList: React.FC<IFieldList> = ({type, view, elements}) => {
+export const FieldList: React.FC<IFieldList> = React.memo(({ type, view, elements }) => {
 
     const styles = [];
 
@@ -14,13 +13,9 @@ export const FieldList: React.FC<IFieldList> = ({type, view, elements}) => {
 
     return (
         <div className={`field-list ${styles.join(' ')}`}>
-            {elements && elements.map((el) => {return (
-                <FieldItem
-                    key={uuidv4()}
-                    name={el.name}
-                    value={el.value}
-                />
-            );})}
+            {elements.map((el) => (
+                <FieldItem key={el.name + el.value} name={el.name} value={el.value} />
+            ))}
         </div>
     );
-};
+});
