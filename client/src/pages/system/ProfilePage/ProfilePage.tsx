@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import ReactModal from 'react-modal';
 import {useAppDispatch, useAppSelector} from '../../../hooks/redux';
@@ -12,34 +12,36 @@ import FieldList from '../../../components/FieldList';
 import {profileFormatData} from '../../../utils/profileFormatData';
 import './index.scss';
 import Page from '../../../components/Page';
+import { Skeleton } from 'antd';
 
 
 interface ProfilePageProps {
     title: string;
 }
 
-export const ProfilePage: React.FC<React.PropsWithChildren<ProfilePageProps>> = ({ title, children, ...rest }) => {
+export const ProfilePage: React.FC<React.PropsWithChildren<ProfilePageProps>> = React.memo(({ title }) => {
+
+    const { auth } = useAppSelector(state => state.authReducer);
 
     const [open, setOpen] = useState(false);
     const [type, setType] = useState<ProfileEditTypes>(null);
 
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const {auth} = useAppSelector(state => {return state.authReducer;});
 
-    if (!auth.user) return null;
-
-    const logoutHandler = () => {
+    const logoutHandler = useCallback(() => {
         dispatch(logout());
-        navigate('/login');
-    };
+        navigate("/login");
+    }, [dispatch, navigate]);
 
-    const onChangeBlock = (type: ProfileEditTypes) => {
+    const onChangeBlock = useCallback((type: ProfileEditTypes) => {
         setType(type);
-        setOpen((prevState) => {return !prevState;});
-    };
+        setOpen((prevState) => !prevState);
+    }, []);
 
-    const {data, isError} = useGetProfileQuery({});
+    const { data, isError, isLoading } = useGetProfileQuery({});
+
+    if (!auth?.user) return null;
 
     if (isError) return <div>Error</div>;
 
@@ -47,49 +49,71 @@ export const ProfilePage: React.FC<React.PropsWithChildren<ProfilePageProps>> = 
         <Page title={title}>
             <div className="profile gap-30">
                 <div className="dashboard-content-block">
-                    <div className='inline-flex gap-25'>
-                        <div className="profile__user-image" />
-                        <div className="flex flex-column">
-                            <div className="profile__user-name">{auth.user.name}</div>
-                            <div className="profile__user-position">{auth.user.post}</div>
-                        </div>
-                    </div>
-                    <button type="button" className="button button--icon profile__logout" onClick={logoutHandler}>
-                        <Icon name="logout"/>
-                    </button>
+                    {isLoading ? (<Skeleton />) : (
+                        <>
+                            <div className='inline-flex gap-25'>
+                                <div className="profile__user-image" />
+                                <div className="flex flex-column">
+                                    <div className="profile__user-name">{auth.user.name}</div>
+                                    <div className="profile__user-position">{auth.user.post}</div>
+                                </div>
+                            </div>
+                            <button type="button" className="button button--icon profile__logout" onClick={logoutHandler}>
+                                <Icon name="logout"/>
+                            </button>
+                        </>
+                    )}
                 </div>
                 <div className="flex gap-30">
                     <div className="dashboard-content-block profile__important">
-                        <div className="dashboard-content-block__title">Важное</div>
-                        {data && data.important && (
-                            <FieldList type="column" elements={profileFormatData(data.important)}/>
+                        {isLoading ? (
+                            <Skeleton />
+                        ) : (
+                            <>
+                                <div className="dashboard-content-block__title">Важное</div>
+                                {data && data.important && (
+                                    <FieldList type="column" elements={profileFormatData(data.important)} />
+                                )}
+                            </>
                         )}
                     </div>
                     <div className="flex flex-column flex-grow-1 gap-30">
                         <div className="dashboard-content-block">
-                            <button
-                                type="button"
-                                className="button button--text profile__change-btn"
-                                onClick={() => {return onChangeBlock('personal');}}
-                            >
-                                <Icon name="edit"/>
-                            </button>
-                            <div className="dashboard-content-block__title">Персональные данные</div>
-                            {data && data.personal && (
-                                <FieldList view="alternating" elements={profileFormatData(data.personal)}/>
+                            {isLoading ? (
+                                <Skeleton />
+                            ) : (
+                                <>
+                                    <button
+                                        type="button"
+                                        className="button button--text profile__change-btn"
+                                        onClick={() => onChangeBlock('personal')}
+                                    >
+                                        <Icon name="edit"/>
+                                    </button>
+                                    <div className="dashboard-content-block__title">Персональные данные</div>
+                                    {data && data.personal && (
+                                        <FieldList view="alternating" elements={profileFormatData(data.personal)}/>
+                                    )}
+                                </>
                             )}
                         </div>
                         <div className="dashboard-content-block">
-                            <button
-                                type="button"
-                                className="button button--text profile__change-btn"
-                                onClick={() => {return onChangeBlock('contacts');}}
-                            >
-                                <Icon name="edit"/>
-                            </button>
-                            <div className="dashboard-content-block__title">Контакты</div>
-                            {data && data.contacts && (
-                                <FieldList view="alternating" elements={profileFormatData(data.contacts)}/>
+                            {isLoading ? (
+                                <Skeleton />
+                            ) : (
+                                <>
+                                    <button
+                                        type="button"
+                                        className="button button--text profile__change-btn"
+                                        onClick={() => onChangeBlock('contacts')}
+                                    >
+                                        <Icon name="edit"/>
+                                    </button>
+                                    <div className="dashboard-content-block__title">Контакты</div>
+                                    {data && data.contacts && (
+                                        <FieldList view="alternating" elements={profileFormatData(data.contacts)}/>
+                                    )}
+                                </>
                             )}
                         </div>
                     </div>
@@ -100,7 +124,7 @@ export const ProfilePage: React.FC<React.PropsWithChildren<ProfilePageProps>> = 
                     overlayClassName="default-modal"
                     shouldCloseOnOverlayClick
                     shouldCloseOnEsc
-                    onRequestClose={() => {return setOpen(false);}}
+                    onRequestClose={() => setOpen(false)}
                     contentLabel="Profile"
                     appElement={document.getElementById('root') || undefined}
                 >
@@ -128,4 +152,4 @@ export const ProfilePage: React.FC<React.PropsWithChildren<ProfilePageProps>> = 
             </div>
         </Page>
     );
-};
+});
