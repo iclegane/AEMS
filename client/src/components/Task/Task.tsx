@@ -5,12 +5,12 @@ import {ITask} from './types';
 import './index.scss';
 
 
-export const Task: React.FC<ITask> = ({index, name, deadline, created, status, manager, ...props}) => {
+export const Task: React.FC<ITask> = ({id, index, name, deadline, created, status, manager}) => {
 
     const shortName = truncate(name, 33);
 
     return(
-        <Link to={`${props.id}`} className="task">
+        <Link to={`${id}`} className="task">
             <div className="task__wrapper">
                 <div className="flex justify-content-sb align-items-c">
                     <div className="task__field task__field--index">{index}</div>

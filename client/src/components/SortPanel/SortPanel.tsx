@@ -4,7 +4,7 @@ import {ISortPanel} from './types';
 import './index.scss';
 
 
-const items: ISortItem[] = [
+const INITIAL_SORT_ITEMS: ISortItem[] = [
     {
         field: 'index',
         name: '#',
@@ -41,26 +41,28 @@ export const SortPanel: React.FC<ISortPanel> = (props) => {
 
     const {sort, setSort} = props.sortManager;
 
-    const [sortItems] = useState<ISortItem[]>(items.map((item) => {
-        item.type = null;
-        if (item.field === sort?.field) item.type = sort?.type;
+    const [sortItems] = useState<ISortItem[]>(
+        INITIAL_SORT_ITEMS.map((item) => {
+            item.type = null;
+            if (item.field === sort?.field) item.type = sort?.type;
 
-        return item;
-    }));
+            return item;
+        })
+    );
 
     return(
         <div className="sort-panel">
             <div className="flex justify-content-sb align-items-c">
-                {sortItems && sortItems.map((item) =>
-                    {return <SortPanelItem
-                        key={item.name}
-                        name={item.name}
-                        field={item.field}
-                        isSortable={item.isSortable}
-                        type={item.type}
+                {sortItems.map(({ name, field, isSortable, type }) => (
+                    <SortPanelItem
+                        key={name}
+                        name={name}
+                        field={field}
+                        isSortable={isSortable}
+                        type={type}
                         setSort={setSort}
-                    />;}
-                )}
+                    />
+                ))}
             </div>
         </div>
     );

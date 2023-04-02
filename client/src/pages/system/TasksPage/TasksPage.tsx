@@ -1,7 +1,6 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './index.scss';
 import Task from '@components/Task';
-import {v4 as uuidv4} from 'uuid';
 import {sortTypes, useGetTasksQuery} from '../../../api/tasks';
 import SortPanel from '../../../components/SortPanel';
 import Pagination from '../../../components/Pagination';
@@ -13,57 +12,54 @@ export interface ISort {
     type: sortTypes;
 }
 
-interface TasksProps {
+interface TasksPageProps {
     title: string;
 }
 
-export const TasksPage: React.FC<React.PropsWithChildren<TasksProps>> = ({ title, children, ...rest }) => {
+export const TasksPage: React.FC<TasksPageProps> = ({ title }) => {
+    const [page, setPage] = React.useState(1);
+    const [limit] = React.useState(5);
+    const [sort, setSort] = React.useState<ISort | null>(null);
 
-    const [page, setPage] = useState(1);
-    const [limit] = useState(5);
-    const [sort, setSort] = useState<ISort | null>(null);
+    const handleSetSort = React.useCallback((newSort: ISort | null) => {
+        setSort(newSort);
+    }, []);
 
-
-    const { data, isLoading } = useGetTasksQuery({
+    const { data: tasksData, isLoading: isTasksLoading } = useGetTasksQuery({
         page,
         limit,
-        sort
+        sort,
     });
 
-    if (isLoading) {
-        return <div>loading</div>;
-    }
+    const tasks = tasksData?.tasks ?? [];
 
-    if (!data) {
-        return <div>Not found</div>;
-    }
+    const renderedTasks = React.useMemo(
+        () =>
+            tasks.map((task, index) => (
+                <Task
+                    id={task.id}
+                    key={task.id + index}
+                    index={index + 1}
+                    name={task.name}
+                    created={task.created}
+                    deadline={task.deadline}
+                    status={task.status || ''}
+                    manager={task.manager || ''}
+                />
+            )),
+        [tasks]
+    );
 
     return (
         <Page title={title}>
             <div className="tasks">
-                {!data && <div>Задач нет</div>}
-
-                <SortPanel sortManager={{sort,setSort}}/>
-
-                {data.tasks && data.tasks.map((task, index) =>
-                    {return <Task
-                        id={task.id}
-                        key={uuidv4()}
-                        index={++index}
-                        name={task.name}
-                        created={task.created}
-                        deadline={task.deadline}
-                        status={task.status || ''}
-                        manager={task.manager || ''}
-                    />;}
-                )}
-
-                <Pagination
-                    page={page}
-                    pages={data.totalPage}
-                    setPage={setPage}
-                />
+                {isTasksLoading && <div>Loading</div>}
+                {!tasks.length && <div>Задач нет</div>}
+                {/*// @ts-ignore*/}
+                <SortPanel sortManager={{ sort, setSort: handleSetSort }} />
+                {renderedTasks}
+                <Pagination page={page} pages={tasksData?.totalPage ?? 0} setPage={setPage} />
             </div>
         </Page>
     );
-};
+}
