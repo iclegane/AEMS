@@ -6,26 +6,26 @@ import {IAuthResponse} from '../models/response/AuthResponse';
 
 export default class AuthService {
     static async login(email: string, password: string): Promise<AxiosResponse<IAuthResponse>> {
-        return TRANSPORT.post<IAuthResponse>('/user/login', {
+        return TRANSPORT.post<IAuthResponse>('/auth/login', {
             email,
             password
         });
     }
 
     static async registration(email: string, password: string): Promise<AxiosResponse<IAuthResponse>> {
-        return TRANSPORT.post<IAuthResponse>('/user/registration', {
+        return TRANSPORT.post<IAuthResponse>('/auth/registration', {
             email,
             password
         });
     }
 
     static async logout(): Promise<void> {
-        return TRANSPORT.post('/user/logout');
+        return TRANSPORT.post('/auth/logout');
     }
 
     // to avoid using TRANSPORT.interceptors
     static async refresh(): Promise<AxiosResponse<IAuthResponse>>{
-        return await axios.get<IAuthResponse>(`${API_URL}/user/refresh`, {
+        return await axios.get<IAuthResponse>(`${API_URL}/auth/refresh`, {
             withCredentials: true,
         });
     }
