@@ -1,6 +1,6 @@
 import {Router, Response, Request} from 'express';
 import {body} from 'express-validator';
-import UserController from '../controllers/UserController.js';
+import AuthController from '../controllers/AuthController.js';
 import AuthMiddleware from '../middlewares/AuthMiddleware.js';
 import ProfileController from '../controllers/ProfileController.js';
 import TaskController from '../controllers/TaskController.js';
@@ -9,13 +9,13 @@ import TaskStatusController from '../controllers/TaskStatusController.js';
 
 const router = Router();
 
-router.post('/user/registration',
+router.post('/auth/registration',
     body('email').isEmail(),
     body('password').isLength({min: 3, max: 32}),
-    UserController.registration);
-router.post('/user/login', UserController.login);
-router.post('/user/logout', UserController.logout);
-router.get('/user/refresh', UserController.refresh);
+    AuthController.registration);
+router.post('/auth/login', AuthController.login);
+router.post('/auth/logout', AuthController.logout);
+router.get('/auth/refresh', AuthController.refresh);
 
 router.post('/profile', AuthMiddleware, ProfileController.getProfileInfo);
 router.put('/profile', AuthMiddleware, ProfileController.updateProfileInfo);
