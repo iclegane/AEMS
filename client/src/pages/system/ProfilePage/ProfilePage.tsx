@@ -49,72 +49,58 @@ export const ProfilePage: React.FC<React.PropsWithChildren<ProfilePageProps>> = 
         <Page title={title}>
             <div className="profile gap-30">
                 <div className="dashboard-content-block">
-                    {isLoading ? (<Skeleton />) : (
-                        <>
-                            <div className='inline-flex gap-25'>
-                                <div className="profile__user-image" />
-                                <div className="flex flex-column">
-                                    <div className="profile__user-name">{auth.user.name}</div>
-                                    <div className="profile__user-position">{auth.user.post}</div>
-                                </div>
+                    <Skeleton loading={isLoading}>
+                        <div className='inline-flex gap-25'>
+                            <div className="profile__user-image" />
+                            <div className="flex flex-column">
+                                <div className="profile__user-name">{auth.user.name}</div>
+                                <div className="profile__user-position">{auth.user.post}</div>
                             </div>
-                            <button type="button" className="button button--icon profile__logout" onClick={logoutHandler}>
-                                <Icon name="logout"/>
-                            </button>
-                        </>
-                    )}
+                        </div>
+                        <button type="button" className="button button--icon profile__logout" onClick={logoutHandler}>
+                            <Icon name="logout"/>
+                        </button>
+                    </Skeleton>
                 </div>
                 <div className="flex gap-30">
                     <div className="dashboard-content-block profile__important">
-                        {isLoading ? (
-                            <Skeleton />
-                        ) : (
-                            <>
-                                <div className="dashboard-content-block__title">Важное</div>
-                                {data && data.important && (
-                                    <FieldList type="column" elements={profileFormatData(data.important)} />
-                                )}
-                            </>
-                        )}
+                        <Skeleton loading={isLoading}>
+                            <div className="dashboard-content-block__title">Важное</div>
+                            {data && data.important && (
+                                <FieldList type="column" elements={profileFormatData(data.important)} />
+                            )}
+                        </Skeleton>
                     </div>
                     <div className="flex flex-column flex-grow-1 gap-30">
                         <div className="dashboard-content-block">
-                            {isLoading ? (
-                                <Skeleton />
-                            ) : (
-                                <>
-                                    <button
-                                        type="button"
-                                        className="button button--text profile__change-btn"
-                                        onClick={() => onChangeBlock('personal')}
-                                    >
-                                        <Icon name="edit"/>
-                                    </button>
-                                    <div className="dashboard-content-block__title">Персональные данные</div>
-                                    {data && data.personal && (
-                                        <FieldList view="alternating" elements={profileFormatData(data.personal)}/>
-                                    )}
-                                </>
-                            )}
+                            <Skeleton loading={isLoading}>
+                                <button
+                                    type="button"
+                                    className="button button--text profile__change-btn"
+                                    onClick={() => onChangeBlock('personal')}
+                                >
+                                    <Icon name="edit"/>
+                                </button>
+                                <div className="dashboard-content-block__title">Персональные данные</div>
+                                {data && data.personal && (
+                                    <FieldList view="alternating" elements={profileFormatData(data.personal)}/>
+                                )}
+                            </Skeleton>
                         </div>
                         <div className="dashboard-content-block">
-                            {isLoading ? (
-                                <Skeleton />
-                            ) : (
-                                <>
-                                    <button
-                                        type="button"
-                                        className="button button--text profile__change-btn"
-                                        onClick={() => onChangeBlock('contacts')}
-                                    >
-                                        <Icon name="edit"/>
-                                    </button>
-                                    <div className="dashboard-content-block__title">Контакты</div>
-                                    {data && data.contacts && (
-                                        <FieldList view="alternating" elements={profileFormatData(data.contacts)}/>
-                                    )}
-                                </>
-                            )}
+                            <Skeleton loading={isLoading}>
+                                <button
+                                    type="button"
+                                    className="button button--text profile__change-btn"
+                                    onClick={() => onChangeBlock('contacts')}
+                                >
+                                    <Icon name="edit"/>
+                                </button>
+                                <div className="dashboard-content-block__title">Контакты</div>
+                                {data && data.contacts && (
+                                    <FieldList view="alternating" elements={profileFormatData(data.contacts)}/>
+                                )}
+                            </Skeleton>
                         </div>
                     </div>
                 </div>
