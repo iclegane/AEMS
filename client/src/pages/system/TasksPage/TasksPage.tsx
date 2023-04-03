@@ -5,6 +5,7 @@ import {sortTypes, useGetTasksQuery} from '../../../api/tasks';
 import SortPanel from '../../../components/SortPanel';
 import Pagination from '../../../components/Pagination';
 import Page from '../../../components/Page';
+import {Skeleton} from "antd";
 
 
 export interface ISort {
@@ -53,12 +54,21 @@ export const TasksPage: React.FC<TasksPageProps> = ({ title }) => {
     return (
         <Page title={title}>
             <div className="tasks">
-                {isTasksLoading && <div>Loading</div>}
-                {!tasks.length && <div>Задач нет</div>}
-                {/*// @ts-ignore*/}
-                <SortPanel sortManager={{ sort, setSort: handleSetSort }} />
-                {renderedTasks}
-                <Pagination page={page} pages={tasksData?.totalPage ?? 0} setPage={setPage} />
+                {!tasks.length && (
+                    <div className="dashboard-content-block">
+                        <div>Задач нет</div>
+                    </div>
+                )}
+                <Skeleton loading={isTasksLoading}>
+                    {/*// @ts-ignore*/}
+                    <SortPanel sortManager={{ sort, setSort: handleSetSort }} />
+                </Skeleton>
+                <Skeleton loading={isTasksLoading}>
+                    {renderedTasks}
+                </Skeleton>
+                <Skeleton loading={isTasksLoading}>
+                    <Pagination page={page} pages={tasksData?.totalPage ?? 0} setPage={setPage} />
+                </Skeleton>
             </div>
         </Page>
     );

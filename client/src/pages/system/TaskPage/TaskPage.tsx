@@ -6,6 +6,7 @@ import FieldList from '../../../components/FieldList';
 import {IFieldItem} from '../../../components/FieldList/FieldItem';
 import {TaskSelectStatuses} from '../../../components/TaskSelectStatuses/TaskSelectStatuses';
 import Page from '../../../components/Page';
+import {Skeleton} from "antd";
 
 
 const taskItems = (task: Task): IFieldItem[] => {
@@ -38,12 +39,11 @@ const taskItems = (task: Task): IFieldItem[] => {
     ];
 };
 
-
 interface TaskPageProps {
     title: string;
 }
 
-export const TaskPage: React.FC<React.PropsWithChildren<TaskPageProps>> = ({ title, children, ...rest }) => {
+export const TaskPage: React.FC<React.PropsWithChildren<TaskPageProps>> = ({ title, children }) => {
 
     const [isChanged, setChanged] = useState(false);
     const [updateData, setUpdateData] = useState<Partial<Task>>({});
@@ -85,22 +85,26 @@ export const TaskPage: React.FC<React.PropsWithChildren<TaskPageProps>> = ({ tit
             <div className='flex flex-column gap-30'>
                 <div className='flex gap-30'>
                     <div className='flex flex-column gap-30'>
-                        <div className="dashboard-content-block">
-                            <div className="dashboard-content-block__title">Инфо</div>
-                            <FieldList type="column" elements={taskItems(data)}/>
-                        </div>
-                        <div className="dashboard-content-block">
-                            <div className="dashboard-content-block__title">Изменить</div>
-                            <TaskSelectStatuses
-                                current={data.status}
-                                onSelect={onSelectHandle}
-                            />
-                        </div>
+                        <Skeleton loading={isLoading}>
+                            <div className="dashboard-content-block">
+                                <div className="dashboard-content-block__title">Инфо</div>
+                                <FieldList type="column" elements={taskItems(data)}/>
+                            </div>
+                            <div className="dashboard-content-block">
+                                <div className="dashboard-content-block__title">Изменить</div>
+                                <TaskSelectStatuses
+                                    current={data.status}
+                                    onSelect={onSelectHandle}
+                                />
+                            </div>
+                        </Skeleton>
                     </div>
                     <div className="dashboard-content-block flex-grow-1">
-                        <div className="dashboard-content-block__title">{data.name}</div>
-                        <div>{data.description}</div>
-                        <div dangerouslySetInnerHTML={{__html: data.body}} />
+                        <Skeleton loading={isLoading}>
+                            <div className="dashboard-content-block__title">{data.name}</div>
+                            <div>{data.description}</div>
+                            <div dangerouslySetInnerHTML={{__html: data.body}} />
+                        </Skeleton>
                     </div>
                 </div>
                 {isChanged && (
