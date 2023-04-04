@@ -13,17 +13,17 @@ export const TaskSelectStatuses: React.FC<ITaskSelectStatuses> = ({onSelect, cur
     const {data, isSuccess} = useGetStatusesQuery(null);
     if (!isSuccess) return null;
 
-    const items = data.map((status) => {return {
+    const items = data.map((status) => ({
         value: status.id,
         label: status.name
-    };});
+    }));
 
-    const currentItem = {...items.find((opt) => {return opt.label === current;})};
+    const currentItem = {...items.find((opt) => opt.label === current)};
 
     return (
         <Select
             defaultValue={currentItem}
-            onChange={(opt) => {return onSelect(opt);}}
+            onChange={(opt) => onSelect(opt)}
             options={items}
         />
     );

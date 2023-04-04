@@ -5,12 +5,10 @@ import {IPagination} from './types';
 import './index.scss';
 
 
-const createItems = (page: number, pages: number): IPaginationItem[] => {
-    return Array.from({ length: pages }, (_, i) => ({
+const createItems = (page: number, pages: number): IPaginationItem[] => Array.from({ length: pages }, (_, i) => ({
         number: i + 1,
         isActive: i + 1 === page,
     }));
-};
 
 export const Pagination = React.memo<IPagination>(({ page, setPage, pages }) => {
 
@@ -19,15 +17,11 @@ export const Pagination = React.memo<IPagination>(({ page, setPage, pages }) => 
     }, [setPage]);
 
     const prev = useCallback(() => {
-        setPage((prevState) => {
-            return prevState - 1 < 1 ? prevState : prevState - 1;
-        });
+        setPage((prevState) => prevState - 1 < 1 ? prevState : prevState - 1);
     }, [setPage]);
 
     const next = useCallback(() => {
-        setPage((prevState) => {
-            return prevState + 1 > pages ? prevState : prevState + 1;
-        });
+        setPage((prevState) => prevState + 1 > pages ? prevState : prevState + 1);
     }, [setPage, pages]);
 
     const items = useMemo(() => createItems(page, pages), [page, pages]);
@@ -43,14 +37,12 @@ export const Pagination = React.memo<IPagination>(({ page, setPage, pages }) => 
                     <Icon name="arrow"/>
                 </button>
 
-                {items && items.map((item, index) => {
-                    return <PaginationItem
+                {items && items.map((item, index) => <PaginationItem
                         key={`PaginationItem-${index}`}
                         isActive={item.isActive}
                         number={item.number}
                         callback={to}
-                    />;
-                })}
+                    />)}
 
                 <button
                     disabled={page === pages}

@@ -7,12 +7,10 @@ interface SettingsPageProps {
     title: string;
 }
 
-export const SettingsPage: React.FC<React.PropsWithChildren<SettingsPageProps>> = ({ title, children, ...rest }) => {
-    return (
+export const SettingsPage: React.FC<React.PropsWithChildren<SettingsPageProps>> = ({ title }) => (
         <Page title={title}>
             <div className="users gap-30">
                 <div className="dashboard-content-block" />
             </div>
         </Page>
     );
-};

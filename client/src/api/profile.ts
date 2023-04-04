@@ -34,25 +34,25 @@ interface IUpdateProfileRequest {
 }
 
 export const profileApi = api.injectEndpoints({
-    endpoints: build => {return {
+    endpoints: build => ({
         getProfile: build.query<IGetProfileResponse, {}>({
-            query: () => {return {
+            query: () => ({
                 url: 'profile',
                 method: 'POST'
-            };},
+            }),
             providesTags: ['Profile']
         }),
         updateProfile: build.mutation({
-            query: (request: IUpdateProfileRequest) => {return {
+            query: (request: IUpdateProfileRequest) => ({
                 url: 'profile',
                 method: 'PUT',
                 body: {
                     data: request
                 },
-            };},
+            }),
             invalidatesTags: ['Profile']
         })
-    };}
+    })
 });
 
 export const {

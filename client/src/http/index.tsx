@@ -14,9 +14,7 @@ TRANSPORT.interceptors.request.use((config) => {
     return config;
 });
 
-TRANSPORT.interceptors.response.use((config) => {
-    return config;
-},async (error) => {
+TRANSPORT.interceptors.response.use((config) => config,async (error) => {
 
     const originalRequest = error.config;
 

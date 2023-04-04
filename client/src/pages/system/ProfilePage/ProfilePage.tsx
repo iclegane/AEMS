@@ -1,6 +1,7 @@
 import React, {useCallback, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import ReactModal from 'react-modal';
+import { Skeleton } from 'antd';
 import {useAppDispatch, useAppSelector} from '../../../hooks/redux';
 import {logout} from '../../../store/actions/AuthAction';
 import Icon from '../../../components/Icon';
@@ -12,7 +13,6 @@ import FieldList from '../../../components/FieldList';
 import {profileFormatData} from '../../../utils/profileFormatData';
 import './index.scss';
 import Page from '../../../components/Page';
-import { Skeleton } from 'antd';
 
 
 interface ProfilePageProps {
@@ -31,7 +31,7 @@ export const ProfilePage: React.FC<React.PropsWithChildren<ProfilePageProps>> = 
 
     const logoutHandler = useCallback(() => {
         dispatch(logout());
-        navigate("/login");
+        navigate('/login');
     }, [dispatch, navigate]);
 
     const onChangeBlock = useCallback((type: ProfileEditTypes) => {

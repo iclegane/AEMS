@@ -7,8 +7,7 @@ interface Props {
     children: React.ReactNode;
 }
 
-export const IllustrationLayout: React.FC<Props> = ({ children , imageUrl}) => {
-    return (
+export const IllustrationLayout: React.FC<Props> = ({ children , imageUrl}) => (
         <div className="illustration-layout">
             <div className="illustration-layout__content">
                 { children }
@@ -18,4 +17,3 @@ export const IllustrationLayout: React.FC<Props> = ({ children , imageUrl}) => {
             </div>
         </div>
     );
-};

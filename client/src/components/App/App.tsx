@@ -4,11 +4,11 @@ import {useAppDispatch, useAppSelector} from '../../hooks/redux';
 import {checkAuth} from '../../store/actions/AuthAction';
 import UserRouter from '../../routes/UserRouter';
 import '@styles/index.scss';
-import {RootState} from "../../store/store";
-import AdminRouter from "../../routes/AdminRouter";
-import {useRole} from "../../hooks/useRole";
-import UnauthorizedRouter from "../../routes/UnauthorizedRouter";
-import {useIsAuth} from "../../hooks/useIsAuth";
+import {RootState} from '../../store/store';
+import AdminRouter from '../../routes/AdminRouter';
+import {useRole} from '../../hooks/useRole';
+import UnauthorizedRouter from '../../routes/UnauthorizedRouter';
+import {useIsAuth} from '../../hooks/useIsAuth';
 
 
 let didInit = false;
@@ -29,7 +29,7 @@ const AppConnect: React.FC = () => {
 
     if (isAuth) {
         const Router = role === 'Admin' ? AdminRouter : UserRouter;
-        return <RouterProvider router={Router} />
+        return <RouterProvider router={Router} />;
     }
 
     return <RouterProvider router={UnauthorizedRouter} />;

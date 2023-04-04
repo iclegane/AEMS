@@ -8,8 +8,7 @@ interface Props {
     children: React.ReactNode;
 }
 
-export const DashboardLayout: React.FC<Props> = ({ children }) => {
-    return (
+export const DashboardLayout: React.FC<Props> = ({ children }) => (
         <div className="dashboard-layout">
             <div className="dashboard-layout__left-panel">
                 <Sidebar/>
@@ -24,4 +23,3 @@ export const DashboardLayout: React.FC<Props> = ({ children }) => {
             </div>
         </div>
     );
-};

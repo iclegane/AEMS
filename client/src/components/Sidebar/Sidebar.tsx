@@ -5,8 +5,7 @@ import './index.scss';
 import LogoPath from '@assets/icons/logo.svg';
 
 
-export const Sidebar: React.FC = () => {
-    return (
+export const Sidebar: React.FC = () => (
         <div className="sidebar">
             <div className="sidebar__header">
                 <div className="sidebar__logo">
@@ -19,4 +18,3 @@ export const Sidebar: React.FC = () => {
             <div className="sidebar__footer" />
         </div>
     );
-};

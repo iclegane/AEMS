@@ -7,16 +7,14 @@ type Status = {
 }
 
 export const statusApi = api.injectEndpoints({
-    endpoints: (build) => {return {
+    endpoints: (build) => ({
         getStatuses: build.query<Status[], unknown>({
-            query: () => {
-                return {
+            query: () => ({
                     url: 'statuses',
                     method: 'GET'
-                };
-            }
+                })
         }),
-    };}
+    })
 });
 
 export const {

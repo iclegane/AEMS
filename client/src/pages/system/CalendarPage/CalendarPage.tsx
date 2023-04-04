@@ -1,9 +1,10 @@
 import React from 'react';
 import './index.scss';
-import Page from '../../../components/Page';
 import type { BadgeProps } from 'antd';
 import { Badge, Calendar } from 'antd';
 import type { Dayjs } from 'dayjs';
+import Page from '../../../components/Page';
+
 
 const getListData = (value: Dayjs) => {
     let listData;
@@ -42,7 +43,7 @@ const getMonthData = (value: Dayjs) => {
     }
 };
 
-export const CalendarPage: React.FC<React.PropsWithChildren<{ title: string; }>> = ({ title, children, ...rest }) => {
+export const CalendarPage: React.FC<React.PropsWithChildren<{ title: string; }>> = ({ title }) => {
 
     const monthCellRender = (value: Dayjs) => {
         const num = getMonthData(value);
