@@ -7,8 +7,7 @@ interface UsersPageProps {
     title: string;
 }
 
-export const MainPage: React.FC<React.PropsWithChildren<UsersPageProps>> = ({ title, children, ...rest }) => {
-    return (
+export const MainPage: React.FC<React.PropsWithChildren<UsersPageProps>> = ({ title }) => (
         <Page title={title}>
             <div className="users gap-30">
                 <div className="dashboard-content-block">
@@ -17,4 +16,3 @@ export const MainPage: React.FC<React.PropsWithChildren<UsersPageProps>> = ({ ti
             </div>
         </Page>
     );
-};

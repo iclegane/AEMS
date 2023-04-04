@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import {RootState} from "../store/store";
-import {UserRole} from "../models/IUser";
+import {RootState} from '../store/store';
+import {UserRole} from '../models/IUser';
 
 
 export const useRole = (): UserRole => {

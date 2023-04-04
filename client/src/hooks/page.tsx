@@ -7,9 +7,7 @@ import {RootState} from '../store/store';
 export function usePageTitle(title: string) {
     const dispatch = useDispatch();
 
-    const setTitle = useMemo(() => {
-        return (title: string) => {return dispatch(setPageTitle(title));};
-    }, [dispatch]);
+    const setTitle = useMemo(() => (title: string) => dispatch(setPageTitle(title)), [dispatch]);
 
     useEffect(() => {
         setTitle(title);
@@ -18,7 +16,7 @@ export function usePageTitle(title: string) {
         };
     }, [title, setTitle, dispatch]);
 
-    const pageTitle = useSelector((state: RootState) => {return state.pageTitle.title;});
+    const pageTitle = useSelector((state: RootState) => state.pageTitle.title);
 
     useEffect(() => {
         document.title = pageTitle;

@@ -1,5 +1,6 @@
-import React from "react";
-import ReactModal from "react-modal";
+import React from 'react';
+import ReactModal from 'react-modal';
+
 
 interface ModalState {
     isOpen: boolean;
@@ -30,5 +31,5 @@ export const CustomModal: React.FC<React.PropsWithChildren<CustomModalProps>> = 
         >
             {children}
         </ReactModal>
-    )
-}
+    );
+};

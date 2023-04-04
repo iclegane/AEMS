@@ -31,10 +31,9 @@ export interface IGetTaskParams {
 }
 
 export const postsApi = api.injectEndpoints({
-    endpoints: (build) => {return {
+    endpoints: (build) => ({
         getTasks: build.query<TaskResponse, IGetTaskParams>({
-            query: ({sort, limit, page}) => {
-                return {
+            query: ({sort, limit, page}) => ({
                     url: 'tasks',
                     params: {
                         limit,
@@ -42,29 +41,24 @@ export const postsApi = api.injectEndpoints({
                         sortField: sort?.field,
                         sortType: sort?.type,
                     }
-                };
-            }
+                })
         }),
         getTask: build.query<Task, string>({
-            query: (id) => {
-                return {
+            query: (id) => ({
                     url: `tasks/${id}`,
                     method: 'GET'
-                };
-            },
-            providesTags: (_task, _err, id) => {return [{ type: 'Tasks', id }];},
+                }),
+            providesTags: (_task, _err, id) => [{ type: 'Tasks', id }],
         }),
         updateTask: build.mutation<Task, Partial<Task>>({
-            query: ({id, ...patch}) => {
-                return {
+            query: ({id, ...patch}) => ({
                     url: `tasks/${id}`,
                     method: 'PUT',
                     body: patch,
-                };
-            },
-            invalidatesTags: (task) => {return [{ type: 'Tasks', id: task?.id }];},
+                }),
+            invalidatesTags: (task) => [{ type: 'Tasks', id: task?.id }],
         })
-    };}
+    })
 });
 
 

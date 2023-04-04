@@ -23,9 +23,9 @@ export const api = createApi({
     reducerPath: 'splitApi',
     baseQuery: baseQueryWithRetry,
     tagTypes: ['Tasks', 'Profile', 'Users'],
-    endpoints: () => {return {};},
+    endpoints: () => ({}),
 });
 
 export const enhancedApi = api.enhanceEndpoints({
-    endpoints: () => {return {};},
+    endpoints: () => ({}),
 });

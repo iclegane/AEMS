@@ -8,7 +8,7 @@ import {RootState} from '../../store/store';
 
 export const Topbar: React.FC = () => {
 
-    const title = useSelector((state: RootState) => {return state.pageTitle.title;});
+    const title = useSelector((state: RootState) => state.pageTitle.title);
 
     return (
         <div className="topbar">

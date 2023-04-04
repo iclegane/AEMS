@@ -1,17 +1,15 @@
 import React, {useState} from 'react';
 import './index.scss';
 import {useParams} from 'react-router-dom';
+import {Skeleton} from 'antd';
 import {Task, useGetTaskQuery, useUpdateTaskMutation} from '../../../api/tasks';
 import FieldList from '../../../components/FieldList';
 import {IFieldItem} from '../../../components/FieldList/FieldItem';
 import {TaskSelectStatuses} from '../../../components/TaskSelectStatuses/TaskSelectStatuses';
 import Page from '../../../components/Page';
-import {Skeleton} from "antd";
 
 
-const taskItems = (task: Task): IFieldItem[] => {
-
-    return [
+const taskItems = (task: Task): IFieldItem[] => [
         {
             name: 'Дата создания',
             value: task.created,
@@ -37,13 +35,12 @@ const taskItems = (task: Task): IFieldItem[] => {
             value: task.performer || '',
         },
     ];
-};
 
 interface TaskPageProps {
     title: string;
 }
 
-export const TaskPage: React.FC<React.PropsWithChildren<TaskPageProps>> = ({ title, children }) => {
+export const TaskPage: React.FC<React.PropsWithChildren<TaskPageProps>> = ({ title }) => {
 
     const [isChanged, setChanged] = useState(false);
     const [updateData, setUpdateData] = useState<Partial<Task>>({});
@@ -59,12 +56,10 @@ export const TaskPage: React.FC<React.PropsWithChildren<TaskPageProps>> = ({ tit
 
     const onSelectHandle = (opt: {value?: string | undefined, label?: string | undefined}) => {
         setChanged(true);
-        setUpdateData((prevState) => {
-            return {
+        setUpdateData((prevState) => ({
                 ...prevState,
                 status: opt.value
-            };
-        });
+            }));
     };
 
     const save = async () => {

@@ -13,7 +13,7 @@ import {useAppSelector} from '../../../hooks/redux';
 export const AuthPage: React.FC = () => {
 
     const navigate = useNavigate();
-    const {auth} = useAppSelector(state => {return state.authReducer;});
+    const {auth} = useAppSelector(state => state.authReducer);
 
     useEffect(() => {
         if (auth.isAuth) navigate('/system');

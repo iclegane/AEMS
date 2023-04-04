@@ -1,6 +1,7 @@
-import {IUser, UserRole} from "../../../../models/IUser";
-import {FetchBaseQueryError} from "@reduxjs/toolkit/query";
-import {SerializedError} from "@reduxjs/toolkit";
+import {FetchBaseQueryError} from '@reduxjs/toolkit/query';
+import {SerializedError} from '@reduxjs/toolkit';
+import {IUser, UserRole} from '../../../../models/IUser';
+
 
 export interface IAddUserFromFields extends Omit<Partial<IUser>, 'confirmPassword'> {
     confirmPassword: string;

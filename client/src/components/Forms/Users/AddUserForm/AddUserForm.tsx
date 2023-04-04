@@ -1,9 +1,10 @@
-import React, {useState} from "react";
-import {useFormik} from "formik";
+import React, {useState} from 'react';
+import {useFormik} from 'formik';
 import {Progress, Result, Select, Spin} from 'antd';
-import {SignUpSchema} from "../../../../utils/validationSchemes";
-import {useAddUserMutation} from "../../../../api/users";
-import {AddUserFormSelectOption, AddUserResponse, IAddUserFromFields} from "./types";
+import {SignUpSchema} from '../../../../utils/validationSchemes';
+import {useAddUserMutation} from '../../../../api/users';
+import {AddUserFormSelectOption, AddUserResponse, IAddUserFromFields} from './types';
+
 
 const values: IAddUserFromFields = {
     name: '',
@@ -73,23 +74,20 @@ export const AddUserForm: React.FC = () => {
         formik.handleSubmit(e);
     };
 
-    const Message = () => {
-        return (
+    const Message = () => (
             <>
                 <Result
-                    status={isSuccess ? "success" : "error"}
-                    title={isSuccess ? "Successfully Added User" : "Submission Failed"}
-                    subTitle={isSuccess ? "New user has been added successfully." : "Please check and modify the form before resubmitting."}
+                    status={isSuccess ? 'success' : 'error'}
+                    title={isSuccess ? 'Successfully Added User' : 'Submission Failed'}
+                    subTitle={isSuccess ? 'New user has been added successfully.' : 'Please check and modify the form before resubmitting.'}
                 />
                 <Progress percent={complete} />
             </>
-        )
-    }
+        );
 
-    const Form = () => {
-        return (
+    const Form = () => (
             <form className='form' onSubmit={handleSubmit}>
-                <h2 className={'text-center'}>Add new User</h2>
+                <h2 className="text-center">Add new User</h2>
                 <div className='form-group'>
                     <label htmlFor="name">Имя</label>
                     <input
@@ -155,12 +153,11 @@ export const AddUserForm: React.FC = () => {
                 <button type="submit" disabled={isAddingUser} className='button button--blue button--full-width button--center form__submit'>Добавить</button>
             </form>
         );
-    }
 
     return(
         <Spin spinning={isAddingUser}>
             {isSuccess === null && Form()}
             {isSuccess !== null && Message()}
         </Spin>
-    )
-}
+    );
+};

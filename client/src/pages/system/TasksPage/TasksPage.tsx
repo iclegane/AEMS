@@ -1,11 +1,11 @@
 import React from 'react';
 import './index.scss';
 import Task from '@components/Task';
+import {Skeleton} from 'antd';
 import {sortTypes, useGetTasksQuery} from '../../../api/tasks';
 import SortPanel from '../../../components/SortPanel';
 import Pagination from '../../../components/Pagination';
 import Page from '../../../components/Page';
-import {Skeleton} from "antd";
 
 
 export interface ISort {
@@ -60,7 +60,7 @@ export const TasksPage: React.FC<TasksPageProps> = ({ title }) => {
                     </div>
                 )}
                 <Skeleton loading={isTasksLoading}>
-                    {/*// @ts-ignore*/}
+                    {/* // @ts-ignore */}
                     <SortPanel sortManager={{ sort, setSort: handleSetSort }} />
                 </Skeleton>
                 <Skeleton loading={isTasksLoading}>
@@ -72,4 +72,4 @@ export const TasksPage: React.FC<TasksPageProps> = ({ title }) => {
             </div>
         </Page>
     );
-}
+};

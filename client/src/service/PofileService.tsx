@@ -32,15 +32,15 @@ export const ProfileService = createApi({
         },
         credentials: 'include',
     }),
-    endpoints: (builder) => {return {
+    endpoints: (builder) => ({
         profile: builder.query<ProfileResponse, ProfileRequest>({
-            query: (id) => {return {
+            query: (id) => ({
                 url: 'profile',
                 method: 'POST',
                 body: id
-            };},
+            }),
         })
-    };},
+    }),
 });
 
 export const { useProfileQuery } = ProfileService;

@@ -11,14 +11,12 @@ interface VacationPageProps {
     title: string;
 }
 
-export const VacationPage: React.FC<React.PropsWithChildren<VacationPageProps>> = ({ title, children, ...rest }) => {
+export const VacationPage: React.FC<React.PropsWithChildren<VacationPageProps>> = ({ title }) => {
 
     const [date, setDate] = useState<string[]>([]);
 
     const handleOnChange = (dates: Date[]) => {
-        const range = dates.map((date) => {
-            return moment(date).format('DD.MM.YYYY');
-        });
+        const range = dates.map((date) => moment(date).format('DD.MM.YYYY'));
 
         setDate(range);
     };

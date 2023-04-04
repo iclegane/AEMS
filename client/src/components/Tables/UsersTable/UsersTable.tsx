@@ -1,8 +1,8 @@
-import React from "react";
-import {Table} from "antd";
-import {ColumnsType} from "antd/es/table";
-import {IUser} from "../../../models/IUser";
-import {useGetUsersQuery} from "../../../api/users";
+import React from 'react';
+import {Table} from 'antd';
+import {ColumnsType} from 'antd/es/table';
+import {IUser} from '../../../models/IUser';
+import {useGetUsersQuery} from '../../../api/users';
 
 
 const columns: ColumnsType<IUser> = [
@@ -69,8 +69,6 @@ export const UsersTable: React.FC = () => {
     const usersWithKeys = users.map((user) => ({ ...user, key: user.id }));
 
     return (
-        <>
-            <Table columns={columns} dataSource={usersWithKeys} loading={isLoading}/>
-        </>
-    )
-}
+        <Table columns={columns} dataSource={usersWithKeys} loading={isLoading}/>
+    );
+};

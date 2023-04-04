@@ -6,7 +6,7 @@ import {useAppSelector} from '../../hooks/redux';
 
 export const UserPanel: React.FC = () => {
 
-    const {auth} = useAppSelector(state => {return state.authReducer;});
+    const {auth} = useAppSelector(state => state.authReducer);
 
     if (!auth.user) return null;
 
