@@ -1,6 +1,7 @@
 import {Router, Response, Request} from 'express';
 import {body} from 'express-validator';
 import AuthController from '../controllers/AuthController.js';
+import UserController from '../controllers/UserController.js';
 import AuthMiddleware from '../middlewares/AuthMiddleware.js';
 import ProfileController from '../controllers/ProfileController.js';
 import TaskController from '../controllers/TaskController.js';
@@ -26,6 +27,9 @@ router.post('/tasks/add', AuthMiddleware, TaskController.add);
 router.put('/tasks/:id', AuthMiddleware, TaskController.update);
 
 router.get('/statuses',  TaskStatusController.list);
+
+router.get('/users/list', UserController.list);
+router.post('/users/add', UserController.add);
 
 router.get('*', (req: Request, res: Response) => res.sendStatus(404));
 
