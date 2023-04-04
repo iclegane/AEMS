@@ -1,7 +1,7 @@
 import {Response, Request, NextFunction} from 'express';
 import {validationResult} from 'express-validator';
 import ApiError from '../exceptions/ApiError.js';
-import UserService from '../service/UserService.js';
+import UserService from '../service/AuthService.js';
 
 
 export interface IAuthQuery {

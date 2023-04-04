@@ -18,7 +18,7 @@ export interface IUserDataResponse {
     user: IUserDto;
 }
 
-class UserService {
+class AuthService {
     async registration(email: string, password: string): Promise<IUserDataResponse> {
         const candidate = await UserModel.findOne({email}).exec();
         if (candidate) {
@@ -113,4 +113,4 @@ class UserService {
     }
 }
 
-export default new UserService();
+export default new AuthService();
