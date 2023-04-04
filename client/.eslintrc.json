@@ -35,7 +35,7 @@
     "linebreak-style": ["error", "unix"],
     "quotes": ["error", "single"],
     "semi": ["error", "always"],
-    "arrow-body-style": ["error", "always"],
+    "arrow-body-style": ["error", "never"],
     "no-param-reassign": ["error", { "props": false }],
     "no-unused-expressions": "off",
     "no-restricted-exports": ["error", { "restrictedNamedExports": ["namedFrom"] }],
