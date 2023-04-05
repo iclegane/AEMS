@@ -8,7 +8,7 @@ export interface ITaskListResponse {
 
 export interface ITaskListQuery {
     filter?: {
-        userID?: string;
+        performerID?: string;
         managerID?: string;
     };
     options: {

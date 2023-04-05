@@ -21,7 +21,7 @@ class TaskService {
             .populate<{performerID: ITaskPopulate['performer']}>('performerID', 'id name')
             .exec();
 
-        const count = await TaskModel.count().exec();
+        const count = await TaskModel.find(filter).count().exec();
 
         return {
             tasks: tasks.map((task) => new TaskDto(task)),
@@ -58,7 +58,7 @@ class TaskService {
             throw ApiError.BadRequest('Задача не сформирована');
         }
 
-        return 'populateTask';
+        return populateTask;
     }
 
     async update(query: ITaskUpdateQuery): Promise<TaskDto | null> {

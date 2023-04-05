@@ -39,7 +39,7 @@ export const TasksPage: React.FC<TasksPageProps> = ({ title }) => {
             tasks.map((task, index) => (
                 <Task
                     id={task.id}
-                    key={task.id + index}
+                    key={task.id + task.created}
                     index={index + 1}
                     name={task.name}
                     created={task.created}
@@ -55,20 +55,26 @@ export const TasksPage: React.FC<TasksPageProps> = ({ title }) => {
         <Page title={title}>
             <div className="tasks">
                 {!tasks.length && (
-                    <div className="dashboard-content-block">
-                        <div>Задач нет</div>
-                    </div>
+                    <Skeleton loading={isTasksLoading}>
+                        <div className="dashboard-content-block">
+                            <div>Задач нет</div>
+                        </div>
+                    </Skeleton>
                 )}
-                <Skeleton loading={isTasksLoading}>
-                    {/* // @ts-ignore */}
-                    <SortPanel sortManager={{ sort, setSort: handleSetSort }} />
-                </Skeleton>
-                <Skeleton loading={isTasksLoading}>
-                    {renderedTasks}
-                </Skeleton>
-                <Skeleton loading={isTasksLoading}>
-                    <Pagination page={page} pages={tasksData?.totalPage ?? 0} setPage={setPage} />
-                </Skeleton>
+                {!!tasks.length && (
+                    <>
+                        <Skeleton loading={isTasksLoading}>
+                            {/* // @ts-ignore */}
+                            <SortPanel sortManager={{ sort, setSort: handleSetSort }} />
+                        </Skeleton>
+                        <Skeleton loading={isTasksLoading}>
+                            {renderedTasks}
+                        </Skeleton>
+                        <Skeleton loading={isTasksLoading}>
+                            <Pagination page={page} pages={tasksData?.totalPage ?? 0} setPage={setPage} />
+                        </Skeleton>
+                    </>
+                )}
             </div>
         </Page>
     );
