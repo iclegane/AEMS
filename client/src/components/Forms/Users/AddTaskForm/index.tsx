@@ -1,1 +1,1 @@
-export {AddTaskForm as default} from './AddTaskForm';
+export { AddTaskForm as default } from './AddTaskForm';

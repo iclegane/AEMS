@@ -1,6 +1,6 @@
 import React from 'react';
 import Select from 'react-select';
-import {useGetStatusesQuery} from '../../api/statuses';
+import { useGetStatusesQuery } from '../../api/statuses';
 
 
 interface ITaskSelectStatuses {
@@ -8,9 +8,9 @@ interface ITaskSelectStatuses {
     current?: string;
 }
 
-export const TaskSelectStatuses: React.FC<ITaskSelectStatuses> = ({onSelect, current}) => {
+export const TaskSelectStatuses: React.FC<ITaskSelectStatuses> = ({ onSelect, current }) => {
 
-    const {data, isSuccess} = useGetStatusesQuery(null);
+    const { data, isSuccess } = useGetStatusesQuery(null);
     if (!isSuccess) return null;
 
     const items = data.map((status) => ({
@@ -18,7 +18,7 @@ export const TaskSelectStatuses: React.FC<ITaskSelectStatuses> = ({onSelect, cur
         label: status.name
     }));
 
-    const currentItem = {...items.find((opt) => opt.label === current)};
+    const currentItem = { ...items.find((opt) => opt.label === current) };
 
     return (
         <Select

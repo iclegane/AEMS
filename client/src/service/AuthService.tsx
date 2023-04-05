@@ -1,7 +1,7 @@
-import axios, {AxiosResponse} from 'axios';
-import {API_URL} from '@utils/constants';
+import axios, { AxiosResponse } from 'axios';
+import { API_URL } from '@utils/constants';
 import TRANSPORT from '../http';
-import {IAuthResponse} from '../models/response/AuthResponse';
+import { IAuthResponse } from '../models/response/AuthResponse';
 
 
 export default class AuthService {

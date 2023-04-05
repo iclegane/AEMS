@@ -1,9 +1,9 @@
 import React from 'react';
-import {v4 as uuidv4} from 'uuid';
-import {IFieldItem} from './types';
+import { v4 as uuidv4 } from 'uuid';
+import { IFieldItem } from './types';
 
 
-export const FieldItem: React.FC<IFieldItem> = ({name, value}) => (
+export const FieldItem: React.FC<IFieldItem> = ({ name, value }) => (
         <div className="field">
             <div className="field__name">{name}</div>
             <div className="field__value">

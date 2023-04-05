@@ -1,5 +1,5 @@
-import {api} from './base';
-import {IUser} from '../models/IUser';
+import { api } from './base';
+import { IUser } from '../models/IUser';
 
 
 export const usersApi = api.injectEndpoints({

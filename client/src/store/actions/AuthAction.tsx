@@ -1,6 +1,6 @@
-import {createAsyncThunk} from '@reduxjs/toolkit';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import {IAuthFields} from '@components/Forms/AuthForm';
+import { IAuthFields } from '@components/Forms/AuthForm';
 import AuthService from '../../service/AuthService';
 
 

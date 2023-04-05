@@ -1,14 +1,14 @@
-import React, {useCallback, useMemo, useState} from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import Page from '../../../components/Page';
 import UsersTable from '../../../components/Tables/UsersTable';
-import {CustomModal} from '../../../components/CustomModal/CustomModal';
+import { CustomModal } from '../../../components/CustomModal/CustomModal';
 import AddUserForm from '../../../components/Forms/Users/AddUserForm';
 import AddTaskForm from '../../../components/Forms/Users/AddTaskForm';
-import {formActions} from './types';
+import { formActions } from './types';
 import './index.scss';
 
 
-export const UsersPage: React.FC<{ title: string }> = ({ title}) => {
+export const UsersPage: React.FC<{ title: string }> = ({ title }) => {
 
     const [isOpen, setIsOpen] = useState(false);
     const [modalContent, setModalContent] = useState<JSX.Element | null>(null);

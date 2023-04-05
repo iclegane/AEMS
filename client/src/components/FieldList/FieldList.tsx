@@ -1,5 +1,5 @@
 import React from 'react';
-import {IFieldList} from './types';
+import { IFieldList } from './types';
 import FieldItem from './FieldItem';
 
 

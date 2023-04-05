@@ -1,5 +1,5 @@
-import {api} from './base';
-import {ISort} from '../pages/system/TasksPage/TasksPage';
+import { api } from './base';
+import { ISort } from '../pages/system/TasksPage/TasksPage';
 
 
 export interface Task {
@@ -33,7 +33,7 @@ export interface IGetTaskParams {
 export const postsApi = api.injectEndpoints({
     endpoints: (build) => ({
         getTasks: build.query<TaskResponse, IGetTaskParams>({
-            query: ({sort, limit, page}) => ({
+            query: ({ sort, limit, page }) => ({
                     url: 'tasks',
                     params: {
                         limit,
@@ -51,7 +51,7 @@ export const postsApi = api.injectEndpoints({
             providesTags: (_task, _err, id) => [{ type: 'Tasks', id }],
         }),
         updateTask: build.mutation<Task, Partial<Task>>({
-            query: ({id, ...patch}) => ({
+            query: ({ id, ...patch }) => ({
                     url: `tasks/${id}`,
                     method: 'PUT',
                     body: patch,

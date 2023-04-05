@@ -1,5 +1,5 @@
-import {Dispatch, SetStateAction} from 'react';
-import {ISort} from '../../pages/system/TasksPage/TasksPage';
+import { Dispatch, SetStateAction } from 'react';
+import { ISort } from '../../pages/system/TasksPage/TasksPage';
 
 
 export interface ISortPanel {

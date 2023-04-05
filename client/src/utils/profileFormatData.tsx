@@ -1,5 +1,5 @@
-import {IFieldItem} from '../components/FieldList/FieldItem';
-import {fieldsEnum} from './enums';
+import { IFieldItem } from '../components/FieldList/FieldItem';
+import { fieldsEnum } from './enums';
 
 
 export function profileFormatData(obj: {[key:string]:string | null | string[]}): IFieldItem[] {

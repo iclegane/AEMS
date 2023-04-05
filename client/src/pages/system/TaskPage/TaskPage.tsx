@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import './index.scss';
-import {useParams} from 'react-router-dom';
-import {Skeleton} from 'antd';
-import {Task, useGetTaskQuery, useUpdateTaskMutation} from '../../../api/tasks';
+import { useParams } from 'react-router-dom';
+import { Skeleton } from 'antd';
+import { Task, useGetTaskQuery, useUpdateTaskMutation } from '../../../api/tasks';
 import FieldList from '../../../components/FieldList';
-import {IFieldItem} from '../../../components/FieldList/FieldItem';
-import {TaskSelectStatuses} from '../../../components/TaskSelectStatuses/TaskSelectStatuses';
+import { IFieldItem } from '../../../components/FieldList/FieldItem';
+import { TaskSelectStatuses } from '../../../components/TaskSelectStatuses/TaskSelectStatuses';
 import Page from '../../../components/Page';
 
 
@@ -50,7 +50,7 @@ export const TaskPage: React.FC<React.PropsWithChildren<TaskPageProps>> = ({ tit
 
     const [UpdateTask] = useUpdateTaskMutation();
 
-    const {data, isSuccess, isLoading} = useGetTaskQuery(id);
+    const { data, isSuccess, isLoading } = useGetTaskQuery(id);
     if (isLoading) return <div>loading...</div>;
     if (!isSuccess) return null;
 
@@ -98,7 +98,7 @@ export const TaskPage: React.FC<React.PropsWithChildren<TaskPageProps>> = ({ tit
                         <Skeleton loading={isLoading}>
                             <div className="dashboard-content-block__title">{data.name}</div>
                             <div>{data.description}</div>
-                            <div dangerouslySetInnerHTML={{__html: data.body}} />
+                            <div dangerouslySetInnerHTML={{ __html: data.body }} />
                         </Skeleton>
                     </div>
                 </div>

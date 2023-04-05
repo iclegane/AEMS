@@ -1,14 +1,14 @@
 import React from 'react';
 import moment from 'moment';
-import {useFormik} from 'formik';
-import {ProfilePersonalSchema} from '../../../../utils/validationSchemes';
-import {useUpdateProfileMutation} from '../../../../api/profile';
-import {IPersonalForm, IPersonalValues} from './types';
+import { useFormik } from 'formik';
+import { ProfilePersonalSchema } from '../../../../utils/validationSchemes';
+import { useUpdateProfileMutation } from '../../../../api/profile';
+import { IPersonalForm, IPersonalValues } from './types';
 
 
 export const PersonalForm: React.FC<{data: IPersonalForm}> = (props) => {
 
-    const {name, birth_date, gender} = props.data;
+    const { name, birth_date, gender } = props.data;
 
     const [UpdateProfile] =  useUpdateProfileMutation();
     const values: IPersonalValues = {
@@ -23,7 +23,7 @@ export const PersonalForm: React.FC<{data: IPersonalForm}> = (props) => {
         validationSchema: ProfilePersonalSchema,
         onSubmit: async (formData) => {
             try {
-                await UpdateProfile({personal: formData});
+                await UpdateProfile({ personal: formData });
 
             } catch (error) {
 

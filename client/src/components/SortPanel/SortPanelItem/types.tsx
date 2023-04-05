@@ -1,4 +1,4 @@
-import {sortTypes} from '../../../api/tasks';
+import { sortTypes } from '../../../api/tasks';
 
 
 export interface ISortItem {

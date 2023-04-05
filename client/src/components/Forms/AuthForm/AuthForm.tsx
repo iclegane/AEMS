@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
-import {useFormik} from 'formik';
-import {SignInSchema} from '@utils/validationSchemes';
-import {unwrapResult} from '@reduxjs/toolkit';
-import {IAuthFields} from './types';
-import {useAppDispatch} from '../../../hooks/redux';
-import {login} from '../../../store/actions/AuthAction';
+import React, { useState } from 'react';
+import { useFormik } from 'formik';
+import { SignInSchema } from '@utils/validationSchemes';
+import { unwrapResult } from '@reduxjs/toolkit';
+import { IAuthFields } from './types';
+import { useAppDispatch } from '../../../hooks/redux';
+import { login } from '../../../store/actions/AuthAction';
 
 
 export const AuthForm: React.FC = () => {

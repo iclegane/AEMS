@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {API_URL} from '@utils/constants';
+import { API_URL } from '@utils/constants';
 import AuthService from '../service/AuthService';
 
 

@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
-import SortPanelItem, {ISortItem} from './SortPanelItem';
-import {ISortPanel} from './types';
+import React, { useState } from 'react';
+import SortPanelItem, { ISortItem } from './SortPanelItem';
+import { ISortPanel } from './types';
 import './index.scss';
 
 
@@ -39,7 +39,7 @@ const INITIAL_SORT_ITEMS: ISortItem[] = [
 
 export const SortPanel: React.FC<ISortPanel> = (props) => {
 
-    const {sort, setSort} = props.sortManager;
+    const { sort, setSort } = props.sortManager;
 
     const [sortItems] = useState<ISortItem[]>(
         INITIAL_SORT_ITEMS.map((item) => {

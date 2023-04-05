@@ -1,7 +1,7 @@
-import React, {useCallback, useMemo} from 'react';
+import React, { useCallback, useMemo } from 'react';
 import Icon from '../Icon';
-import PaginationItem, {IPaginationItem} from './PaginationItem';
-import {IPagination} from './types';
+import PaginationItem, { IPaginationItem } from './PaginationItem';
+import { IPagination } from './types';
 import './index.scss';
 
 

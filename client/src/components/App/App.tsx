@@ -1,14 +1,14 @@
-import React, {useEffect} from 'react';
-import {RouterProvider} from 'react-router-dom';
-import {useAppDispatch, useAppSelector} from '../../hooks/redux';
-import {checkAuth} from '../../store/actions/AuthAction';
+import React, { useEffect } from 'react';
+import { RouterProvider } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { checkAuth } from '../../store/actions/AuthAction';
 import UserRouter from '../../routes/UserRouter';
 import '@styles/index.scss';
-import {RootState} from '../../store/store';
+import { RootState } from '../../store/store';
 import AdminRouter from '../../routes/AdminRouter';
-import {useRole} from '../../hooks/useRole';
+import { useRole } from '../../hooks/useRole';
 import UnauthorizedRouter from '../../routes/UnauthorizedRouter';
-import {useIsAuth} from '../../hooks/useIsAuth';
+import { useIsAuth } from '../../hooks/useIsAuth';
 
 
 let didInit = false;
