@@ -1,8 +1,8 @@
 import React from 'react';
 import './index.scss';
 import Task from '@components/Task';
-import {Skeleton} from 'antd';
-import {sortTypes, useGetTasksQuery} from '../../../api/tasks';
+import { Skeleton } from 'antd';
+import { sortTypes, useGetTasksQuery } from '../../../api/tasks';
 import SortPanel from '../../../components/SortPanel';
 import Pagination from '../../../components/Pagination';
 import Page from '../../../components/Page';

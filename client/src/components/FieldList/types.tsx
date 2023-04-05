@@ -1,4 +1,4 @@
-import {IFieldItem} from './FieldItem';
+import { IFieldItem } from './FieldItem';
 
 
 export interface IFieldList {

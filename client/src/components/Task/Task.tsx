@@ -1,11 +1,11 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
-import {truncate} from '../../utils/truncate';
-import {ITask} from './types';
+import { Link } from 'react-router-dom';
+import { truncate } from '../../utils/truncate';
+import { ITask } from './types';
 import './index.scss';
 
 
-export const Task: React.FC<ITask> = ({id, index, name, deadline, created, status, manager}) => {
+export const Task: React.FC<ITask> = ({ id, index, name, deadline, created, status, manager }) => {
 
     const shortName = truncate(name, 33);
 

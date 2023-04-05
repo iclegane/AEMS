@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import {API_URL} from '../utils/constants';
-import {RootState} from '../store/store';
+import { API_URL } from '../utils/constants';
+import { RootState } from '../store/store';
 
 
 type Field = {
@@ -21,8 +21,8 @@ export interface ProfileRequest {
 export const ProfileService = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: API_URL,
-        prepareHeaders: (headers, {getState}) => {
-            const {isAuth} = (getState() as RootState).authReducer.auth;
+        prepareHeaders: (headers, { getState }) => {
+            const { isAuth } = (getState() as RootState).authReducer.auth;
 
             if (isAuth) {
                 headers.set('Authorization', `Bearer ${localStorage.getItem('token')}`);

@@ -1,1 +1,1 @@
-export {AddUserForm as default} from './AddUserForm';
+export { AddUserForm as default } from './AddUserForm';

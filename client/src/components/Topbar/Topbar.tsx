@@ -2,8 +2,8 @@ import React from 'react';
 import UserPanel from '@components/UserPanel';
 import Icon from '@components/Icon/';
 import './index.scss';
-import {useSelector} from 'react-redux';
-import {RootState} from '../../store/store';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
 
 
 export const Topbar: React.FC = () => {

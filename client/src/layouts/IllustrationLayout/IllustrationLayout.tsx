@@ -7,13 +7,13 @@ interface Props {
     children: React.ReactNode;
 }
 
-export const IllustrationLayout: React.FC<Props> = ({ children , imageUrl}) => (
+export const IllustrationLayout: React.FC<Props> = ({ children , imageUrl }) => (
         <div className="illustration-layout">
             <div className="illustration-layout__content">
                 { children }
             </div>
             <div className="illustration-layout__picture-container">
-                <div style={{backgroundImage: `url(${imageUrl})`}} className="illustration-layout__picture" />
+                <div style={{ backgroundImage: `url(${imageUrl})` }} className="illustration-layout__picture" />
             </div>
         </div>
     );

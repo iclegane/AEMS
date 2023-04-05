@@ -1,1 +1,1 @@
-export {TaskSelectStatuses as default} from './TaskSelectStatuses';
+export { TaskSelectStatuses as default } from './TaskSelectStatuses';

@@ -1,12 +1,12 @@
 import React from 'react';
-import {Table, Space} from 'antd';
-import {ColumnsType} from 'antd/es/table';
-import {IUser} from '../../../models/IUser';
-import {useGetUsersQuery} from '../../../api/users';
-import {formActions} from '../../../pages/system/UsersPage';
+import { Table, Space } from 'antd';
+import { ColumnsType } from 'antd/es/table';
+import { IUser } from '../../../models/IUser';
+import { useGetUsersQuery } from '../../../api/users';
+import { formActions } from '../../../pages/system/UsersPage';
 
 
-export const UsersTable: React.FC<{actionHandler: (action: formActions, id: string) => () => void}> = ({actionHandler}) => {
+export const UsersTable: React.FC<{actionHandler: (action: formActions, id: string) => () => void}> = ({ actionHandler }) => {
 
     const { data: users = [], isLoading, isError } = useGetUsersQuery();
 

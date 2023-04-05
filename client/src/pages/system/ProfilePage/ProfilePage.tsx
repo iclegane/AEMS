@@ -1,16 +1,16 @@
-import React, {useCallback, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
+import React, { useCallback, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ReactModal from 'react-modal';
 import { Skeleton } from 'antd';
-import {useAppDispatch, useAppSelector} from '../../../hooks/redux';
-import {logout} from '../../../store/actions/AuthAction';
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
+import { logout } from '../../../store/actions/AuthAction';
 import Icon from '../../../components/Icon';
-import {useGetProfileQuery} from '../../../api/profile';
+import { useGetProfileQuery } from '../../../api/profile';
 import PersonalForm from '../../../components/Forms/Profile/PersonalForm';
 import ContactForm from '../../../components/Forms/Profile/ContactForm';
-import {ProfileEditTypes} from './types';
+import { ProfileEditTypes } from './types';
 import FieldList from '../../../components/FieldList';
-import {profileFormatData} from '../../../utils/profileFormatData';
+import { profileFormatData } from '../../../utils/profileFormatData';
 import './index.scss';
 import Page from '../../../components/Page';
 

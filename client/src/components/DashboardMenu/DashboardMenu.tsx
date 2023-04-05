@@ -1,9 +1,9 @@
 import React from 'react';
 import Icon from '@components/Icon';
 import './index.scss';
-import {Link} from 'react-router-dom';
-import {v4 as uuidv4} from 'uuid';
-import {menu} from '../../utils/menu';
+import { Link } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
+import { menu } from '../../utils/menu';
 
 
 export const DashboardMenu: React.FC = () => (

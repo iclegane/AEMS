@@ -1,6 +1,6 @@
-import {createSlice, ActionReducerMapBuilder} from '@reduxjs/toolkit';
-import {checkAuth, login, logout} from '../actions/AuthAction';
-import {IUser} from '../../models/IUser';
+import { createSlice, ActionReducerMapBuilder } from '@reduxjs/toolkit';
+import { checkAuth, login, logout } from '../actions/AuthAction';
+import { IUser } from '../../models/IUser';
 
 
 interface IAuthState {

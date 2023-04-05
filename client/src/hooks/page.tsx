@@ -1,7 +1,7 @@
-import {useDispatch, useSelector} from 'react-redux';
-import {useEffect, useMemo} from 'react';
-import {setPageTitle} from '../store/reducers/TitleSlice';
-import {RootState} from '../store/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useMemo } from 'react';
+import { setPageTitle } from '../store/reducers/TitleSlice';
+import { RootState } from '../store/store';
 
 
 export function usePageTitle(title: string) {

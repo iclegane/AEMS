@@ -1,2 +1,2 @@
-export {SortPanelItem as default} from './SortPanelItem';
+export { SortPanelItem as default } from './SortPanelItem';
 export * from './types';

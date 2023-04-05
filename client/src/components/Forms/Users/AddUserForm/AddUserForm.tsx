@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
-import {useFormik} from 'formik';
-import {Progress, Result, Select, Spin} from 'antd';
-import {SignUpSchema} from '../../../../utils/validationSchemes';
-import {useAddUserMutation} from '../../../../api/users';
-import {AddUserFormSelectOption, AddUserResponse, IAddUserFromFields} from './types';
+import React, { useState } from 'react';
+import { useFormik } from 'formik';
+import { Progress, Result, Select, Spin } from 'antd';
+import { SignUpSchema } from '../../../../utils/validationSchemes';
+import { useAddUserMutation } from '../../../../api/users';
+import { AddUserFormSelectOption, AddUserResponse, IAddUserFromFields } from './types';
 
 
 const values: IAddUserFromFields = {

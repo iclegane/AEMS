@@ -12,7 +12,7 @@ interface CustomModalProps {
     children: React.ReactNode;
 }
 
-export const CustomModal: React.FC<React.PropsWithChildren<CustomModalProps>> = ({modalState, children}) => {
+export const CustomModal: React.FC<React.PropsWithChildren<CustomModalProps>> = ({ modalState, children }) => {
 
     const { isOpen, setIsOpen } = modalState;
 
