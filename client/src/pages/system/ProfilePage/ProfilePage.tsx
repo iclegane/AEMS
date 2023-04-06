@@ -13,13 +13,10 @@ import FieldList from '../../../components/FieldList';
 import { profileFormatData } from '../../../utils/profileFormatData';
 import './index.scss';
 import Page from '../../../components/Page';
+import { PageProps } from '../../../models/IPage';
 
 
-interface ProfilePageProps {
-    title: string;
-}
-
-export const ProfilePage: React.FC<React.PropsWithChildren<ProfilePageProps>> = React.memo(({ title }) => {
+export const ProfilePage: React.FC<React.PropsWithChildren<PageProps>> = React.memo(({ title }) => {
 
     const { auth } = useAppSelector(state => state.authReducer);
 

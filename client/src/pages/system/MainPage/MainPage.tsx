@@ -1,13 +1,10 @@
 import React from 'react';
 import './index.scss';
 import Page from '../../../components/Page';
+import { PageProps } from '../../../models/IPage';
 
 
-interface UsersPageProps {
-    title: string;
-}
-
-export const MainPage: React.FC<React.PropsWithChildren<UsersPageProps>> = ({ title }) => (
+export const MainPage: React.FC<React.PropsWithChildren<PageProps>> = ({ title }) => (
         <Page title={title}>
             <div className="users gap-30">
                 <div className="dashboard-content-block">

@@ -2,22 +2,15 @@ import React from 'react';
 import './index.scss';
 import Task from '@components/Task';
 import { Skeleton } from 'antd';
-import { sortTypes, useGetTasksQuery } from '../../../api/tasks';
+import { useGetTasksQuery } from '../../../api/tasks';
 import SortPanel from '../../../components/SortPanel';
 import Pagination from '../../../components/Pagination';
 import Page from '../../../components/Page';
+import { ISort } from '../../../models/ISort';
+import { PageProps } from '../../../models/IPage';
 
-
-export interface ISort {
-    field: string;
-    type: sortTypes;
-}
-
-interface TasksPageProps {
-    title: string;
-}
-
-export const TasksPage: React.FC<TasksPageProps> = ({ title }) => {
+ 
+export const TasksPage: React.FC<PageProps> = ({ title }) => {
     const [page, setPage] = React.useState(1);
     const [limit] = React.useState(5);
     const [sort, setSort] = React.useState<ISort | null>(null);

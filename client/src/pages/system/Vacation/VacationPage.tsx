@@ -5,18 +5,15 @@ import 'react-calendar/dist/Calendar.css';
 import '../../../styles/utils/calendar.css';
 import moment from 'moment';
 import Page from '../../../components/Page';
+import { PageProps } from '../../../models/IPage';
 
 
-interface VacationPageProps {
-    title: string;
-}
-
-export const VacationPage: React.FC<React.PropsWithChildren<VacationPageProps>> = ({ title }) => {
+export const VacationPage: React.FC<React.PropsWithChildren<PageProps>> = ({ title }) => {
 
     const [date, setDate] = useState<string[]>([]);
 
     const handleOnChange = (dates: Date[]) => {
-        const range = dates.map((date) => moment(date).format('DD.MM.YYYY'));
+        const range = dates.map((dateEL) => moment(dateEL).format('DD.MM.YYYY'));
 
         setDate(range);
     };

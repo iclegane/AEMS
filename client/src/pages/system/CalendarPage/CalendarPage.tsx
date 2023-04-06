@@ -4,6 +4,7 @@ import type { BadgeProps } from 'antd';
 import { Badge, Calendar } from 'antd';
 import type { Dayjs } from 'dayjs';
 import Page from '../../../components/Page';
+import { PageProps } from '../../../models/IPage';
 
 
 const getListData = (value: Dayjs) => {
@@ -43,7 +44,7 @@ const getMonthData = (value: Dayjs) => {
     }
 };
 
-export const CalendarPage: React.FC<React.PropsWithChildren<{ title: string; }>> = ({ title }) => {
+export const CalendarPage: React.FC<React.PropsWithChildren<PageProps>> = ({ title }) => {
 
     const monthCellRender = (value: Dayjs) => {
         const num = getMonthData(value);
