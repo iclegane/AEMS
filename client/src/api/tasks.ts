@@ -1,47 +1,10 @@
 import { api } from './base';
-import { ISort } from '../pages/system/TasksPage/TasksPage';
+import { CreateTaskParamsData, GetTasksParams, Task, TaskListResponseData } from '../models/ITask';
 
-
-export interface Task {
-    id: string;
-    name: string;
-    description: string;
-    created: string;
-    updated: string;
-    deadline: string;
-    body: string,
-    performer?: string;
-    manager?: string;
-    status?: string;
-}
-
-type TaskResponse = {
-    tasks: Task[];
-    totalPage: number;
-    page: number;
-    count: number;
-};
-
-export type sortTypes = 'asc' | 'desc' | null;
-
-export interface IGetTaskParams {
-    page: number;
-    limit: number;
-    sort: ISort | null
-}
-
-interface ICreateTask {
-    name: string,
-    description: string,
-    deadline: string,
-    body: string,
-    performerID: string,
-    managerID: string,
-}
-
-export const postsApi = api.injectEndpoints({
+ 
+export const tasksApi = api.injectEndpoints({
     endpoints: (build) => ({
-        getTasks: build.query<TaskResponse, IGetTaskParams>({
+        getTasks: build.query<TaskListResponseData, GetTasksParams>({
             query: ({ sort, limit, page }) => ({
                     url: 'tasks',
                     params: {
@@ -59,12 +22,13 @@ export const postsApi = api.injectEndpoints({
                 }),
             providesTags: (_task, _err, id) => [{ type: 'Tasks', id }],
         }),
-        createTask: build.mutation<Partial<Task>, ICreateTask>({
+        createTask: build.mutation<Task, CreateTaskParamsData>({
             query: (task) => ({
                     url: 'tasks/add',
                     method: 'POST',
                     body: task
-                })
+                }),
+            invalidatesTags: (task) => [{ type: 'Tasks', id: task?.id }],
         }),
         updateTask: build.mutation<Task, Partial<Task>>({
             query: ({ id, ...patch }) => ({
@@ -83,4 +47,4 @@ export const {
     useGetTaskQuery,
     useUpdateTaskMutation,
     useCreateTaskMutation
-} = postsApi;
+} = tasksApi;
