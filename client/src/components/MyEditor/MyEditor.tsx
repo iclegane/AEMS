@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 
-export const MyEditor: React.FC = () => {
+interface Props {
+    onHtmlChange: (html: string) => void;
+}
+
+export const MyEditor: React.FC<Props> = ({ onHtmlChange }) => {
+    const [value, setValue] = useState<string>('');
+
+    const handleChange = (newValue: string) => {
+        setValue(newValue);
+        onHtmlChange(newValue);
+    };
+    
     return (
-        <>
-            123
-        </>
+        <ReactQuill value={value} onChange={handleChange} />
     );
 };
