@@ -55,3 +55,20 @@ export const ProfilePersonalSchema = Yup.object().shape({
     }),
     underground: Yup.string()
 });
+
+export const AddTaskFormSchema = Yup.object().shape({
+    name: Yup.string()
+        .trim()
+        .min(5, '2 символа минимально.')
+        .max(30, '30 символов максимум.')
+        .required('Обязательное поле'),
+    description: Yup.string()
+        .trim()
+        .min(5, '2 символа минимально.')
+        .max(30, '30 символов максимум.')
+        .required('Обязательное поле'),
+    deadline: Yup.string()
+        .required('Обязательное поле'),
+    body: Yup.string().trim().required('Обязательное поле'),
+    performerID: Yup.string().trim().required('Обязательное поле'),
+});

@@ -30,6 +30,15 @@ export interface IGetTaskParams {
     sort: ISort | null
 }
 
+interface ICreateTask {
+    name: string,
+    description: string,
+    deadline: string,
+    body: string,
+    performerID: string,
+    managerID: string,
+}
+
 export const postsApi = api.injectEndpoints({
     endpoints: (build) => ({
         getTasks: build.query<TaskResponse, IGetTaskParams>({
@@ -50,6 +59,13 @@ export const postsApi = api.injectEndpoints({
                 }),
             providesTags: (_task, _err, id) => [{ type: 'Tasks', id }],
         }),
+        createTask: build.mutation<Partial<Task>, ICreateTask>({
+            query: (task) => ({
+                    url: 'tasks/add',
+                    method: 'POST',
+                    body: task
+                })
+        }),
         updateTask: build.mutation<Task, Partial<Task>>({
             query: ({ id, ...patch }) => ({
                     url: `tasks/${id}`,
@@ -65,5 +81,6 @@ export const postsApi = api.injectEndpoints({
 export const {
     useGetTasksQuery,
     useGetTaskQuery,
-    useUpdateTaskMutation
+    useUpdateTaskMutation,
+    useCreateTaskMutation
 } = postsApi;
