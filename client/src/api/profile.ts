@@ -1,41 +1,10 @@
 import { api } from './base';
+import { ProfileData, UpdateProfileData } from '../models/IProfile';
 
-
-interface IGetProfileResponse {
-    important: {
-        employment: string | null
-        post: string | null;
-        skills: string[] | [];
-    }
-    personal: {
-        name: string | null;
-        birth_date: string | null;
-        work_date: string | null;
-        gender: string | null;
-        post: string | null;
-    }
-    contacts: {
-        address: string | null;
-        email: string | null;
-        phone: string | null;
-        underground: string | null;
-    }
-}
-
-interface IUpdateProfileRequest {
-    important?: {
-    }
-    personal?: {
-        name: string;
-        birth_date: string;
-        gender: string;
-    }
-    contacts?: {}
-}
-
+ 
 export const profileApi = api.injectEndpoints({
     endpoints: build => ({
-        getProfile: build.query<IGetProfileResponse, {}>({
+        getProfile: build.query<ProfileData, {}>({
             query: () => ({
                 url: 'profile',
                 method: 'POST'
@@ -43,7 +12,7 @@ export const profileApi = api.injectEndpoints({
             providesTags: ['Profile']
         }),
         updateProfile: build.mutation({
-            query: (request: IUpdateProfileRequest) => ({
+            query: (request: UpdateProfileData) => ({
                 url: 'profile',
                 method: 'PUT',
                 body: {

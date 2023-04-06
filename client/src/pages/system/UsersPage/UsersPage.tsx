@@ -6,9 +6,10 @@ import AddUserForm from '../../../components/Forms/Users/AddUserForm';
 import AddTaskForm from '../../../components/Forms/Users/AddTaskForm';
 import { formActions } from './types';
 import './index.scss';
+import { PageProps } from '../../../models/IPage';
 
 
-export const UsersPage: React.FC<{ title: string }> = ({ title }) => {
+export const UsersPage: React.FC<PageProps> = ({ title }) => {
 
     const [isOpen, setIsOpen] = useState(false);
     const [modalContent, setModalContent] = useState<JSX.Element | null>(null);

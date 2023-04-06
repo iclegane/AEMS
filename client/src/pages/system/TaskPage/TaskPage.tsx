@@ -8,6 +8,7 @@ import { IFieldItem } from '../../../components/FieldList/FieldItem';
 import { TaskSelectStatuses } from '../../../components/TaskSelectStatuses/TaskSelectStatuses';
 import Page from '../../../components/Page';
 import { Task } from '../../../models/ITask';
+import { PageProps } from '../../../models/IPage';
 
 
 const taskItems = (task: Task): IFieldItem[] => [
@@ -36,12 +37,8 @@ const taskItems = (task: Task): IFieldItem[] => [
             value: task.performer || '',
         },
     ];
-
-interface TaskPageProps {
-    title: string;
-}
-
-export const TaskPage: React.FC<React.PropsWithChildren<TaskPageProps>> = ({ title }) => {
+ 
+export const TaskPage: React.FC<React.PropsWithChildren<PageProps>> = ({ title }) => {
 
     const [isChanged, setChanged] = useState(false);
     const [updateData, setUpdateData] = useState<Partial<Task>>({});

@@ -1,3 +1,3 @@
-export interface IPage {
-    title?: string;
+export interface PageProps {
+    title: string;
 }

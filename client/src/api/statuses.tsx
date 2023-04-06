@@ -1,10 +1,6 @@
 import { api } from './base';
+import { Status } from '../models/IStatus';
 
-
-type Status = {
-    id: string;
-    name: string;
-}
 
 export const statusApi = api.injectEndpoints({
     endpoints: (build) => ({
