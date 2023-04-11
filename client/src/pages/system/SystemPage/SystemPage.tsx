@@ -4,6 +4,7 @@ import './index.scss';
 import { Outlet, useOutlet } from 'react-router-dom';
 import MainPage from '../MainPage';
 import { PageProps } from '../../../models/IPage';
+import Notification from '../../../components/Notification';
 
 
 export const SystemPage: React.FC<PageProps> = ({ title }) => {
@@ -17,6 +18,7 @@ export const SystemPage: React.FC<PageProps> = ({ title }) => {
                     <MainPage title={title}/>
                 }
             </DashboardLayout>
+            <Notification/>
         </div>
     );
 };
