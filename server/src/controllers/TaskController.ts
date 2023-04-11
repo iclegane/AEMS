@@ -4,6 +4,7 @@ import ApiError from '../exceptions/ApiError.js';
 import {ITaskAddQuery, ITaskListQuery, ITaskUpdateQuery} from '../service/Task/types.js';
 import {SortTypes} from '../types/sort.js';
 import TokenService from '../service/TokenService.js';
+import io from '../index.js';
 
 
 class TaskController {
@@ -69,6 +70,8 @@ class TaskController {
                 name,
                 description,
             });
+
+            io.to(`performer-${performerID}`).emit('createTask', name);
 
             res.json(task);
         } catch(error: unknown) {
