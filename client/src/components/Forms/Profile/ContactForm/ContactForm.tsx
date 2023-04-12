@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { useFormik } from 'formik';
 import { Select, Spin } from 'antd';
 import { ProfilePersonalSchema } from '../../../../utils/validationSchemes';
@@ -8,26 +8,19 @@ import { useGetUndergroundsQuery } from '../../../../api/underground';
 import ResponseMessage from '../../../ResponseMessage';
 
 
-export const ContactForm: React.FC<{data: IContactForm}> = (props) => {
-
-    const { data } = props;
+export const ContactForm: React.FC<{data: IContactForm}> = ({ data }) => {
     const { address, phone, underground } = data;
-
     const [isSuccess, setIsSuccess] = useState<boolean | null>(null);
-
     const [UpdateProfile, { isLoading: isUpdatingTask }] =  useUpdateProfileMutation();
     const { data: undergrounds = [], isLoading: isUndergroundsLoading, isError: isUndergroundsError } = useGetUndergroundsQuery({});
-
-    if (isUndergroundsError) {
-        return <div>Попробуйте позже</div>;
-    }
+    const [formikValues] = useState<{ address: string; phone: string; underground: string | null }>({
+        address: address ?? '',
+        phone: phone ?? '',
+        underground: underground ?? null,
+    });
 
     const formik = useFormik({
-        initialValues: {
-            address,
-            phone,
-            underground: undergrounds.find((item) => item.name === underground)?.id || null,
-        },
+        initialValues: formikValues,
         initialStatus: false,
         validationSchema: ProfilePersonalSchema,
         onSubmit: async (formData) => {
@@ -38,6 +31,10 @@ export const ContactForm: React.FC<{data: IContactForm}> = (props) => {
             setIsSuccess(!('error' in response));
         },
     });
+
+    if (isUndergroundsError) {
+        return <div>Попробуйте позже</div>;
+    }
 
     return(
         <Spin spinning={isUpdatingTask}>
