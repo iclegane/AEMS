@@ -54,7 +54,7 @@ const UserSchema = new Schema<IUserDB>({
         ref: 'Gender',
         default: null
     },
-    underground_id: {
+    underground: {
         type: Schema.Types.ObjectId,
         ref: 'Underground',
         default: null
