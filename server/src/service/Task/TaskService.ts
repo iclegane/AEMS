@@ -1,4 +1,4 @@
-import {Types} from 'mongoose';
+import {SortOrder, Types} from 'mongoose';
 import TaskModel from '../../models/task/TaskModel.js';
 import TaskStatusModel from '../../models/task/status/TaskStatusModel.js';
 import UserModel from '../../models/user/UserModel.js';
@@ -9,19 +9,32 @@ import TaskDto from '../../dtos/TaskDto/TaskDto.js';
 
 
 class TaskService {
-    async list(query: ITaskListQuery): Promise<ITaskListResponse>  {
+    async list(query: ITaskListQuery): Promise<ITaskListResponse> {
         const {filter = {}, options} = query;
 
-        const tasks = await TaskModel.find(filter)
-            .limit(options.limit)
+        const statusNames = (filter.status?.length && filter.status);
+        const statusIds = await TaskStatusModel.find({ name: { $in: statusNames } }).distinct('_id');
+
+        const sortArr: [string, SortOrder][] = [];
+        if (options.sort && options.sort.field && options.sort.type) {
+            sortArr.push([options.sort.field, options.sort.type]);
+        }
+
+        const filterData = {
+            performerID: filter.performerID,
+            ...(filter.status?.length && { statusID: { $in: statusIds } })
+        };
+
+        const tasks = await TaskModel.find(filterData)
+            .sort(sortArr)
             .skip((options.page - 1) * options.limit)
-            .sort([[options.sortField, options.sortType]])
+            .limit(options.limit)
             .populate<{statusID: ITaskPopulate['status']}>('statusID', 'id name')
             .populate<{managerID: ITaskPopulate['manager']}>('managerID', 'id name')
             .populate<{performerID: ITaskPopulate['performer']}>('performerID', 'id name')
             .exec();
 
-        const count = await TaskModel.find(filter).count().exec();
+        const count = await TaskModel.find(filterData).count().exec();
 
         return {
             tasks: tasks.map((task) => new TaskDto(task)),

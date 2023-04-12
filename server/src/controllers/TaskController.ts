@@ -1,30 +1,43 @@
 import {NextFunction, Request, Response} from 'express';
 import TaskService from '../service/Task/TaskService.js';
 import ApiError from '../exceptions/ApiError.js';
-import {ITaskAddQuery, ITaskListQuery, ITaskUpdateQuery} from '../service/Task/types.js';
-import {SortTypes} from '../types/sort.js';
+import {
+    ITaskAddQuery,
+    ITaskListFilter,
+    ITaskListParams,
+    ITaskUpdateQuery,
+    Sort
+} from '../service/Task/types.js';
 import TokenService from '../service/TokenService.js';
 import io from '../index.js';
 
 
 class TaskController {
-    list = async (req: Request<never, never, ITaskListQuery>, res: Response, next: NextFunction) => {
-        const { page = 1, limit = 10, sortField = 'name', sortType = 'asc' } = req.query;
+    list = async (req: Request<never, never, ITaskListParams>, res: Response, next: NextFunction) => {
+        const {
+            page = 1,
+            limit = 10,
+            sortJson = '{}',
+            filterJson = '{}'
+        } = req.query;
 
         try {
             const {refreshToken} = req.cookies as { refreshToken?: string };
             const userDto = TokenService.validateRefreshToken(refreshToken || '');
             if (!userDto)  throw ApiError.BadRequest('Token is not valid');
 
+            const parsedSort = JSON.parse(sortJson as string) as Sort;
+            const parsedFilter = JSON.parse(filterJson as string) as ITaskListFilter;
+
             const { count, tasks } = await TaskService.list({
                 filter: {
-                    performerID: userDto.id
+                    performerID: userDto.id,
+                    ...parsedFilter,
                 },
                 options: {
                     page: Number(page),
                     limit: Number(limit),
-                    sortField: String(sortField),
-                    sortType: String(sortType) as SortTypes,
+                    sort: parsedSort,
                 },
             });
 

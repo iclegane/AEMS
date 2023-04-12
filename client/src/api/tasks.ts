@@ -5,15 +5,15 @@ import { CreateTaskParamsData, GetTasksParams, Task, TaskListResponseData } from
 export const tasksApi = api.injectEndpoints({
     endpoints: (build) => ({
         getTasks: build.query<TaskListResponseData, GetTasksParams>({
-            query: ({ sort, limit, page }) => ({
-                    url: 'tasks',
-                    params: {
-                        limit,
-                        page,
-                        sortField: sort?.field,
-                        sortType: sort?.type,
-                    }
-                })
+            query: ({ sort, limit, page, filter }) => ({
+                url: '/tasks',
+                params: {
+                    limit,
+                    page,
+                    filterJson: JSON.stringify(filter),
+                    sortJson: JSON.stringify(sort)
+                }
+            }),
         }),
         getTask: build.query<Task, string>({
             query: (id) => ({
