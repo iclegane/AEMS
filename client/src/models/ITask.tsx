@@ -21,9 +21,16 @@ export interface TaskListResponseData {
     count: number;
 }
 
+export interface TaskFilter {
+    performer?: string;
+    manager?: string;
+    status?: string[];
+}
+
 export interface GetTasksParams {
     page: number;
     limit: number;
+    filter: TaskFilter;
     sort: ISort | null
 }
 

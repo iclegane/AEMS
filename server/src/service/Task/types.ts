@@ -6,16 +6,30 @@ export interface ITaskListResponse {
     count: number;
 }
 
+export interface ITaskListParams {
+    limit?: number;
+    page?: number;
+    sortJson?: string,
+    filterJson?: string;
+}
+
+export interface Sort {
+    field: string;
+    type: 'asc' | 'desc';
+}
+
+export interface ITaskListFilter {
+    performerID?: string;
+    managerID?: string;
+    status?: string[];
+}
+
 export interface ITaskListQuery {
-    filter?: {
-        performerID?: string;
-        managerID?: string;
-    };
+    filter?: ITaskListFilter;
     options: {
         limit: number;
         page: number;
-        sortField: string;
-        sortType: 'asc' | 'desc';
+        sort?: Sort,
     };
 }
 

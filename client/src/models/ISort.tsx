@@ -1,4 +1,4 @@
-export type sortTypes = 'asc' | 'desc' | null;
+export type sortTypes = 1 | -1 | null;
 
 export interface ISort {
     field: string;
