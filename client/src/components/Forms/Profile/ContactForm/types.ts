@@ -1,5 +1,5 @@
 export interface IContactForm {
-    address: string | null;
-    phone: string | null;
-    underground: string | null;
+    address: string | null | undefined;
+    phone: string | null | undefined;
+    underground: string | null | undefined;
 }
