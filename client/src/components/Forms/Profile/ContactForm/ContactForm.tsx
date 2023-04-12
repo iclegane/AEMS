@@ -1,23 +1,34 @@
 import React from 'react';
 import { useFormik } from 'formik';
+import { Select, Spin } from 'antd';
 import { ProfilePersonalSchema } from '../../../../utils/validationSchemes';
 import { useUpdateProfileMutation } from '../../../../api/profile';
 import { IContactForm } from './types';
+import { useGetUndergroundsQuery } from '../../../../api/underground';
 
 
 export const ContactForm: React.FC<{data: IContactForm}> = (props) => {
 
-    const { address, phone } = props.data;
+    const { data } = props;
+    const { address, phone } = data;
+
     const [UpdateProfile] =  useUpdateProfileMutation();
+    const { data: undergrounds = [], isLoading: isUndergroundsLoading, isError: isUndergroundsError } = useGetUndergroundsQuery({});
+
+    if (isUndergroundsError) {
+        return <div>Попробуйте позже</div>;
+    }
+
     const formik = useFormik({
         initialValues: {
             address,
-            phone
+            phone,
+            underground: null,
         },
         initialStatus: false,
         validationSchema: ProfilePersonalSchema,
         onSubmit: async (formData) => {
-            await UpdateProfile({
+            UpdateProfile({
                 contacts: formData
             });
         },
@@ -47,7 +58,22 @@ export const ContactForm: React.FC<{data: IContactForm}> = (props) => {
                 />
                 {formik.errors.phone ? <span className="form__err-msg">{formik.errors.phone}</span> : null}
             </div>
-            <button type='submit' className='button button--blue form__submit'>Изменить</button>
+            <Spin spinning={isUndergroundsLoading}>
+                <label htmlFor="name">Метро</label>
+                <Select
+                    style={{ width: 120 }}
+                    value={formik.values.underground}
+                    onChange={(selectedOption) => {
+                        formik.setFieldValue('underground', selectedOption);
+                    }}
+                    options={undergrounds.map((underground) => ({
+                        label: underground.name,
+                        value: underground.id,
+                    }))}
+                />
+                {formik.errors.underground ? <span className="form__err-msg">{formik.errors.underground}</span> : null}
+            </Spin>
+            <button disabled={isUndergroundsLoading} type='submit' className='button button--blue form__submit'>Изменить</button>
         </form>
     );
 };
