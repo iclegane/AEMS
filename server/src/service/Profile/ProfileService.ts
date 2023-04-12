@@ -44,8 +44,8 @@ class ProfileService {
                 select: 'id name',
                 model: SkillModel
             })
-            .populate<{underground_id: IUndergroundDocument}>({
-                path: 'underground_id',
+            .populate<{underground: IUndergroundDocument}>({
+                path: 'underground',
                 select: 'id name',
                 model: UndergroundModel
             });
@@ -58,6 +58,7 @@ class ProfileService {
         
         const {personal, contacts} = data;
 
+        // todo: add check for ids
         await UserModel.findByIdAndUpdate(id, {
             ...personal,
             ...contacts,
