@@ -53,7 +53,7 @@ export const ProfilePersonalSchema = Yup.object().shape({
     phone: Yup.string().matches(/^[(]?7{1}[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/, {
         message: 'от 10 до 15 символов, состоит из цифр, начинается с 7.'
     }),
-    underground: Yup.string()
+    underground: Yup.string().required('Обязательное поле')
 });
 
 export const AddTaskFormSchema = Yup.object().shape({
