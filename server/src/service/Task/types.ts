@@ -19,8 +19,8 @@ export interface Sort {
 }
 
 export interface ITaskListFilter {
-    performerID?: string;
-    managerID?: string;
+    performer?: string;
+    manager?: string;
     status?: string[];
 }
 

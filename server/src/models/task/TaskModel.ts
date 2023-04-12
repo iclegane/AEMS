@@ -22,17 +22,17 @@ const TaskSchema = new Schema<ITaskDB>({
         type: Date,
         required:true,
     },
-    performerID: {
+    performer: {
         type: Schema.Types.ObjectId,
         ref: 'User',
         required: true,
     },
-    managerID: {
+    manager: {
         type: Schema.Types.ObjectId,
         ref: 'User',
         required: true,
     },
-    statusID: {
+    status: {
         type: Schema.Types.ObjectId,
         ref: 'TaskStatus',
         required: true

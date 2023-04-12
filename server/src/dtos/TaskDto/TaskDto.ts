@@ -5,9 +5,9 @@ import {DATE_FORMAT, DATETIME_FORMAT} from '../../utils/constants.js';
 
 
 type TaskDtoPopulated = Replace<ITaskDocument, {
-    statusID: ITaskPopulate['status'];
-    managerID: ITaskPopulate['manager'];
-    performerID: ITaskPopulate['performer'];
+    status: ITaskPopulate['status'];
+    manager: ITaskPopulate['manager'];
+    performer: ITaskPopulate['performer'];
 }>;
 
 class TaskDto {
@@ -37,9 +37,9 @@ class TaskDto {
         this.description = taskModel.description;
         this.body = taskModel.body;
         this.deadline = moment(taskModel.deadline).format(DATE_FORMAT);
-        this.performer = taskModel.performerID?.name;
-        this.status = taskModel.statusID?.name;
-        this.manager = taskModel.managerID?.name;
+        this.performer = taskModel.performer?.name;
+        this.status = taskModel.status?.name;
+        this.manager = taskModel.manager?.name;
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument

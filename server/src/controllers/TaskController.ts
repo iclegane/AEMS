@@ -31,7 +31,7 @@ class TaskController {
 
             const { count, tasks } = await TaskService.list({
                 filter: {
-                    performerID: userDto.id,
+                    performer: userDto.id,
                     ...parsedFilter,
                 },
                 options: {

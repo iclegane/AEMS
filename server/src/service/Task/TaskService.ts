@@ -21,17 +21,17 @@ class TaskService {
         }
 
         const filterData = {
-            performerID: filter.performerID,
-            ...(filter.status?.length && { statusID: { $in: statusIds } })
+            performer: filter.performer,
+            ...(filter.status?.length && { status: { $in: statusIds } })
         };
 
         const tasks = await TaskModel.find(filterData)
             .sort(sortArr)
             .skip((options.page - 1) * options.limit)
             .limit(options.limit)
-            .populate<{statusID: ITaskPopulate['status']}>('statusID', 'id name')
-            .populate<{managerID: ITaskPopulate['manager']}>('managerID', 'id name')
-            .populate<{performerID: ITaskPopulate['performer']}>('performerID', 'id name')
+            .populate<{status: ITaskPopulate['status']}>('status', 'id name')
+            .populate<{manager: ITaskPopulate['manager']}>('manager', 'id name')
+            .populate<{performer: ITaskPopulate['performer']}>('performer', 'id name')
             .exec();
 
         const count = await TaskModel.find(filterData).count().exec();
@@ -58,15 +58,15 @@ class TaskService {
             description: query.description,
             deadline: query.deadline,
             body: query.body,
-            performerID: performer.id as string,
-            managerID: query.managerID,
-            statusID: taskStatus.id as string,
+            performer: performer.id as string,
+            manager: query.managerID,
+            status: taskStatus.id as string,
         });
 
         const populateTask = await TaskModel.findById(task.id)
-            .populate<Pick<ITaskPopulate, 'status'>>('statusID', 'id name')
-            .populate<Pick<ITaskPopulate, 'manager'>>('managerID', 'id name')
-            .populate<Pick<ITaskPopulate, 'performer'>>('performerID', 'id name');
+            .populate<Pick<ITaskPopulate, 'status'>>('status', 'id name')
+            .populate<Pick<ITaskPopulate, 'manager'>>('manager', 'id name')
+            .populate<Pick<ITaskPopulate, 'performer'>>('performer', 'id name');
         if (!populateTask) {
             throw ApiError.BadRequest('Задача не сформирована');
         }
@@ -88,14 +88,14 @@ class TaskService {
         }
 
         const updatedData = await TaskModel.findByIdAndUpdate({_id: query.id}, {
-            statusID: query.fields.status
+            status: query.fields.status
         },{
             strict: true,
             new: true,
         })
-            .populate<{statusID: ITaskPopulate['status']}>('statusID', 'id name')
-            .populate<{managerID: ITaskPopulate['manager']}>('managerID', 'id name')
-            .populate<{performerID: ITaskPopulate['performer']}>('performerID', 'id name')
+            .populate<{status: ITaskPopulate['status']}>('status', 'id name')
+            .populate<{manager: ITaskPopulate['manager']}>('manager', 'id name')
+            .populate<{performer: ITaskPopulate['performer']}>('performer', 'id name')
             .exec();
         if (!updatedData) {
             throw ApiError.BadRequest('Update error');
@@ -107,9 +107,9 @@ class TaskService {
     async detail(id: string): Promise<TaskDto | null> {
         const taskID = new Types.ObjectId(id);
         const task = await TaskModel.findById({_id: taskID})
-            .populate<{statusID: ITaskPopulate['status']}>('statusID', 'id name')
-            .populate<{managerID: ITaskPopulate['manager']}>('managerID', 'id name')
-            .populate<{performerID: ITaskPopulate['performer']}>('performerID', 'id name')
+            .populate<{status: ITaskPopulate['status']}>('status', 'id name')
+            .populate<{manager: ITaskPopulate['manager']}>('manager', 'id name')
+            .populate<{performer: ITaskPopulate['performer']}>('performer', 'id name')
             .exec();
         if (!task) throw ApiError.BadRequest('task not found');
 
