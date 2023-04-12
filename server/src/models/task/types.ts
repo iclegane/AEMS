@@ -8,9 +8,9 @@ export interface ITaskDB {
     description: string;
     body: JSON;
     deadline: Date;
-    statusID: Types.ObjectId;
-    performerID: Types.ObjectId;
-    managerID: Types.ObjectId;
+    status: Types.ObjectId;
+    performer: Types.ObjectId;
+    manager: Types.ObjectId;
 }
 
 export interface ITaskPopulate {
