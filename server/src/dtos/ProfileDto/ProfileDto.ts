@@ -10,7 +10,7 @@ type UserDtoPopulated = Replace<IUserDocument, {
     post_id: IUserPopulated['post_id'];
     skill_ids: IUserPopulated['skill_ids'];
     role_id: IUserPopulated['role_id'];
-    underground_id: IUserPopulated['underground_id'];
+    underground: IUserPopulated['underground'];
 }>
 
 class ProfileDto {
@@ -39,7 +39,7 @@ class ProfileDto {
             address: userModel.address,
             email: userModel.email,
             phone: userModel.phone,
-            underground: userModel.underground_id?.name || null
+            underground: userModel.underground?.name || null
         };
     }
 };
