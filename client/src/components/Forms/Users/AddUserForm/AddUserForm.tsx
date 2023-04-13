@@ -1,19 +1,12 @@
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
-import { Progress, Result, Select, Spin } from 'antd';
+import { Result, Select, Spin } from 'antd';
 import { SignUpSchema } from '../../../../utils/validationSchemes';
 import { useAddUserMutation } from '../../../../api/users';
 import { AddUserFormSelectOption, AddUserResponse, IAddUserFromFields } from './types';
+import { useGetPostsQuery } from '../../../../api/post';
+import { useGetSkillsQuery } from '../../../../api/skills';
 
-
-const values: IAddUserFromFields = {
-    name: '',
-    password: '',
-    confirmPassword: '',
-    role: undefined,
-    email: '',
-    post: null,
-};
 
 const roles: AddUserFormSelectOption[] = [
     {
@@ -29,31 +22,22 @@ const roles: AddUserFormSelectOption[] = [
 ];
 
 export const AddUserForm: React.FC = () => {
-
-    const [isSuccess, setIsSuccess] = useState<boolean | null>(null);
+    const { data: posts = [], isLoading: isPostsLoading } = useGetPostsQuery({});
+    const { data: skills = [], isLoading: isSkilldsLoading } = useGetSkillsQuery({});
     const [addUser, { isLoading: isAddingUser }] = useAddUserMutation();
-    const [complete, setComplete] = useState<number>(0);
-
-    const startClosingTimer = (onTimerComplete = () => {}) => {
-        const timer = setInterval(() => {
-            setComplete((prevComplete) => {
-                const nextComplete = prevComplete + 5;
-
-                if (nextComplete === 100) {
-                    setTimeout(() => {
-                        setComplete(0);
-                        onTimerComplete();
-                        clearInterval(timer);
-                    }, 2000);
-                }
-
-                return nextComplete;
-            });
-        }, 100);
-    };
+    const [isSuccess, setIsSuccess] = useState<boolean | null>(null);
+    const [initialValues] = useState({
+        name: '',
+        password: '',
+        confirmPassword: '',
+        role: '',
+        email: '',
+        post: '',
+        skills: [],
+    });
 
     const formik = useFormik({
-        initialValues: values,
+        initialValues,
         initialStatus: false,
         validationSchema: SignUpSchema,
         onSubmit: async (formData: IAddUserFromFields, actions) => {
@@ -61,11 +45,6 @@ export const AddUserForm: React.FC = () => {
             const response: AddUserResponse = await addUser(userData);
 
             setIsSuccess(!!response.data);
-
-            startClosingTimer(() => {
-                setIsSuccess(null);
-                actions.resetForm();
-            });
         },
     });
 
@@ -75,19 +54,16 @@ export const AddUserForm: React.FC = () => {
     };
 
     const Message = () => (
-            <>
-                <Result
-                    status={isSuccess ? 'success' : 'error'}
-                    title={isSuccess ? 'Successfully Added User' : 'Submission Failed'}
-                    subTitle={isSuccess ? 'New user has been added successfully.' : 'Please check and modify the form before resubmitting.'}
-                />
-                <Progress percent={complete} />
-            </>
-        );
+        <Result
+            status={isSuccess ? 'success' : 'error'}
+            title={isSuccess ? 'Successfully Added User' : 'Submission Failed'}
+            subTitle={isSuccess ? 'New user has been added successfully.' : 'Please check and modify the form before resubmitting.'}
+        />
+    );
 
     const Form = () => (
             <form className='form' onSubmit={handleSubmit}>
-                <h2 className="text-center">Add new User</h2>
+                <h2 className="text-center">Добавить нового пользователя</h2>
                 <div className='form-group'>
                     <label htmlFor="name">Имя</label>
                     <input
@@ -115,15 +91,45 @@ export const AddUserForm: React.FC = () => {
                 <div className='form-group'>
                     <label htmlFor="role">Роль</label>
                     <Select
-                        labelInValue
-                        defaultValue={undefined}
+                        style={{ width: '100%' }}
+                        onChange={(selectedOption) => {
+                            formik.setFieldValue('role', selectedOption);
+                        }}
                         options={roles}
-                        value={formik.values.role ? { key: formik.values.role, value: formik.values.role, label: formik.values.role } : undefined}
-                        onBlur={() => formik.setFieldTouched('role', true)}
-                        onChange={(selectedOption) => formik.setFieldValue('role', selectedOption.key)}
                         className={formik.errors.role && formik.touched.role ? 'form__select form__select--error' : 'form__select'}
                     />
                     {formik.errors.role && formik.touched.role ? <div className="form__err-msg">{formik.errors.role}</div> : null}
+                </div>
+                <div className='form-group'>
+                    <label htmlFor="role">Должность</label>
+                    <Select
+                        style={{ width: '100%' }}
+                        onChange={(selectedOption) => {
+                            formik.setFieldValue('post', selectedOption);
+                        }}
+                        options={posts.map((item) => ({
+                            label: item.name,
+                            value: item.id,
+                        }))}
+                        className={formik.errors.post && formik.touched.post ? 'form__select form__select--error' : 'form__select'}
+                    />
+                    {formik.errors.post && formik.touched.post ? <div className="form__err-msg">{formik.errors.post}</div> : null}
+                </div>
+                <div className='form-group'>
+                    <label htmlFor="role">Навыки</label>
+                    <Select
+                        style={{ width: '100%' }}
+                        mode="multiple"
+                        onChange={(selectedOption) => {
+                            formik.setFieldValue('skills', selectedOption);
+                        }}
+                        options={skills.map((item) => ({
+                            label: item.name,
+                            value: item.id,
+                        }))}
+                        className={formik.errors.skills && formik.touched.skills ? 'form__select form__select--error' : 'form__select'}
+                    />
+                    {formik.errors.skills && formik.touched.skills ? <div className="form__err-msg">{formik.errors.skills}</div> : null}
                 </div>
                 <div className='form-group'>
                     <label htmlFor="password">Пароль</label>
@@ -149,7 +155,6 @@ export const AddUserForm: React.FC = () => {
                     />
                     {formik.errors.confirmPassword ? <span className="form__err-msg">{formik.errors.confirmPassword}</span> : null}
                 </div>
-
                 <button type="submit" disabled={isAddingUser} className='button button--blue button--full-width button--center form__submit'>Добавить</button>
             </form>
         );

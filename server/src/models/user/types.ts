@@ -22,8 +22,8 @@ export interface IUserDB {
     gender: Types.ObjectId | null;
     underground: Types.ObjectId | null;
     employment_id: Types.ObjectId | null;
-    post_id: Types.ObjectId | null;
-    skill_ids: Types.ObjectId[] | [];
+    post: Types.ObjectId | null;
+    skill: Types.ObjectId[] | [];
 }
 
 export interface IUserPopulated {
@@ -31,8 +31,8 @@ export interface IUserPopulated {
     gender: IGenderDocument | null;
     underground: IUndergroundDocument | null;
     employment_id: IEmploymentDocument | null;
-    post_id: IPostDocument | null;
-    skill_ids: ISkillDocument[] | [];
+    post: IPostDocument | null;
+    skill: ISkillDocument[] | [];
 }
 
 export interface IUserDocument extends IUserDB, Document {}
