@@ -8,7 +8,6 @@ import { useGetPostsQuery } from '../../../../api/post';
 import { useGetSkillsQuery } from '../../../../api/skills';
 
 
-
 const roles: AddUserFormSelectOption[] = [
     {
         key: 'User',
