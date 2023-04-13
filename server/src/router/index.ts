@@ -7,6 +7,7 @@ import ProfileController from '../controllers/ProfileController.js';
 import TaskController from '../controllers/TaskController.js';
 import TaskStatusController from '../controllers/TaskStatusController.js';
 import UndergroundController from '../controllers/UndergroundController.js';
+import PostController from '../controllers/PostController.js';
 
 
 const router = Router();
@@ -33,6 +34,8 @@ router.get('/users/list', UserController.list);
 router.post('/users/add', UserController.add);
 
 router.get('/underground', UndergroundController.list);
+
+router.get('/posts', PostController.getPosts);
 
 router.get('*', (req: Request, res: Response) => res.sendStatus(404));
 
