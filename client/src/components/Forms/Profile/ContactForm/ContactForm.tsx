@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import { Select, Spin } from 'antd';
-import { ProfilePersonalSchema } from '../../../../utils/validationSchemes';
+import { ProfileContactsSchema } from '../../../../utils/validationSchemes';
 import { useUpdateProfileMutation } from '../../../../api/profile';
 import { IContactForm } from './types';
 import { useGetUndergroundsQuery } from '../../../../api/underground';
@@ -22,7 +22,7 @@ export const ContactForm: React.FC<{data: IContactForm}> = ({ data }) => {
     const formik = useFormik({
         initialValues: formikValues,
         initialStatus: false,
-        validationSchema: ProfilePersonalSchema,
+        validationSchema: ProfileContactsSchema,
         onSubmit: async (formData) => {
             const response = UpdateProfile({
                 contacts: formData
