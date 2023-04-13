@@ -7,8 +7,8 @@ import {DATE_FORMAT} from '../../utils/constants.js';
 type UserDtoPopulated = Replace<IUserDocument, {
     gender: IUserPopulated['gender'];
     employment_id: IUserPopulated['employment_id'];
-    post_id: IUserPopulated['post_id'];
-    skill_ids: IUserPopulated['skill_ids'];
+    post: IUserPopulated['post'];
+    skill: IUserPopulated['skill'];
     role_id: IUserPopulated['role_id'];
     underground: IUserPopulated['underground'];
 }>
@@ -23,8 +23,8 @@ class ProfileDto {
     constructor(userModel: UserDtoPopulated) {
         this.important = {
             employment: userModel.employment_id?.name,
-            post: userModel.post_id?.name,
-            skills: userModel.skill_ids.map((el) => el.name)
+            post: userModel.post?.name,
+            skills: userModel.skill.map((el) => el.name)
         };        
         
         this.personal = {
@@ -32,7 +32,7 @@ class ProfileDto {
             birth_date: userModel.birth_date ? moment(userModel.birth_date).format(DATE_FORMAT) : null,
             work_date: moment(userModel.work_date).format(DATE_FORMAT),
             gender: userModel.gender?.name || null,
-            post: userModel.post_id?.name || null
+            post: userModel.post?.name || null
         };
 
         this.contacts = {
