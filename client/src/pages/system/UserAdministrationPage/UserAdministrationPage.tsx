@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Page from '../../../components/Page';
 import './index.scss';
 import { PageProps } from '../../../models/IPage';
@@ -6,11 +6,15 @@ import { Spin } from 'antd';
 import { useParams } from 'react-router-dom';
 import { useGetUserByIDQuery } from '../../../api/users';
 import FieldList from '../../../components/FieldList';
+import { CustomModal } from '../../../components/CustomModal/CustomModal';
+import { UpdateUserForm } from '../../../components/Forms/Users/UpdateUserForm/UpdateUserForm';
 
 
 export const UserAdministrationPage: React.FC<PageProps> = ({ title }) => {
     const { id } = useParams();
     if (!id) return null;
+
+    const [isOpen, setIsOpen] = useState(false);
 
     const { data: user, isLoading: isGetUserLoading, isError: isGetUserError } = useGetUserByIDQuery({ id });
 
@@ -33,9 +37,21 @@ export const UserAdministrationPage: React.FC<PageProps> = ({ title }) => {
     return (
         <Page title={`Данные пользователя ${user?.name || user.email}`}>
             <Spin spinning={isGetUserLoading}>
-                <div className="dashboard-content-block">
-                    <FieldList view="alternating" elements={fields}/>
+                <div className="flex flex-column gap-30">
+                    <div className="dashboard-content-block">
+                        <FieldList view="alternating" elements={fields}/>
+                    </div>
+                    <div className="dashboard-content-block">
+                        <button
+                            type="button"
+                            onClick={() => setIsOpen((prevState) => !prevState)}
+                            className="button button--default"
+                        >Изменить данные</button>
+                    </div>
                 </div>
+                <CustomModal modalState={{ isOpen, setIsOpen }}>
+                  <UpdateUserForm />
+                </CustomModal>
             </Spin>
         </Page>
     );
