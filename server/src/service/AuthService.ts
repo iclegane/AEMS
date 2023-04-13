@@ -39,7 +39,7 @@ class AuthService {
         });
         const user = await UserModel.findById(create.id)
             .populate<{role_id: IRoleDocument}>({path: 'role_id', model: RoleModel})
-            .populate<{post_id: IPostDocument}>({path: 'post_id', model: PostModel}).exec();
+            .populate<{post: IPostDocument}>({path: 'post', model: PostModel}).exec();
         if (!user) throw ApiError.BadRequest('Create error');
 
         // todo: add mail service
@@ -59,7 +59,7 @@ class AuthService {
     async login(email: string, password: string): Promise<IUserDataResponse> {
         const user = await UserModel.findOne({ email })
             .populate<{role_id: IRoleDocument}>({path: 'role_id', model: RoleModel})
-            .populate<{post_id: IPostDocument}>({path: 'post_id', model: PostModel}).exec();
+            .populate<{post: IPostDocument}>({path: 'post', model: PostModel}).exec();
         if (!user) {
             throw ApiError.BadRequest('User not found');
         }
@@ -97,7 +97,7 @@ class AuthService {
 
         const user = await UserModel.findById(userData.id)
             .populate<{role_id: IRoleDocument}>({path: 'role_id', model: RoleModel})
-            .populate<{post_id: IPostDocument}>({path: 'post_id', model: PostModel}).exec();
+            .populate<{post: IPostDocument}>({path: 'post', model: PostModel}).exec();
         if (!user) {
             throw ApiError.UnauthorizedError();
         }
