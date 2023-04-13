@@ -1,5 +1,6 @@
 import { api } from './base';
 import { IUser } from '../models/IUser';
+import { IAddUserFromFields } from '../components/Forms/Users/AddUserForm/types';
 
 
 export const usersApi = api.injectEndpoints({
@@ -8,7 +9,7 @@ export const usersApi = api.injectEndpoints({
             query: () => ({ url: '/users/list' }),
             providesTags: ['Users']
         }),
-        addUser: build.mutation<IUser, Partial<IUser>>({
+        addUser: build.mutation<IUser, Omit<IAddUserFromFields, 'confirmPassword'>>({
             query: (user) => ({
                 url: '/users/add',
                 method: 'POST',
