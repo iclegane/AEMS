@@ -3,9 +3,14 @@ import { SerializedError } from '@reduxjs/toolkit';
 import { IUser, UserRole } from '../../../../models/IUser';
 
 
-export interface IAddUserFromFields extends Omit<Partial<IUser>, 'confirmPassword'> {
-    confirmPassword: string;
+export interface IAddUserFromFields {
+    name: string;
     password: string;
+    confirmPassword: string;
+    role: string;
+    email: string;
+    post: string;
+    skills: string[];
 }
 
 export type AddUserFormSelectOption = {
