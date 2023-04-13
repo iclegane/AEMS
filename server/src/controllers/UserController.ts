@@ -9,6 +9,7 @@ interface User {
     role: string;
     post: string;
     password: string;
+    skills: string[];
 }
 
 interface UserRequest extends Request {
@@ -28,9 +29,9 @@ class UserController {
 
     add = async (req: UserRequest, res: Response, next: NextFunction) => {
         try {
-            const {name, email, role, post, password} = req.body;
+            const {name, email, role, post, skills, password} = req.body;
 
-            const user = await UserService.addUser(name, email, password, role, post);
+            const user = await UserService.addUser(name, email, password, role, post, skills);
 
             res.json(user);
         } catch (e) {
