@@ -2,7 +2,7 @@ import { api } from './base';
 import { IPost } from '../models/IPost';
 
 
-export const postsApi = api.injectEndpoints({
+export const postApi = api.injectEndpoints({
     endpoints: (build) => ({
         getPosts: build.query<IPost[], unknown>({
             query: () => ({
@@ -15,4 +15,4 @@ export const postsApi = api.injectEndpoints({
 
 export const {
     useGetPostsQuery
-} = postsApi;
+} = postApi;
