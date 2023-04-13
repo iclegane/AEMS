@@ -1,3 +1,4 @@
+import {Types} from 'mongoose';
 import UserModel from '../../models/user/UserModel.js';
 import GenderModel from '../../models/gender/GenderModel.js';
 import EmploymentModel from '../../models/employment/EmploymentModel.js';
@@ -19,8 +20,8 @@ import ProfileDto from '../../dtos/ProfileDto/ProfileDto.js';
 class ProfileService {
     async getProfileData(id: string): Promise<ProfileDto> {
         const user = await UserModel.findById(id)
-            .populate<{gender_id: IGenderDocument}>({
-                path: 'gender_id',
+            .populate<{gender: IGenderDocument}>({
+                path: 'gender',
                 select: 'id name',
                 model: GenderModel
             })
@@ -57,12 +58,45 @@ class ProfileService {
     async updateProfileData(id: string, data: IUpdateProfileRequest): Promise<undefined> {
         
         const {personal, contacts} = data;
+        const update: {
+            gender?: Types.ObjectId,
+            name?: string,
+            birth_date?: string
+            address?: string,
+            phone?: string,
+            underground?: string,
+        } = {};
+
+        if (personal?.gender) {
+            const gender = await GenderModel.findOne({
+                name: personal.gender,
+            }).select('_id');
+
+            if (gender?.id) update.gender = gender.id as Types.ObjectId;
+        }
+
+        if (personal?.name) {
+            update.name = personal.name;
+        }
+
+        if (personal?.birth_date) {
+            update.birth_date = personal.birth_date;
+        }
+
+        if (contacts?.address) {
+            update.address = contacts.address;
+        }
+
+        if (contacts?.phone) {
+            update.phone = contacts.phone;
+        }
+
+        if (contacts?.underground) {
+            update.underground = contacts.underground;
+        }
 
         // todo: add check for ids
-        await UserModel.findByIdAndUpdate(id, {
-            ...personal,
-            ...contacts,
-        });
+        await UserModel.findByIdAndUpdate(id, update);
 
         return undefined;
     }
