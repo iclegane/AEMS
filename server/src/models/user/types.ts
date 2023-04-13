@@ -19,7 +19,7 @@ export interface IUserDB {
     address: string | null;
     vacation_count: number | null;
     role_id: Types.ObjectId;
-    gender_id: Types.ObjectId | null;
+    gender: Types.ObjectId | null;
     underground: Types.ObjectId | null;
     employment_id: Types.ObjectId | null;
     post_id: Types.ObjectId | null;
@@ -28,7 +28,7 @@ export interface IUserDB {
 
 export interface IUserPopulated {
     role_id: IRoleDocument;
-    gender_id: IGenderDocument | null;
+    gender: IGenderDocument | null;
     underground: IUndergroundDocument | null;
     employment_id: IEmploymentDocument | null;
     post_id: IPostDocument | null;
