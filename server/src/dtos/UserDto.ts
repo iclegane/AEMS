@@ -14,7 +14,7 @@ export interface IUserDto {
 
 type UserDtoPopulated = Replace<IUserDocument, {
     role_id: IUserPopulated['role_id'];
-    post_id: IUserPopulated['post_id'];
+    post: IUserPopulated['post'];
 }>
 
 class UserDto {
@@ -33,7 +33,7 @@ class UserDto {
         this.name = model.name;
         this.email = model.email;
         this.role = model.role_id.name;
-        this.post = model.post_id?.name ? model.post_id.name : null;
+        this.post = model.post?.name ? model.post.name : null;
     }
 }
 
