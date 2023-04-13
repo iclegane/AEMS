@@ -30,8 +30,8 @@ class ProfileService {
                 select: 'id name',
                 model: EmploymentModel
             })
-            .populate<{post_id: IPostDocument}>({
-                path: 'post_id',
+            .populate<{post: IPostDocument}>({
+                path: 'post',
                 select: 'id name',
                 model: PostModel
             })
@@ -40,8 +40,8 @@ class ProfileService {
                 select: 'id name',
                 model: RoleModel
             })
-            .populate<{skill_ids: ISkillDocument[]}>({
-                path: 'skill_ids',
+            .populate<{skill: ISkillDocument[]}>({
+                path: 'skill',
                 select: 'id name',
                 model: SkillModel
             })
