@@ -5,7 +5,7 @@ import {DATE_FORMAT} from '../../utils/constants.js';
 
 
 type UserDtoPopulated = Replace<IUserDocument, {
-    gender_id: IUserPopulated['gender_id'];
+    gender: IUserPopulated['gender'];
     employment_id: IUserPopulated['employment_id'];
     post_id: IUserPopulated['post_id'];
     skill_ids: IUserPopulated['skill_ids'];
@@ -31,7 +31,7 @@ class ProfileDto {
             name: userModel.name,
             birth_date: userModel.birth_date ? moment(userModel.birth_date).format(DATE_FORMAT) : null,
             work_date: moment(userModel.work_date).format(DATE_FORMAT),
-            gender: userModel.gender_id?.name || null,
+            gender: userModel.gender?.name || null,
             post: userModel.post_id?.name || null
         };
 
