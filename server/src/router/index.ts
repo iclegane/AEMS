@@ -6,6 +6,7 @@ import AuthMiddleware from '../middlewares/AuthMiddleware.js';
 import ProfileController from '../controllers/ProfileController.js';
 import TaskController from '../controllers/TaskController.js';
 import TaskStatusController from '../controllers/TaskStatusController.js';
+import UndergroundController from '../controllers/UndergroundController.js';
 
 
 const router = Router();
@@ -30,6 +31,8 @@ router.get('/statuses',  TaskStatusController.list);
 
 router.get('/users/list', UserController.list);
 router.post('/users/add', UserController.add);
+
+router.get('/underground', UndergroundController.list);
 
 router.get('*', (req: Request, res: Response) => res.sendStatus(404));
 

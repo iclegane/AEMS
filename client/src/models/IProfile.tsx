@@ -27,5 +27,9 @@ export interface UpdateProfileData  {
         birth_date: string;
         gender: string;
     }
-    contacts?: {}
+    contacts?: {
+        address: string | null;
+        phone: string | null;
+        underground: string | null;
+    }
 }

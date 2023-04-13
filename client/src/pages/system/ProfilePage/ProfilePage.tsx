@@ -127,7 +127,8 @@ export const ProfilePage: React.FC<React.PropsWithChildren<PageProps>> = React.m
                             <h2>Контакты</h2>
                             <ContactForm data={{
                                 address: data?.contacts.address,
-                                phone: data?.contacts.phone
+                                phone: data?.contacts.phone,
+                                underground: data?.contacts.underground
                             }}/>
                         </>
                     }

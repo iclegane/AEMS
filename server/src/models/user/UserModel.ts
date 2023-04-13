@@ -49,12 +49,12 @@ const UserSchema = new Schema<IUserDB>({
         ref: 'Role',
         required: true,
     },
-    gender_id: {
+    gender: {
         type: Schema.Types.ObjectId,
         ref: 'Gender',
         default: null
     },
-    underground_id: {
+    underground: {
         type: Schema.Types.ObjectId,
         ref: 'Underground',
         default: null
