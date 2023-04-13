@@ -3,7 +3,7 @@ import SkillDto from '../../dtos/SkillDto/SkillDto.js';
  
 
 class SkillService {
-    async getAllPosts(): Promise<SkillDto[]> {
+    async getAllSkills(): Promise<SkillDto[]> {
         const skills = await SkillModel.find().exec();
         
         return skills.map((skill) => new SkillDto(skill));
