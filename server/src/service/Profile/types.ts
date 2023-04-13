@@ -13,13 +13,13 @@ export interface IUserProfile extends IUserPopulated {
 
 export interface IUpdateProfileRequest {
     personal?: {
-        name?: IUserProfile['name'];
-        birth_date?: IUserProfile['birth_date'];
-        gender?: IUserProfile['gender_id'];
+        name?: string;
+        birth_date?: string;
+        gender?: string;
     }
     contacts?: {
-        address?: IUserProfile['address']
-        phone?: IUserProfile['phone']
-        underground?: IUserProfile['underground_id']
+        address?: string;
+        phone?:string;
+        underground?: string;
     }
 }
