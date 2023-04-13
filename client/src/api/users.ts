@@ -1,5 +1,5 @@
 import { api } from './base';
-import { IUser } from '../models/IUser';
+import { IUser, UserInfoDto } from '../models/IUser';
 import { IAddUserFromFields } from '../components/Forms/Users/AddUserForm/types';
 
 
@@ -8,6 +8,9 @@ export const usersApi = api.injectEndpoints({
         getUsers: build.query<IUser[], void>({
             query: () => ({ url: '/users/list' }),
             providesTags: ['Users']
+        }),
+        getUserByID: build.query<UserInfoDto, { id: string }>({
+            query: ({ id }) => ({ url: `/admin/users/${id}` }),
         }),
         addUser: build.mutation<IUser, Omit<IAddUserFromFields, 'confirmPassword'>>({
             query: (user) => ({
@@ -22,5 +25,6 @@ export const usersApi = api.injectEndpoints({
 
 export const {
     useGetUsersQuery,
+    useGetUserByIDQuery,
     useAddUserMutation,
 } = usersApi;
