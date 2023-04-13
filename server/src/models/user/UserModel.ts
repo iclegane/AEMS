@@ -64,12 +64,12 @@ const UserSchema = new Schema<IUserDB>({
         ref: 'Employment',
         default: null
     },
-    post_id: {
+    post: {
         type: Schema.Types.ObjectId,
         ref: 'Post',
         default: null
     },
-    skill_ids: {
+    skill: {
         type: [{ type: Schema.Types.ObjectId, ref: 'Skill' }],
         default: []
     }
