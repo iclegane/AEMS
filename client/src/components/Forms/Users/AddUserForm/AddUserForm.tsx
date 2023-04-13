@@ -22,8 +22,8 @@ const roles: AddUserFormSelectOption[] = [
 ];
 
 export const AddUserForm: React.FC = () => {
-    const { data: posts = [], isLoading: isPostsLoading } = useGetPostsQuery({});
-    const { data: skills = [], isLoading: isSkilldsLoading } = useGetSkillsQuery({});
+    const { data: posts = [] } = useGetPostsQuery({});
+    const { data: skills = [] } = useGetSkillsQuery({});
     const [addUser, { isLoading: isAddingUser }] = useAddUserMutation();
     const [isSuccess, setIsSuccess] = useState<boolean | null>(null);
     const [initialValues] = useState({
