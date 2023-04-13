@@ -8,6 +8,7 @@ import TaskController from '../controllers/TaskController.js';
 import TaskStatusController from '../controllers/TaskStatusController.js';
 import UndergroundController from '../controllers/UndergroundController.js';
 import PostController from '../controllers/PostController.js';
+import SkillController from '../controllers/SkillController.js';
 
 
 const router = Router();
@@ -36,6 +37,8 @@ router.post('/users/add', UserController.add);
 router.get('/underground', UndergroundController.list);
 
 router.get('/posts', PostController.getPosts);
+
+router.get('/skills', SkillController.getSkills);
 
 router.get('*', (req: Request, res: Response) => res.sendStatus(404));
 
