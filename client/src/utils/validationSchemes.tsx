@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+import dayjs from 'dayjs';
 
 
 export const SignInSchema = Yup.object().shape({
@@ -43,9 +44,17 @@ export const ProfilePersonalSchema = Yup.object().shape({
         .max(30, '30 символов максимум.')
         .matches(/(?:[A-Za-z]+\s){2}[A-Za-z]+/, {
             message: 'ФИО должно состоять из 3 частей'
-        }),
-    birth_date: Yup.date().min(new Date(1970, 0, 1)),
-    gender: Yup.string(),
+        }).required('Обязательное поле'),
+    birth_date: Yup.string().test('valid-date', 'Некорректная дата рождения', (value) => {
+        if (!value) return false;
+        const date = dayjs(value, 'DD.MM.YYYY');
+        const minDate = dayjs('01.01.1970', 'DD.MM.YYYY');
+        return date.isValid() && date.isAfter(minDate);
+    }),
+    gender: Yup.string().required('Обязательное поле'),
+});
+
+export const ProfileContactsSchema = Yup.object().shape({
     address: Yup.string()
         .trim()
         .min(5, '5 символов минимально.')
