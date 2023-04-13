@@ -9,6 +9,7 @@ import CalendarPage from '../pages/system/CalendarPage';
 import UsersPage from '../pages/system/UsersPage';
 import FilesPage from '../pages/system/FilesPage';
 import SettingsPage from '../pages/system/SettingsPage';
+import UserAdministrationPage from '../pages/system/UserAdministrationPage';
 import { SystemPage } from '../pages/system/SystemPage/SystemPage';
 
 
@@ -27,6 +28,7 @@ const AdminRouter = createBrowserRouter([
                     { path: 'vacation', element: <VacationPage title="Отпуск"/> },
                     { path: 'calendar', element: <CalendarPage title="Календарь"/> },
                     { path: 'users', element: <UsersPage title="Пользователи"/> },
+                    { path: 'users/:id', element: <UserAdministrationPage title="Пользователь"/> },
                     { path: 'files', element: <FilesPage title="Файлы"/> },
                     { path: 'settings', element: <SettingsPage title="Настройки"/> },
                 ]
