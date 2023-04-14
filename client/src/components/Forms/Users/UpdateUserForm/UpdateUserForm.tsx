@@ -6,9 +6,11 @@ import { useGetSkillsQuery } from '../../../../api/skills';
 import { useGetUndergroundsQuery } from '../../../../api/underground';
 import { useGetRolesQuery } from '../../../../api/role';
 import { useGetGendersQuery } from '../../../../api/gender';
+import { UserInfoDto } from '../../../../models/IUser';
+import dayjs from "dayjs";
  
 
-export const UpdateUserForm: React.FC = () => {
+export const UpdateUserForm: React.FC<{data: UserInfoDto}> = ({ data }) => {
 
     const { data: posts = [], isLoading: isPostsLoading } = useGetPostsQuery({});
     const { data: roles = [], isLoading: isRolesLoading } = useGetRolesQuery({});
@@ -18,17 +20,17 @@ export const UpdateUserForm: React.FC = () => {
     
     const formik = useFormik({
         initialValues: {
-            name: '',
-            email: '',
-            address: '',
-            phone: '',
-            birth_date: '',
-            work_date: '',
-            post: '',
-            role: '',
-            gender: '',
-            skill: [],
-            underground: '',
+            name: data.name,
+            email: data.email,
+            address: data.address,
+            phone: data.phone,
+            birth_date: data.birth_date,
+            work_date: data.work_date,
+            post: data.post?.id || null,
+            role: data.role?.id || null,
+            gender: data.gender?.id || null,
+            skill: data.skill.map((el) => el.id) || [],
+            underground: data.underground?.id || null,
         },
         initialStatus: false,
         validationSchema: null,
@@ -43,7 +45,7 @@ export const UpdateUserForm: React.FC = () => {
             <div className='form-group'>
                 <label htmlFor="name">ФИО</label>
                 <input
-                    placeholder=''
+                    placeholder='ФИО'
                     type="text"
                     name='name'
                     id='name'
@@ -55,7 +57,7 @@ export const UpdateUserForm: React.FC = () => {
             <div className='form-group'>
                 <label htmlFor="name">Почта</label>
                 <input
-                    placeholder='email'
+                    placeholder='Почта'
                     type="email"
                     name='email'
                     id='email'
@@ -67,7 +69,7 @@ export const UpdateUserForm: React.FC = () => {
             <div className='form-group'>
                 <label htmlFor="name">Адрес</label>
                 <input
-                    placeholder='address'
+                    placeholder='Адрес'
                     type="text"
                     name='address'
                     id='address'
@@ -91,7 +93,9 @@ export const UpdateUserForm: React.FC = () => {
             <div className='form-group'>
                 <label htmlFor="name">Дата рождения</label>
                 <DatePicker
+                    placeholder="Выберете дату"
                     format="DD.MM.YYYY"
+                    defaultValue={dayjs(formik.values.birth_date, 'DD.MM.YYYY')}
                     onChange={(date: any, dateString: string) => formik.setFieldValue('birth_date', dateString)}
                 />
                 {formik.errors.birth_date ? <span className="form__err-msg">{formik.errors.birth_date}</span> : null}
@@ -99,7 +103,9 @@ export const UpdateUserForm: React.FC = () => {
             <div className='form-group'>
                 <label htmlFor="name">Первый рабочий день</label>
                 <DatePicker
+                    placeholder="Выберете дату"
                     format="DD.MM.YYYY"
+                    defaultValue={dayjs(formik.values.work_date, 'DD.MM.YYYY')}
                     onChange={(date: any, dateString: string) => formik.setFieldValue('work_date', dateString)}
                 />
                 {formik.errors.work_date ? <span className="form__err-msg">{formik.errors.work_date}</span> : null}
@@ -108,6 +114,7 @@ export const UpdateUserForm: React.FC = () => {
                 <label htmlFor="name">Должность</label>
                 <Select
                     style={{ width: '100%' }}
+                    placeholder="Выберете должность"
                     loading={isPostsLoading}
                     value={formik.values.post}
                     onChange={(selectedOption) => {
@@ -124,6 +131,7 @@ export const UpdateUserForm: React.FC = () => {
                 <label htmlFor="name">Роли</label>
                 <Select
                     style={{ width: '100%' }}
+                    placeholder="Выберете роль"
                     value={formik.values.role}
                     loading={isRolesLoading}
                     onChange={(selectedOption) => {
@@ -140,6 +148,7 @@ export const UpdateUserForm: React.FC = () => {
                 <label htmlFor="name">Пол</label>
                 <Select
                     style={{ width: '100%' }}
+                    placeholder="Выберете пол"
                     value={formik.values.gender}
                     loading={isGendersLoading}
                     onChange={(selectedOption) => {
@@ -157,6 +166,7 @@ export const UpdateUserForm: React.FC = () => {
                 <Select
                     style={{ width: '100%' }}
                     mode="multiple"
+                    placeholder="Выберете Навыки"
                     value={formik.values.skill}
                     loading={isSkillsLoading}
                     onChange={(selectedOption) => {
@@ -172,7 +182,8 @@ export const UpdateUserForm: React.FC = () => {
             <div className='form-group'>
                 <label htmlFor="name">Метро</label>
                 <Select
-                    style={{ width: 120 }}
+                    style={{ width: '100%' }}
+                    placeholder="Выберете метро"
                     value={formik.values.underground}
                     loading={isUndergroundsLoading}
                     onChange={(selectedOption) => {
@@ -185,7 +196,7 @@ export const UpdateUserForm: React.FC = () => {
                 />
                 {formik.errors.underground ? <span className="form__err-msg">{formik.errors.underground}</span> : null}
             </div>
-            <button type="submit" className="button button--default">Изменить данные</button>
+            <button type="submit"  disabled={!formik.dirty || formik.isSubmitting} className="button button--default">Изменить данные</button>
         </form>
     );
 };
