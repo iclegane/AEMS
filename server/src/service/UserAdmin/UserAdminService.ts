@@ -1,3 +1,4 @@
+import moment from 'moment';
 import UserModel from '../../models/user/UserModel.js';
 import ApiError from '../../exceptions/ApiError.js';
 import PostModel from '../../models/post/PostModel.js';
@@ -15,6 +16,7 @@ import {IPostDocument} from '../../models/post/types';
 import {ISkillDocument} from '../../models/skill/types';
 import {IGenderDocument} from '../../models/gender/types';
 import {IUndergroundDocument} from '../../models/underground/types';
+import {DATE_FORMAT} from '../../utils/constants.js';
 
 
 interface UserInfoDto {
@@ -23,8 +25,8 @@ interface UserInfoDto {
     email: string;
     address: string | null;
     phone: string | null;
-    birth_date: Date | null;
-    work_date: Date;
+    birth_date: string | null;
+    work_date: string;
     post: PostDto | null;
     role: RoleDto | null;
     gender: GenderDto | null;
@@ -51,8 +53,8 @@ class UserAdminService {
             email: user.email,
             address: user.address,
             phone: user.phone,
-            birth_date: user.birth_date,
-            work_date: user.work_date,
+            birth_date: moment(user.birth_date).format(DATE_FORMAT),
+            work_date: moment(user.work_date).format(DATE_FORMAT),
             post: user.post ? new PostDto(user.post) : null,
             role: user.role_id ? new RoleDto(user.role_id) : null,
             gender: user.gender ? new GenderDto(user.gender) : null,
