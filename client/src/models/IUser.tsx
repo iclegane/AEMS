@@ -19,8 +19,8 @@ export interface UserInfoDto {
     email: string;
     address: string | null;
     phone: string | null;
-    birth_date: Date | null;
-    work_date: Date;
+    birth_date: string | null;
+    work_date: string;
     post: UserInfoDtoField | null;
     role: UserInfoDtoField | null;
     gender: UserInfoDtoField | null;
