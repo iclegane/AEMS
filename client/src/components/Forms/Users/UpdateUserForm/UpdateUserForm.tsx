@@ -1,23 +1,28 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import { DatePicker, Select } from 'antd';
+import dayjs from 'dayjs';
+import { useParams } from 'react-router-dom';
 import { useGetPostsQuery } from '../../../../api/post';
 import { useGetSkillsQuery } from '../../../../api/skills';
 import { useGetUndergroundsQuery } from '../../../../api/underground';
 import { useGetRolesQuery } from '../../../../api/role';
 import { useGetGendersQuery } from '../../../../api/gender';
 import { UserInfoDto } from '../../../../models/IUser';
-import dayjs from "dayjs";
+import { useUpdateUserByIDMutation } from '../../../../api/users';
  
 
 export const UpdateUserForm: React.FC<{data: UserInfoDto}> = ({ data }) => {
-
+    const { id } = useParams();
+    const [UpdateUserByID] = useUpdateUserByIDMutation();
     const { data: posts = [], isLoading: isPostsLoading } = useGetPostsQuery({});
     const { data: roles = [], isLoading: isRolesLoading } = useGetRolesQuery({});
     const { data: genders = [], isLoading: isGendersLoading } = useGetGendersQuery({});
     const { data: skills = [], isLoading: isSkillsLoading } = useGetSkillsQuery({});
     const { data: undergrounds = [], isLoading: isUndergroundsLoading } = useGetUndergroundsQuery({});
-    
+
+    if (!id) return null;
+
     const formik = useFormik({
         initialValues: {
             name: data.name,
@@ -34,11 +39,18 @@ export const UpdateUserForm: React.FC<{data: UserInfoDto}> = ({ data }) => {
         },
         initialStatus: false,
         validationSchema: null,
-        onSubmit: async (formData, actions) => {
-            console.log(formData);
+        onSubmit: async (formData) => {
+            try {
+                await UpdateUserByID({
+                    id,
+                    data: formData,
+                });
+            } catch (e) {
+                console.log(e);
+            }
         },
     });
-    
+
     return(
         <form className='form'onSubmit={formik.handleSubmit}>
             <h2 className="text-center">Изменить данные пользователя</h2>
