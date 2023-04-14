@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import Page from '../../../components/Page';
 import './index.scss';
-import { PageProps } from '../../../models/IPage';
 import { Spin } from 'antd';
 import { useParams } from 'react-router-dom';
+import { PageProps } from '../../../models/IPage';
+import Page from '../../../components/Page';
 import { useGetUserByIDQuery } from '../../../api/users';
 import FieldList from '../../../components/FieldList';
 import { CustomModal } from '../../../components/CustomModal/CustomModal';
@@ -25,7 +25,6 @@ export const UserAdministrationPage: React.FC<PageProps> = ({ title }) => {
     }
 
     const fields = Object.entries(user).map(([objectKey, objectValue]) => {
-
         const name = fieldNameMap[objectKey as keyof UserInfoDto] || objectKey;
         let value: string | string[] = '';
 
@@ -59,7 +58,7 @@ export const UserAdministrationPage: React.FC<PageProps> = ({ title }) => {
                     </div>
                 </div>
                 <CustomModal modalState={{ isOpen, setIsOpen }}>
-                  <UpdateUserForm />
+                  <UpdateUserForm data={user} />
                 </CustomModal>
             </Spin>
         </Page>
