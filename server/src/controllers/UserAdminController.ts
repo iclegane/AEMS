@@ -1,8 +1,11 @@
 import {NextFunction, Request, Response} from 'express';
 import ApiError from '../exceptions/ApiError.js';
 import UserAdminService from '../service/UserAdmin/UserAdminService.js';
+import {UserAdminUpdateSchema} from '../utils/validations.js';
+import {IUpdateUserRequestData} from '../types/IUserApi';
 
 
+ 
 class UserAdminController {
 
     getAllUsers = () => {};
@@ -22,7 +25,23 @@ class UserAdminController {
 
     createUser = () => {};
 
-    updateUser = () => {};
+    updateUserById = async (
+        req: Request<{ id: string }, never, { data: IUpdateUserRequestData }>,
+        res: Response,
+        next: NextFunction) => {
+        try {
+            const { id } = req.params;
+            const { data } = req.body;
+
+            const update = await UserAdminUpdateSchema.validate(data);
+
+            const user = await UserAdminService.updateUserByID(id, update);
+
+            res.json(user);
+        } catch (e) {
+            next(e);
+        }
+    };
 
     deleteUser = () => {};
 }

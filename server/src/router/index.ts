@@ -44,6 +44,7 @@ router.get('/roles', RoleController.list);
 router.get('/genders', GenderController.list);
 
 router.get('/admin/users/:id', UserAdminController.getUserById);
+router.put('/admin/users/:id', UserAdminController.updateUserById);
 
 router.get('*', (req: Request, res: Response) => res.sendStatus(404));
 
