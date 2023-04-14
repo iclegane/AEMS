@@ -8,6 +8,8 @@ import { useGetUserByIDQuery } from '../../../api/users';
 import FieldList from '../../../components/FieldList';
 import { CustomModal } from '../../../components/CustomModal/CustomModal';
 import { UpdateUserForm } from '../../../components/Forms/Users/UpdateUserForm/UpdateUserForm';
+import { fieldNameMap } from '../../../utils/fieldNameMap';
+import { UserInfoDto } from '../../../models/IUser';
 
 
 export const UserAdministrationPage: React.FC<PageProps> = ({ title }) => {
@@ -22,16 +24,23 @@ export const UserAdministrationPage: React.FC<PageProps> = ({ title }) => {
         return null;
     }
 
-    const fields = Object.entries(user).map(([key, value]) => {
-        let fieldValue: string | string[] = value;
+    const fields = Object.entries(user).map(([objectKey, objectValue]) => {
 
-        if (Array.isArray(value)) {
-            fieldValue = value.map(({ v }) => v || '');
-        } else if (typeof value === 'object' && value !== null) {
-            ({ name: fieldValue } = value);
+        const name = fieldNameMap[objectKey as keyof UserInfoDto] || objectKey;
+        let value: string | string[] = '';
+
+        if (Array.isArray(objectValue)) {
+            value = objectValue.map((v: { name: string }) => v.name);
+        } else if (typeof objectValue === 'object' && objectValue !== null) {
+            value = objectValue.name;
+        } else if (typeof objectValue === 'string') {
+            value = objectValue;
         }
 
-        return { name: key, value: fieldValue };
+        return {
+            name,
+            value,
+        };
     });
 
     return (
@@ -39,7 +48,7 @@ export const UserAdministrationPage: React.FC<PageProps> = ({ title }) => {
             <Spin spinning={isGetUserLoading}>
                 <div className="flex flex-column gap-30">
                     <div className="dashboard-content-block">
-                        <FieldList view="alternating" elements={fields}/>
+                         <FieldList view="alternating" elements={fields}/>
                     </div>
                     <div className="dashboard-content-block">
                         <button
