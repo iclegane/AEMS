@@ -27,3 +27,17 @@ export interface UserInfoDto {
     skill: UserInfoDtoField[];
     underground: UserInfoDtoField | null;
 }
+
+export interface IUpdateUserRequestData {
+    name: string | null;
+    email: string;
+    address: string | null;
+    phone: string | null;
+    birth_date: string | null;
+    work_date: string;
+    post: string | null;
+    role: string | null;
+    gender: string | null;
+    skill: string[];
+    underground: string | null;
+}
