@@ -9,6 +9,9 @@ import TaskStatusController from '../controllers/TaskStatusController.js';
 import UndergroundController from '../controllers/UndergroundController.js';
 import PostController from '../controllers/PostController.js';
 import SkillController from '../controllers/SkillController.js';
+import RoleController from '../controllers/RoleController.js';
+import GenderController from '../controllers/GenderController.js';
+import UserAdminController from '../controllers/UserAdminController.js';
 
 
 const router = Router();
@@ -35,10 +38,12 @@ router.get('/users/list', UserController.list);
 router.post('/users/add', UserController.add);
 
 router.get('/underground', UndergroundController.list);
-
 router.get('/posts', PostController.getPosts);
-
 router.get('/skills', SkillController.getSkills);
+router.get('/roles', RoleController.list);
+router.get('/genders', GenderController.list);
+
+router.get('/admin/users/:id', UserAdminController.getUserById);
 
 router.get('*', (req: Request, res: Response) => res.sendStatus(404));
 

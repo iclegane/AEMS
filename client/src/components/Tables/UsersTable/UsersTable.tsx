@@ -1,6 +1,7 @@
 import React from 'react';
 import { Table, Space } from 'antd';
 import { ColumnsType } from 'antd/es/table';
+import { Link } from 'react-router-dom';
 import { IUser } from '../../../models/IUser';
 import { useGetUsersQuery } from '../../../api/users';
 import { formActions } from '../../../pages/system/UsersPage';
@@ -26,7 +27,12 @@ export const UsersTable: React.FC<{actionHandler: (action: formActions, id: stri
             title: 'ID',
             dataIndex: 'id',
             key: 'id',
-            width: '15%',
+            width: '10%',
+            render: (id: string) => (
+                <Link to={`${id}`}>
+                    <span>{id.slice(0, 7)}</span>
+                </Link>
+            )
         },
         {
             title: 'Name',
