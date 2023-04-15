@@ -43,23 +43,23 @@ class UserAdminService {
         ]);
 
         if (!postExists) {
-            throw new Error('Invalid post ID');
+            throw ApiError.BadRequest('Invalid post ID');
         }
 
         if (!roleExists) {
-            throw new Error('Invalid role ID');
+            throw ApiError.BadRequest('Invalid role ID');
         }
 
         if (!genderExists) {
-            throw new Error('Invalid gender ID');
+            throw ApiError.BadRequest('Invalid gender ID');
         }
 
         if (!skillExists) {
-            throw new Error('Invalid skill ID');
+            throw ApiError.BadRequest('Invalid skill ID');
         }
 
         if (!undergroundExists) {
-            throw new Error('Invalid underground ID');
+            throw ApiError.BadRequest('Invalid underground ID');
         }
 
         const updatedData = await UserModel
@@ -72,7 +72,7 @@ class UserAdminService {
             .exec();
 
         if (!updatedData) {
-            throw new Error(`User with id ${id} not found`);
+            throw ApiError.BadRequest(`Error update user ${id}`);
         }
 
         return new UserInfoDto(updatedData);
@@ -89,19 +89,19 @@ class UserAdminService {
         ]);
 
         if (emailExist) {
-            throw new Error('email has Exist');
+            throw ApiError.BadRequest('email has Exist');
         }
 
         if (!postExists) {
-            throw new Error('Invalid post ID');
+            throw ApiError.BadRequest('Invalid post ID');
         }
 
         if (!roleExists) {
-            throw new Error('Invalid role ID');
+            throw ApiError.BadRequest('Invalid role ID');
         }
 
         if (!skillExists) {
-            throw new Error('Invalid gender ID');
+            throw ApiError.BadRequest('Invalid gender ID');
         }
 
         const createdUser = await UserModel.create({
@@ -114,7 +114,7 @@ class UserAdminService {
         });
 
         if (!createdUser) {
-            throw new Error(`Failed to create user with email: ${email}`);
+            throw ApiError.BadRequest(`Failed to create user with email: ${email}`);
         }
 
         return this.getUserByID(createdUser.id as string);
