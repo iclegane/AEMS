@@ -1,6 +1,6 @@
 import React from 'react';
 import { useFormik } from 'formik';
-import { DatePicker, Select } from 'antd';
+import { DatePicker, Select, Form, Input  } from 'antd';
 import dayjs from 'dayjs';
 import { useParams } from 'react-router-dom';
 import { useGetPostsQuery } from '../../../../api/post';
@@ -25,17 +25,17 @@ export const UpdateUserForm: React.FC<{data: UserInfoDto}> = ({ data }) => {
 
     const formik = useFormik({
         initialValues: {
-            name: data.name,
-            email: data.email,
-            address: data.address,
-            phone: data.phone,
-            birth_date: data.birth_date,
-            work_date: data.work_date,
-            post: data.post?.id || null,
-            role: data.role?.id || null,
-            gender: data.gender?.id || null,
+            name: data.name || '',
+            email: data.email || '',
+            address: data.address || '',
+            phone: data.phone || '',
+            birth_date: data.birth_date || '',
+            work_date: data.work_date || '',
+            post: data.post?.id || 'null',
+            role: data.role?.id || 'null',
+            gender: data.gender?.id || '',
             skill: data.skill.map((el) => el.id) || [],
-            underground: data.underground?.id || null,
+            underground: data.underground?.id || 'null',
         },
         initialStatus: false,
         validationSchema: null,
@@ -52,78 +52,45 @@ export const UpdateUserForm: React.FC<{data: UserInfoDto}> = ({ data }) => {
     });
 
     return(
-        <form className='form'onSubmit={formik.handleSubmit}>
+        <Form layout="vertical" onSubmitCapture={formik.handleSubmit}>
             <h2 className="text-center">Изменить данные пользователя</h2>
-            <div className='form-group'>
-                <label htmlFor="name">ФИО</label>
-                <input
-                    placeholder='ФИО'
-                    type="text"
-                    name='name'
-                    id='name'
-                    onChange={formik.handleChange}
-                    value={formik.values.name}
-                />
+            <Form.Item label="ФИО">
+                <Input placeholder="ФИО" value={formik.values.name} onChange={formik.handleChange} />
                 {formik.errors.name ? <span className="form__err-msg">{formik.errors.name}</span> : null}
-            </div>
-            <div className='form-group'>
-                <label htmlFor="name">Почта</label>
-                <input
-                    placeholder='Почта'
-                    type="email"
-                    name='email'
-                    id='email'
-                    onChange={formik.handleChange}
-                    value={formik.values.email}
-                />
+            </Form.Item>
+            <Form.Item label="Почта">
+                <Input placeholder="Почта" value={formik.values.email} onChange={formik.handleChange} />
                 {formik.errors.email ? <span className="form__err-msg">{formik.errors.email}</span> : null}
-            </div>
-            <div className='form-group'>
-                <label htmlFor="name">Адрес</label>
-                <input
-                    placeholder='Адрес'
-                    type="text"
-                    name='address'
-                    id='address'
-                    onChange={formik.handleChange}
-                    value={formik.values.address}
-                />
-                {formik.errors.address ? <span className="form__err-msg">{formik.errors.address}</span> : null}
-            </div>
-            <div className='form-group'>
-                <label htmlFor="name">Телефон</label>
-                <input
-                    placeholder='+79008003510'
-                    type="text"
-                    name='phone'
-                    id='phone'
-                    onChange={formik.handleChange}
-                    value={formik.values.phone}
-                />
+            </Form.Item>
+            <Form.Item label="Адрес">
+                <Input placeholder="Адрес" value={formik.values.address} onChange={formik.handleChange} />
+            {formik.errors.address ? <span className="form__err-msg">{formik.errors.address}</span> : null}
+            </Form.Item>
+            <Form.Item label="Телефон">
+                <Input placeholder="+79008003510" value={formik.values.phone} onChange={formik.handleChange} />
                 {formik.errors.phone ? <span className="form__err-msg">{formik.errors.phone}</span> : null}
-            </div>
-            <div className='form-group'>
-                <label htmlFor="name">Дата рождения</label>
+            </Form.Item>
+            <Form.Item label="Дата рождения">
                 <DatePicker
+                    id="birth_date"
+                    name="birth_date"
                     placeholder="Выберете дату"
                     format="DD.MM.YYYY"
                     defaultValue={dayjs(formik.values.birth_date, 'DD.MM.YYYY')}
-                    onChange={(date: any, dateString: string) => formik.setFieldValue('birth_date', dateString)}
+                    onChange={(_, dateString: string) => formik.setFieldValue('birth_date', dateString)}
                 />
                 {formik.errors.birth_date ? <span className="form__err-msg">{formik.errors.birth_date}</span> : null}
-            </div>
-            <div className='form-group'>
-                <label htmlFor="name">Первый рабочий день</label>
+            </Form.Item>
+            <Form.Item label="Первый рабочий день">
                 <DatePicker
                     placeholder="Выберете дату"
                     format="DD.MM.YYYY"
                     defaultValue={dayjs(formik.values.work_date, 'DD.MM.YYYY')}
-                    onChange={(date: any, dateString: string) => formik.setFieldValue('work_date', dateString)}
+                    onChange={(_, dateString: string) => formik.setFieldValue('work_date', dateString)}
                 />
                 {formik.errors.work_date ? <span className="form__err-msg">{formik.errors.work_date}</span> : null}
-            </div>
-            <div className='form-group'>
-                <label htmlFor="name">Должность</label>
+            </Form.Item>
+            <Form.Item label="Должность">
                 <Select
                     style={{ width: '100%' }}
                     placeholder="Выберете должность"
@@ -138,9 +105,8 @@ export const UpdateUserForm: React.FC<{data: UserInfoDto}> = ({ data }) => {
                     }))}
                 />
                 {formik.errors.post ? <span className="form__err-msg">{formik.errors.post}</span> : null}
-            </div>
-            <div className='form-group'>
-                <label htmlFor="name">Роли</label>
+            </Form.Item>
+            <Form.Item label="Роли">
                 <Select
                     style={{ width: '100%' }}
                     placeholder="Выберете роль"
@@ -155,9 +121,8 @@ export const UpdateUserForm: React.FC<{data: UserInfoDto}> = ({ data }) => {
                     }))}
                 />
                 {formik.errors.role ? <span className="form__err-msg">{formik.errors.role}</span> : null}
-            </div>
-            <div className='form-group'>
-                <label htmlFor="name">Пол</label>
+            </Form.Item>
+            <Form.Item label="Пол">
                 <Select
                     style={{ width: '100%' }}
                     placeholder="Выберете пол"
@@ -172,9 +137,8 @@ export const UpdateUserForm: React.FC<{data: UserInfoDto}> = ({ data }) => {
                     }))}
                 />
                 {formik.errors.gender ? <span className="form__err-msg">{formik.errors.gender}</span> : null}
-            </div>
-            <div className='form-group'>
-                <label htmlFor="name">Навыки</label>
+            </Form.Item>
+            <Form.Item label="Навыки">
                 <Select
                     style={{ width: '100%' }}
                     mode="multiple"
@@ -190,9 +154,8 @@ export const UpdateUserForm: React.FC<{data: UserInfoDto}> = ({ data }) => {
                     }))}
                 />
                 {formik.errors.skill ? <span className="form__err-msg">{formik.errors.skill}</span> : null}
-            </div>
-            <div className='form-group'>
-                <label htmlFor="name">Метро</label>
+            </Form.Item>
+            <Form.Item label="Метро">
                 <Select
                     style={{ width: '100%' }}
                     placeholder="Выберете метро"
@@ -207,8 +170,8 @@ export const UpdateUserForm: React.FC<{data: UserInfoDto}> = ({ data }) => {
                     }))}
                 />
                 {formik.errors.underground ? <span className="form__err-msg">{formik.errors.underground}</span> : null}
-            </div>
-            <button type="submit"  disabled={!formik.dirty || formik.isSubmitting} className="button button--default">Изменить данные</button>
-        </form>
+            </Form.Item>
+            <button type="submit"  disabled={!formik.dirty || formik.isSubmitting} className="button button--blue button--full-width button--center form__submit">Изменить данные</button>
+        </Form>
     );
 };
