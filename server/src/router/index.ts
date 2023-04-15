@@ -35,7 +35,7 @@ router.put('/tasks/:id', AuthMiddleware, TaskController.update);
 router.get('/statuses',  TaskStatusController.list);
 
 router.get('/users/list', UserController.list);
-router.post('/users/add', UserController.add);
+
 
 router.get('/underground', UndergroundController.list);
 router.get('/posts', PostController.getPosts);
@@ -45,6 +45,7 @@ router.get('/genders', GenderController.list);
 
 router.get('/admin/users/:id', UserAdminController.getUserById);
 router.put('/admin/users/:id', UserAdminController.updateUserById);
+router.post('/admin/users/add', UserAdminController.createUser);
 
 router.get('*', (req: Request, res: Response) => res.sendStatus(404));
 
