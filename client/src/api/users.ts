@@ -25,9 +25,11 @@ export const usersApi = api.injectEndpoints({
         }),
         addUser: build.mutation<IUser, Omit<IAddUserFromFields, 'confirmPassword'>>({
             query: (user) => ({
-                url: '/users/add',
+                url: '/admin/users/add',
                 method: 'POST',
-                body: user,
+                body: {
+                    data: user
+                },
             }),
             invalidatesTags: ['Users']
         }),
