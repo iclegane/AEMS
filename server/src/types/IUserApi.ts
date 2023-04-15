@@ -1,3 +1,12 @@
+export interface ICreateUserRequestData {
+    name: string;
+    email: string;
+    password: string;
+    post: string;
+    role: string;
+    skill: string[];
+}
+
 export interface IUpdateUserRequestData {
     address: string;
     birth_date: string;
