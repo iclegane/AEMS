@@ -12,6 +12,8 @@ const baseQuery = fetchBaseQuery({
             headers.set('Authorization', `Bearer ${localStorage.getItem('token')}`);
         }
 
+        headers.set('Content-Type', 'application/json');
+
         return headers;
     },
     credentials: 'include',

@@ -5,8 +5,8 @@ import cookieParser from 'cookie-parser';
 import mongoose from 'mongoose';
 import {Server as HttpServer} from 'http';
 import {Server as SocketServer, Socket} from 'socket.io';
-import errorMiddleware from './middlewares/ErrorMiddleware.js';
 import router from './router/index.js';
+import errorMiddleware from './middlewares/ErrorMiddleware.js';
 
 
 dotenv.config({ path: './.env' });
@@ -18,18 +18,17 @@ const corsOptions = {
 
 const PORT = process.env.PORT || 5000;
 const app = express();
-const httpServer = new HttpServer(app);
-const io = new SocketServer(httpServer, {
-    cors: corsOptions
-});
-
 
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors(corsOptions));
 app.use('/api', router);
-app.use(errorMiddleware);
 
+
+const httpServer = new HttpServer(app);
+const io = new SocketServer(httpServer, {
+    cors: corsOptions
+});
 
 const start = async () => {
 
