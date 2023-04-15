@@ -3,25 +3,14 @@ import { useFormik } from 'formik';
 import { Result, Select, Spin } from 'antd';
 import { SignUpSchema } from '../../../../utils/validationSchemes';
 import { useAddUserMutation } from '../../../../api/users';
-import { AddUserFormSelectOption, AddUserResponse, IAddUserFromFields } from './types';
+import { AddUserResponse, IAddUserFromFields } from './types';
 import { useGetPostsQuery } from '../../../../api/post';
 import { useGetSkillsQuery } from '../../../../api/skills';
-
-
-const roles: AddUserFormSelectOption[] = [
-    {
-        key: 'User',
-        value: 'User',
-        label: 'User',
-    },
-    {
-        key: 'Manager',
-        value: 'Manager',
-        label: 'Manager',
-    },
-];
+import { useGetRolesQuery } from '../../../../api/role';
+ 
 
 export const AddUserForm: React.FC = () => {
+    const { data: roles = [] } = useGetRolesQuery({});
     const { data: posts = [] } = useGetPostsQuery({});
     const { data: skills = [] } = useGetSkillsQuery({});
     const [addUser, { isLoading: isAddingUser }] = useAddUserMutation();
@@ -33,7 +22,7 @@ export const AddUserForm: React.FC = () => {
         role: '',
         email: '',
         post: '',
-        skills: [],
+        skill: [],
     });
 
     const formik = useFormik({
@@ -95,7 +84,10 @@ export const AddUserForm: React.FC = () => {
                         onChange={(selectedOption) => {
                             formik.setFieldValue('role', selectedOption);
                         }}
-                        options={roles}
+                        options={roles.map((item) => ({
+                            label: item.name,
+                            value: item.id,
+                        }))}
                         className={formik.errors.role && formik.touched.role ? 'form__select form__select--error' : 'form__select'}
                     />
                     {formik.errors.role && formik.touched.role ? <div className="form__err-msg">{formik.errors.role}</div> : null}
@@ -121,15 +113,15 @@ export const AddUserForm: React.FC = () => {
                         style={{ width: '100%' }}
                         mode="multiple"
                         onChange={(selectedOption) => {
-                            formik.setFieldValue('skills', selectedOption);
+                            formik.setFieldValue('skill', selectedOption);
                         }}
                         options={skills.map((item) => ({
                             label: item.name,
                             value: item.id,
                         }))}
-                        className={formik.errors.skills && formik.touched.skills ? 'form__select form__select--error' : 'form__select'}
+                        className={formik.errors.skill && formik.touched.skill ? 'form__select form__select--error' : 'form__select'}
                     />
-                    {formik.errors.skills && formik.touched.skills ? <div className="form__err-msg">{formik.errors.skills}</div> : null}
+                    {formik.errors.skill && formik.touched.skill ? <div className="form__err-msg">{formik.errors.skill}</div> : null}
                 </div>
                 <div className='form-group'>
                     <label htmlFor="password">Пароль</label>

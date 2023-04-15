@@ -10,7 +10,7 @@ export interface IAddUserFromFields {
     role: string;
     email: string;
     post: string;
-    skills: string[];
+    skill: string[];
 }
 
 export type AddUserFormSelectOption = {
