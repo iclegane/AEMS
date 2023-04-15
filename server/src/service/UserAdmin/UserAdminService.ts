@@ -11,7 +11,7 @@ import {ISkillDocument} from '../../models/skill/types';
 import {IGenderDocument} from '../../models/gender/types';
 import {IUndergroundDocument} from '../../models/underground/types';
 import UserInfoDto from '../../dtos/UserInfoDto/UserInfoDto.js';
-import {IUpdateUserRequestData} from '../../types/IUserApi';
+import {ICreateUserRequestData, IUpdateUserRequestData} from '../../types/IUserApi';
 
 
 
@@ -76,6 +76,48 @@ class UserAdminService {
         }
 
         return new UserInfoDto(updatedData);
+    };
+
+    createUser = async (data: ICreateUserRequestData): Promise<UserInfoDto> => {
+        const {name, email, password, post, role, skill} = data;
+
+        const [emailExist, postExists, roleExists, skillExists] = await Promise.all([
+            UserModel.exists({ email }),
+            PostModel.exists({ _id: post }),
+            RoleModel.exists({ _id: role }),
+            SkillModel.exists({ _id: { $in: skill } }),
+        ]);
+
+        if (emailExist) {
+            throw new Error('email has Exist');
+        }
+
+        if (!postExists) {
+            throw new Error('Invalid post ID');
+        }
+
+        if (!roleExists) {
+            throw new Error('Invalid role ID');
+        }
+
+        if (!skillExists) {
+            throw new Error('Invalid gender ID');
+        }
+
+        const createdUser = await UserModel.create({
+            name,
+            email,
+            password,
+            post,
+            role_id: role,
+            skill
+        });
+
+        if (!createdUser) {
+            throw new Error(`Failed to create user with email: ${email}`);
+        }
+
+        return this.getUserByID(createdUser.id as string);
     };
 }
 
