@@ -24,6 +24,8 @@ const phoneSchema = Yup.string().trim();
 
 const emailSchema = Yup.string().email();
 
+const passwordSchema = Yup.string().trim();
+
 const birthDateSchema = Yup.string()
     .test((value) => moment(value, 'DD.MM.YYYY').isValid())
     .test('after-1950', 'Date must be after 01.01.1950', value => moment(value, 'DD.MM.YYYY').isAfter('1950-01-01', 'year'));
@@ -50,10 +52,15 @@ export const ProfilePersonalSchema = Yup.object().shape({
     underground: Yup.string()
 });
 
+export const AuthLoginSchema = Yup.object().shape({
+    email: emailSchema.required(),
+    password: passwordSchema.required(),
+});
+
 export const UserAdminCreateSchema = Yup.object().shape({
     name: nameSchema.required(),
     email: emailSchema.required(),
-    password: Yup.string().required(),
+    password: passwordSchema.required(),
     post: objectIdSchema.required(),
     role: objectIdSchema.required(),
     skill: Yup.array().of(objectIdSchema.required()).required(),
