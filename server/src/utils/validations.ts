@@ -6,7 +6,7 @@ import moment from 'moment';
 const objectIdSchema = Yup.string().test({
     name: 'is-object-id',
     message: 'Invalid ObjectID',
-    test: (value) => Types.ObjectId.isValid(value as string),
+    test: (value) => Types.ObjectId.isValid(value as string)
 });
 
 const nameSchema = Yup.string()
@@ -48,6 +48,19 @@ export const ProfilePersonalSchema = Yup.object().shape({
         message: 'от 10 до 15 символов, состоит из цифр, начинается с 7.'
     }),
     underground: Yup.string()
+});
+
+export const UserAdminCreateSchema = Yup.object().shape({
+    name: nameSchema.required(),
+    email: emailSchema.required(),
+    password: Yup.string().required(),
+    post: objectIdSchema.required(),
+    role: objectIdSchema.required(),
+    skill: Yup.array().of(objectIdSchema.required()).required(),
+});
+
+export const UserAdminGetSchema = Yup.object().shape({
+    userID: objectIdSchema.required()
 });
 
 export const UserAdminUpdateSchema = Yup.object().shape({
