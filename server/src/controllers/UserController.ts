@@ -2,7 +2,6 @@ import {NextFunction, Request, Response} from 'express';
 import UserService from '../service/User/UserService.js';
 
 
-
 interface User {
     name: string;
     email: string;
@@ -22,18 +21,6 @@ class UserController {
             const users = await UserService.getAllUsers();
 
             res.json(users);
-        } catch (e) {
-            next(e);
-        }
-    };
-
-    add = async (req: UserRequest, res: Response, next: NextFunction) => {
-        try {
-            const {name, email, role, post, skills, password} = req.body;
-
-            const user = await UserService.addUser(name, email, password, role, post, skills);
-
-            res.json(user);
         } catch (e) {
             next(e);
         }
