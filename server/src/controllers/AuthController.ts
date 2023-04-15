@@ -1,16 +1,15 @@
 import {Response, Request, NextFunction} from 'express';
 import UserService from '../service/AuthService.js';
+import {AuthLoginSchema} from '../utils/validations.js';
+import {IAuthRequest} from '../types/IAuthApi';
+import {RequestWithCookie} from '../types/IRequest';
 
-
-export interface IAuthQuery {
-    email: string;
-    password: string;
-}
 
 class AuthController {
-    login = async (req: Request<never, never, IAuthQuery>, res: Response, next: NextFunction) => {
+    login = async (req: Request<never, never, IAuthRequest>, res: Response, next: NextFunction) => {
         try {
-            const {email, password} = req.body;
+            const {email, password} = await AuthLoginSchema.validate(req.body, {abortEarly: false});
+            
             const userData = await UserService.login(email, password);
 
             res.cookie('refreshToken', userData.refreshToken, {
@@ -18,34 +17,27 @@ class AuthController {
                 httpOnly: true,
             });
 
-            return res.json(userData);
+            res.json(userData);
         } catch (error) {
             next(error);
         }
-
-        return undefined;
     };
 
-    logout = async (req: Request, res: Response, next: NextFunction) => {
+    logout = async (req: RequestWithCookie, res: Response, next: NextFunction) => {
         try {
-
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             const {refreshToken} = req.cookies;
 
             const token = await UserService.logout(refreshToken as string);
             res.clearCookie('refreshToken');
 
-            return res.json(token);
+            res.json(token);
         } catch (error) {
             next(error);
         }
-
-        return undefined;
     };
 
-    refresh = async (req: Request, res: Response, next: NextFunction) => {
+    refresh = async (req: RequestWithCookie, res: Response, next: NextFunction) => {
         try {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             const {refreshToken} = req.cookies;
             const userData = await UserService.refresh(refreshToken as string);
             res.cookie('refreshToken', userData.refreshToken, {
@@ -53,12 +45,10 @@ class AuthController {
                 httpOnly: true,
             });
 
-            return res.json(userData);
+            res.json(userData);
         } catch (error) {
             next(error);
         }
-
-        return undefined;
     };
 }
 
