@@ -12,7 +12,7 @@ import { fieldNameMap } from '../../../utils/fieldNameMap';
 import { UserInfoDto } from '../../../models/IUser';
 
 
-export const UserAdministrationPage: React.FC<PageProps> = ({ title }) => {
+export const UserAdministrationPage: React.FC<PageProps> = () => {
     const { id } = useParams();
     if (!id) return null;
 
@@ -47,14 +47,14 @@ export const UserAdministrationPage: React.FC<PageProps> = ({ title }) => {
             <Spin spinning={isGetUserLoading}>
                 <div className="flex flex-column gap-30">
                     <div className="dashboard-content-block">
-                         <FieldList view="alternating" elements={fields}/>
-                    </div>
-                    <div className="dashboard-content-block">
                         <button
                             type="button"
                             onClick={() => setIsOpen((prevState) => !prevState)}
                             className="button button--default"
                         >Изменить данные</button>
+                    </div>
+                    <div className="dashboard-content-block">
+                         <FieldList view="alternating" elements={fields}/>
                     </div>
                 </div>
                 <CustomModal modalState={{ isOpen, setIsOpen }}>
