@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 import UserAdminService from '../service/UserAdmin/UserAdminService.js';
 import {UserAdminCreateSchema, UserAdminGetSchema, UserAdminUpdateSchema} from '../utils/validations.js';
 import {ICreateUserRequestData, IUpdateUserRequestData} from '../types/IUserApi';
+import ApiError from '../exceptions/ApiError.js';
 
 
 
@@ -16,7 +17,7 @@ class UserAdminController {
 
             const { userID } = await UserAdminGetSchema.validate({
                 userID : id
-            });
+            }, { abortEarly: false });
 
             const user = await UserAdminService.getUserByID(userID);
 
@@ -30,10 +31,10 @@ class UserAdminController {
         try {
             const {data} = req.body;
 
-            const createData = await UserAdminCreateSchema.validate(data);
+            const createData = await UserAdminCreateSchema.validate(data, { abortEarly: false });
 
             const hashPassword = await bcrypt.hash(data.password, 4).catch((err: Error) => {
-                throw new Error(`Error hashing password: ${err.message}`);
+                throw ApiError.BadRequest('Error handle password');
             });
 
             const user = await UserAdminService.createUser({
@@ -55,7 +56,7 @@ class UserAdminController {
             const { id } = req.params;
             const { data } = req.body;
 
-            const update = await UserAdminUpdateSchema.validate(data);
+            const update = await UserAdminUpdateSchema.validate(data, { abortEarly: false });
 
             const user = await UserAdminService.updateUserByID(id, update);
 
