@@ -1,88 +1,81 @@
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
-import type { DatePickerProps } from 'antd';
-import { DatePicker, Select, Spin } from 'antd';
+import { DatePicker, Select, Spin, Form, Input } from 'antd';
 import dayjs from 'dayjs';
 import { ProfilePersonalSchema } from '../../../../utils/validationSchemes';
 import { IPersonalForm } from './types';
 import { useUpdateProfileMutation } from '../../../../api/profile';
-import ResponseMessage from '../../../ResponseMessage';
+import { useGetGendersQuery } from '../../../../api/gender';
 
 
-const genders = ['Мужской', 'Женский'];
-
-export const PersonalForm: React.FC<{data: IPersonalForm}> = ({ data }) => {
+export const PersonalForm: React.FC<{ data: IPersonalForm }> = ({ data }) => {
     const { name, birth_date, gender } = data;
-    const [isSuccess, setIsSuccess] = useState<boolean | null>(null);
-    const [UpdateProfile, { isLoading: isUpdatingProfile }] =  useUpdateProfileMutation();
-    const [ initialValues ] = useState({
-        name: name ?? '',
-        birth_date: birth_date ?? '',
-        gender: gender ?? '',
+    const [formError, setFormError] = useState({
+        isError: false,
+        message: ''
     });
+    const { data: genders = [] } = useGetGendersQuery({});
+    const [UpdateProfile, { isLoading: isUpdatingProfile }] = useUpdateProfileMutation();
 
     const formik = useFormik({
-        initialValues,
+        initialValues: {
+            name: name ?? '',
+            birth_date: birth_date ?? '',
+            gender: genders.find(el => el.name === gender)?.id ?? '',
+        },
         initialStatus: false,
         validationSchema: ProfilePersonalSchema,
         onSubmit: async (formData) => {
-            const response = await UpdateProfile({
-                personal: formData
-            });
+            try {
+                await UpdateProfile({
+                    personal: formData
+                }).unwrap();
 
-            setIsSuccess(!('error' in response));
-        },
+                setFormError((prevState) => ({ ...prevState, isError: false }));
+            } catch (error) {
+                setFormError({
+                    isError: true,
+                    message: error.data.message ?? 'ServerError'
+                });
+            }
+        }
     });
 
-    const onDateChangeHandler: DatePickerProps['onChange'] = (date, dateString) => {
-        formik.setFieldValue('birth_date', dateString);
-    };
-
-    return(
+    return (
         <Spin spinning={isUpdatingProfile}>
-            {isSuccess !== null && <ResponseMessage isSuccess={isSuccess}/>}
-            {isSuccess === null && (
-                <form className='form' onSubmit={formik.handleSubmit}>
-                <div className='form-group'>
-                    <label htmlFor="name">Имя</label>
-                    <input
-                        id='name'
-                        name='name'
-                        type="text"
-                        placeholder='John Doe'
-                        onChange={formik.handleChange}
-                        value={formik.values.name}
-                    />
+            <Form layout="vertical" onSubmitCapture={formik.handleSubmit}>
+                <Form.Item label="Имя">
+                    <Input name='name' placeholder="John Doe Development" value={formik.values.name} onChange={formik.handleChange} />
                     {formik.errors.name ? <span className="form__err-msg">{formik.errors.name}</span> : null}
-                </div>
-                <div className="form-group">
-                    <label htmlFor="birth_date">Дата рождения</label>
+                </Form.Item>
+                <Form.Item label="Дата рождения">
                     <DatePicker
                         format="DD.MM.YYYY"
                         placeholder="Выбрать дату"
                         defaultValue={dayjs(formik.values.birth_date, 'DD.MM.YYYY')}
-                        onChange={onDateChangeHandler}
+                        onChange={(_, dateString) => formik.setFieldValue('birth_date', dateString)}
                     />
                     {formik.errors.birth_date ? <span className="form__err-msg">{formik.errors.birth_date}</span> : null}
-                </div>
-                <div className='form-group'>
-                    <label htmlFor="gender">Пол</label>
+                </Form.Item>
+                <Form.Item label="Пол">
                     <Select
-                        style={{ width: 120 }}
+                        style={{ width: '100%' }}
                         value={formik.values.gender}
-                        onChange={(selectedOption) => {
-                            formik.setFieldValue('gender', selectedOption);
-                        }}
-                        options={genders.map((el) => ({
-                            label: el,
-                            value: el,
+                        onChange={(selectedOption) => formik.setFieldValue('gender', selectedOption)}
+                        options={genders.map((item) => ({
+                            label: item.name,
+                            value: item.id,
                         }))}
                     />
                     {formik.errors.gender ? <span className="form__err-msg">{formik.errors.gender}</span> : null}
-                </div>
-                <button type='submit' className='button button--blue form__submit'>Изменить</button>
-            </form>
-            )}
+                </Form.Item>
+
+                {formError.isError && (
+                    <span className="form__err-msg">{formError.message}</span>
+                )}
+
+                <button type='submit' disabled={!formik.dirty || formik.isSubmitting} className='button button--blue form__submit'>Изменить</button>
+            </Form>
         </Spin>
     );
 };

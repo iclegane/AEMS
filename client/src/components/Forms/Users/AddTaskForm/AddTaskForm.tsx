@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { Spin, DatePicker } from 'antd';
+import { DatePicker, Spin, Form, Input } from 'antd';
 import { useFormik } from 'formik';
 import { useSelector } from 'react-redux';
 import MyEditor from '../../../MyEditor';
-import ResponseMessage from '../../../ResponseMessage';
 import { AddTaskFormSchema } from '../../../../utils/validationSchemes';
 import { useCreateTaskMutation } from '../../../../api/tasks';
 import { RootState } from '../../../../store/store';
@@ -17,11 +16,13 @@ const initialValues = {
 };
 
 export const AddTaskForm: React.FC<{taskID: string}> = ({ taskID }) => {
-
     const { user } = useSelector((state: RootState) => state.authReducer.auth);
     const [createTask, { isLoading: isCreatingTask }] = useCreateTaskMutation();
-    const [isSuccess, setIsSuccess] = useState<boolean | null>(null);
-
+    const [formError, setFormError] = useState({
+        isError: false,
+        message: ''
+    });
+ 
     const formik = useFormik({
         initialValues: {
             ...initialValues,
@@ -30,78 +31,54 @@ export const AddTaskForm: React.FC<{taskID: string}> = ({ taskID }) => {
         },
         initialStatus: false,
         validationSchema: AddTaskFormSchema,
-        onSubmit: async (formData, actions) => {
-            const response = await createTask(formData);
-            setIsSuccess(!('error' in response));
+        onSubmit: async (formData) => {
+            try {
+                await createTask(formData).unwrap();
+
+                setFormError((prevState) => ({ ...prevState, isError: false }));
+            } catch(e) {
+                setFormError({
+                    isError: true,
+                    message: e.data.message ?? 'ServerError'
+                });
+            }
         }
     });
-
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        formik.handleSubmit(e);
-    };
-
-    const onHtmlHandler = (html: string) => {
-        formik.setFieldValue('body', html);
-    };
-    
-    const onDateHandler = (date: any, dateString: string) => {
-        formik.setFieldValue('deadline', dateString);
-    };
-
+ 
     return (
         <Spin spinning={isCreatingTask}>
-            {isSuccess !== null && <ResponseMessage isSuccess={isSuccess}/>}
-            {isSuccess === null && (
-                <form className='form' onSubmit={handleSubmit}>
-                    <h2 className="text-center">Добавить новую задачу</h2>
-                    <div className='form-group'>
-                        <label htmlFor="name">Введите название задачи</label>
-                        <input
-                            placeholder='Название задачи'
-                            type="text"
-                            name='name'
-                            id='name'
-                            onChange={formik.handleChange}
-                            value={formik.values.name}
-                        />
-                        {formik.errors.name ? <span className="form__err-msg">{formik.errors.name}</span> : null}
-                    </div>
-                    <div className='form-group'>
-                        <label htmlFor="description">Введите краткое описание</label>
-                        <input
-                            placeholder='Краткое описание'
-                            type="text"
-                            name='description'
-                            id='description'
-                            onChange={formik.handleChange}
-                            value={formik.values.description}
-                        />
-                        {formik.errors.description ? <span className="form__err-msg">{formik.errors.description}</span> : null}
-                    </div>
-                    <div className='form-group'>
-                        <label htmlFor="name">Введите крайний срок</label>
-                        <DatePicker
-                            showTime={{ format: 'HH:mm' }}
-                            format="YYYY-MM-DD HH:mm"
-                            onChange={onDateHandler}
-                        />
-                        {formik.errors.deadline ? <span className="form__err-msg">{formik.errors.deadline}</span> : null}
-                    </div>
-                    <div className='form-group'>
-                        <label htmlFor="MyEditor">Введите описание задачи</label>
-                        <MyEditor onHtmlChange={onHtmlHandler}/>
-                        {formik.errors.body ? <span className="form__err-msg">{formik.errors.body}</span> : null}
-                    </div>
-                    <div className='form-group'>
-                        <label htmlFor="performerID">Исполнитель</label>
-                        <input onChange={formik.handleChange} value={taskID} type="text" name='performerID' id='performerID' readOnly/>
-                        {formik.errors.performerID ? <span className="form__err-msg">{formik.errors.performerID}</span> : null}
-                    </div>
+            <Form layout="vertical" onSubmitCapture={formik.handleSubmit}>
+                <h2 className="text-center">Добавить новую задачу</h2>
+                <Form.Item label="Название задачи">
+                    <Input name='name' placeholder="Название задачи" value={formik.values.name} onChange={formik.handleChange} />
+                    {formik.errors.name ? <span className="form__err-msg">{formik.errors.name}</span> : null}
+                </Form.Item>
+                <Form.Item label="Введите краткое описание">
+                    <Input name='description' placeholder="Название задачи" value={formik.values.description} onChange={formik.handleChange} />
+                    {formik.errors.description ? <span className="form__err-msg">{formik.errors.description}</span> : null}
+                </Form.Item>
+                <Form.Item label="Введите краткое описание">
+                    <DatePicker
+                        showTime={{ format: 'HH:mm' }}
+                        format="YYYY-MM-DD HH:mm"
+                        onChange={(_, dateString) => formik.setFieldValue('deadline', dateString)}
+                    />
+                    {formik.errors.deadline ? <span className="form__err-msg">{formik.errors.deadline}</span> : null}
+                </Form.Item>
+                <Form.Item label="Введите краткое описание">
+                    <MyEditor onHtmlChange={(html) => formik.setFieldValue('body', html)}/>
+                    {formik.errors.body ? <span className="form__err-msg">{formik.errors.body}</span> : null}
+                </Form.Item>
+                <Form.Item label="Исполнитель">
+                    <Input name='performerID' placeholder="Исполнитель" value={formik.values.performerID} type='text' readOnly />
+                </Form.Item>
 
-                    <button type="submit" disabled={isCreatingTask} className='button button--blue button--full-width button--center form__submit'>Добавить</button>
-                </form>
-            )}
+                {formError.isError && (
+                    <span className="form__err-msg">{formError.message}</span>
+                )}
+
+                <button type='submit'  className='button button--blue form__submit'>Создать</button>
+            </Form>
         </Spin>
     );
 };

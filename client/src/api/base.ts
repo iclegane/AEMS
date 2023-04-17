@@ -27,7 +27,3 @@ export const api = createApi({
     tagTypes: ['Tasks', 'Profile', 'Users', 'User'],
     endpoints: () => ({}),
 });
-
-export const enhancedApi = api.enhanceEndpoints({
-    endpoints: () => ({}),
-});
