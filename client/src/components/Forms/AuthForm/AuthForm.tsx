@@ -21,11 +21,7 @@ export const AuthForm: React.FC = () => {
         initialStatus: false,
         validationSchema: SignInSchema,
         onSubmit: async (formData) => {
-            try {
-                await dispatch(login(formData));
-            } catch (e) {
-                console.log(e);
-            }
+            await dispatch(login(formData));
         },
     });
 

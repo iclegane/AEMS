@@ -1,34 +1,42 @@
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
-import { Select, Spin } from 'antd';
+import { Select, Spin, Form, Input } from 'antd';
 import { ProfileContactsSchema } from '../../../../utils/validationSchemes';
 import { useUpdateProfileMutation } from '../../../../api/profile';
 import { IContactForm } from './types';
 import { useGetUndergroundsQuery } from '../../../../api/underground';
-import ResponseMessage from '../../../ResponseMessage';
 
 
 export const ContactForm: React.FC<{data: IContactForm}> = ({ data }) => {
     const { address, phone, underground } = data;
-    const [isSuccess, setIsSuccess] = useState<boolean | null>(null);
-    const [UpdateProfile, { isLoading: isUpdatingTask }] =  useUpdateProfileMutation();
-    const { data: undergrounds = [], isLoading: isUndergroundsLoading, isError: isUndergroundsError } = useGetUndergroundsQuery({});
-    const [formikValues] = useState<{ address: string; phone: string; underground: string | null }>({
-        address: address ?? '',
-        phone: phone ?? '',
-        underground: underground ?? null,
+    const [formError, setFormError] = useState({
+        isError: false,
+        message: ''
     });
+    const [UpdateProfile, { isLoading: isUpdatingTask }] =  useUpdateProfileMutation();
+    const { data: undergrounds = [], isError: isUndergroundsError } = useGetUndergroundsQuery({});
 
     const formik = useFormik({
-        initialValues: formikValues,
+        initialValues: {
+            address: address ?? '',
+            phone: phone ?? '',
+            underground: undergrounds.find(el => el.name === underground)?.id ?? '' ?? '',
+        },
         initialStatus: false,
         validationSchema: ProfileContactsSchema,
         onSubmit: async (formData) => {
-            const response = UpdateProfile({
-                contacts: formData
-            });
+            try {
+                await UpdateProfile({
+                    contacts: formData
+                }).unwrap();
 
-            setIsSuccess(!('error' in response));
+                setFormError((prevState) => ({ ...prevState, isError: false }));
+            } catch(error) {
+                setFormError({
+                    isError: true,
+                    message: error.data.message ?? 'ServerError'
+                });
+            }
         },
     });
 
@@ -38,49 +46,45 @@ export const ContactForm: React.FC<{data: IContactForm}> = ({ data }) => {
 
     return(
         <Spin spinning={isUpdatingTask}>
-            {isSuccess !== null && <ResponseMessage isSuccess={isSuccess}/>}
-            {isSuccess === null && (
-                <form className='form' onSubmit={formik.handleSubmit}>
-                    <div className='form-group'>
-                        <label htmlFor="name">Адрес</label>
-                        <input
-                            id='address'
-                            name='address'
-                            type="text"
-                            onChange={formik.handleChange}
-                            value={formik.values.address || ''}
-                        />
-                        {formik.errors.address ? <span className="form__err-msg">{formik.errors.address}</span> : null}
-                    </div>
-                    <div className='form-group'>
-                        <label htmlFor="name">Телефон</label>
-                        <input
-                            id='phone'
-                            name='phone'
-                            type="text"
-                            onChange={formik.handleChange}
-                            value={formik.values.phone || ''}
-                        />
-                        {formik.errors.phone ? <span className="form__err-msg">{formik.errors.phone}</span> : null}
-                    </div>
-                    <Spin spinning={isUndergroundsLoading}>
-                        <label htmlFor="name">Метро</label>
-                        <Select
-                            style={{ width: 120 }}
-                            value={formik.values.underground}
-                            onChange={(selectedOption) => {
-                                formik.setFieldValue('underground', selectedOption);
-                            }}
-                            options={undergrounds.map((item) => ({
-                                label: item.name,
-                                value: item.id,
-                            }))}
-                        />
-                        {formik.errors.underground ? <span className="form__err-msg">{formik.errors.underground}</span> : null}
-                    </Spin>
-                    <button disabled={isUndergroundsLoading} type='submit' className='button button--blue form__submit'>Изменить</button>
-                </form>
-            )}
+             <Form layout="vertical" onSubmitCapture={formik.handleSubmit}>
+                <Form.Item label="Адрес">
+                    <Input 
+                        name='address' 
+                        placeholder="John Doe Development" 
+                        value={formik.values.address} onChange={formik.handleChange} 
+                    />
+                    {formik.errors.address ? <span className="form__err-msg">{formik.errors.address}</span> : null}
+                </Form.Item>
+
+                <Form.Item label="Телефон">
+                    <Input 
+                        name='phone' 
+                        placeholder="John Doe Development" 
+                        value={formik.values.phone} onChange={formik.handleChange} 
+                    />
+                    {formik.errors.phone ? <span className="form__err-msg">{formik.errors.phone}</span> : null}
+                </Form.Item>
+
+                <Form.Item label="Метро">
+                    <Select
+                        style={{ width: '100%' }}
+                        value={formik.values.underground}
+                        onChange={(selectedOption) => formik.setFieldValue('underground', selectedOption)}
+                        options={undergrounds.map((item) => ({
+                            label: item.name,
+                            value: item.id,
+                        }))}
+                    />
+
+                    {formik.errors.underground ? <span className="form__err-msg">{formik.errors.underground}</span> : null}
+                </Form.Item>
+                
+                {formError.isError && (
+                    <span className="form__err-msg">{formError.message}</span>
+                )}
+
+                <button type='submit' disabled={!formik.dirty || formik.isSubmitting} className='button button--blue form__submit'>Изменить</button>
+             </Form>
         </Spin>
     );
 };
