@@ -12,13 +12,6 @@ export default class AuthService {
         });
     }
 
-    static async registration(email: string, password: string): Promise<AxiosResponse<IAuthResponse>> {
-        return TRANSPORT.post<IAuthResponse>('/auth/registration', {
-            email,
-            password
-        });
-    }
-
     static async logout(): Promise<void> {
         return TRANSPORT.post('/auth/logout');
     }
