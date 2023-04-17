@@ -14,13 +14,11 @@ export const login = createAsyncThunk(
             return response.data;
         } catch (e: unknown) {
 
-            let msg = 'Непредвиденная ошибка';
-
-            if (axios.isAxiosError(e)) {
-                e.response?.data?.message ? msg = e.response.data.message : null;
+            if (axios.isAxiosError(e) && e.response && e.response.data) {
+                return thunkAPI.rejectWithValue(e.response.data.message);
             }
-
-            return thunkAPI.rejectWithValue(msg);
+            
+            return thunkAPI.rejectWithValue('Unexpected error occurred');
         }
     }
 );
