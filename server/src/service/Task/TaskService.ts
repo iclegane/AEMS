@@ -74,21 +74,19 @@ class TaskService {
         return populateTask;
     }
 
-    async update(query: ITaskUpdateQuery): Promise<TaskDto | null> {
-        const task = await TaskModel.findById(query.id);
-        if (!task) {
-            throw ApiError.BadRequest('Task not found');
-        }
+    async update(query: ITaskUpdateQuery) {
+        const {status} = query;
+        const update: {
+            status?: string;
+        } = {};
 
-        if (query.fields.status) {
-            const status = await TaskStatusModel.findById(query.fields.status);
-            if (!status) {
-                throw ApiError.BadRequest('Status not found');
-            }
+        if (status) {
+            const statusIsExists = await TaskStatusModel.exists({_id: status});
+            update.status = status;
         }
 
         const updatedData = await TaskModel.findByIdAndUpdate({_id: query.id}, {
-            status: query.fields.status
+            ...update
         },{
             strict: true,
             new: true,
@@ -105,8 +103,7 @@ class TaskService {
     }
 
     async detail(id: string): Promise<TaskDto | null> {
-        const taskID = new Types.ObjectId(id);
-        const task = await TaskModel.findById({_id: taskID})
+        const task = await TaskModel.findById({_id: id})
             .populate<{status: ITaskPopulate['status']}>('status', 'id name')
             .populate<{manager: ITaskPopulate['manager']}>('manager', 'id name')
             .populate<{performer: ITaskPopulate['performer']}>('performer', 'id name')

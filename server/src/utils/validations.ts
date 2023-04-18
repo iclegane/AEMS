@@ -16,7 +16,7 @@ const nameSchema = Yup.string()
     .matches(/(?:[A-Za-z]+\s){2}[A-Za-z]+/, {
         message: 'ФИО должно состоять из 3 частей'
     }
-);
+    );
 
 const addressSchema = Yup.string().trim();
 
@@ -86,3 +86,23 @@ export const UserAdminUpdateSchema = Yup.object().shape({
     skill: Yup.array().of(objectIdSchema.required()).required(),
     underground: objectIdSchema.required(),
 });
+
+export const TasksListSchema = Yup.object().shape({
+    page: Yup.number().integer().min(1),
+    limit: Yup.number().integer().min(1),
+    sortJson: Yup.string(),
+    filterJson: Yup.string(),
+})
+
+export const TasksDetailSchema = Yup.object().shape({
+    id: objectIdSchema.required()
+})
+
+export const TasksUpdateSchema = Yup.object().shape({
+    id: objectIdSchema.required(),
+    status: Yup.lazy((value) => {
+        return value !== undefined
+        ? objectIdSchema
+        : Yup.string().notRequired()
+    })
+})

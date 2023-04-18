@@ -44,8 +44,5 @@ export interface ITaskAddQuery {
 
 export interface ITaskUpdateQuery {
     id: string;
-    fields: {
-        status?: string;
-        name?: string
-    }
+    status?: string;
 }

@@ -6,7 +6,7 @@ import { IAddUserFromFields } from '../components/Forms/Users/AddUserForm/types'
 export const usersApi = api.injectEndpoints({
     endpoints: (build) => ({
         getUsers: build.query<IUser[], void>({
-            query: () => ({ url: '/users/list' }),
+            query: () => ({ url: '/admin/users/list' }),
             providesTags: ['Users']
         }),
         getUserByID: build.query<UserInfoDto, { id: string }>({

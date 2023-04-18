@@ -28,22 +28,21 @@ router.put('/profile', AuthMiddleware, ProfileController.updateProfileInfo);
 
 router.get('/tasks', AuthMiddleware,  TaskController.list);
 router.get('/tasks/:id', AuthMiddleware, TaskController.detail);
-router.post('/tasks/add', AuthMiddleware, TaskController.add);
 router.put('/tasks/:id', AuthMiddleware, TaskController.update);
 
 router.get('/statuses',  TaskStatusController.list);
-
-router.get('/users/list', UserController.list);
-
 router.get('/underground', UndergroundController.list);
 router.get('/posts', PostController.getPosts);
 router.get('/skills', SkillController.getSkills);
 router.get('/roles', RoleController.list);
 router.get('/genders', GenderController.list);
 
-router.get('/admin/users/:id', UserAdminController.getUserById);
-router.put('/admin/users/:id', UserAdminController.updateUserById);
-router.post('/admin/users/add', UserAdminController.createUser);
+router.get('/admin/users/list',AuthMiddleware, UserController.list);
+router.get('/admin/users/:id',AuthMiddleware, UserAdminController.getUserById);
+router.put('/admin/users/:id',AuthMiddleware, UserAdminController.updateUserById);
+router.post('/admin/users/add',AuthMiddleware, UserAdminController.createUser);
+router.post('/admin/tasks/add',AuthMiddleware, TaskController.add);
+
 
 router.get('*', (req: Request, res: Response) => {
     throw ApiError.NotFound('Not Found');

@@ -24,7 +24,7 @@ export const tasksApi = api.injectEndpoints({
         }),
         createTask: build.mutation<Task, CreateTaskParamsData>({
             query: (task) => ({
-                    url: 'tasks/add',
+                    url: 'admin/tasks/add',
                     method: 'POST',
                     body: task
                 }),
