@@ -75,14 +75,14 @@ class TaskService {
     }
 
     async update(query: ITaskUpdateQuery) {
-        const {fields} = query;
+        const {status} = query;
         const update: {
             status?: string;
         } = {};
 
-        if (fields?.status) {
-            const statusIsExists = await TaskStatusModel.exists({_id: fields.status});
-            update.status = fields.status;
+        if (status) {
+            const statusIsExists = await TaskStatusModel.exists({_id: status});
+            update.status = status;
         }
 
         const updatedData = await TaskModel.findByIdAndUpdate({_id: query.id}, {

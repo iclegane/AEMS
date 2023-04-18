@@ -10,7 +10,9 @@ import {
 } from '../service/Task/types.js';
 import io from '../index.js';
 import { TasksDetailSchema, TasksListSchema, TasksUpdateSchema } from '../utils/validations.js';
- 
+import { ParamsDictionary } from 'express-serve-static-core';
+
+
 class TaskController {
     list = async (req: Request<never, never, ITaskListParams>, res: Response, next: NextFunction) => {
         try {
@@ -81,15 +83,16 @@ class TaskController {
         }
     };
 
-    update = async (req: Request<never, never, ITaskUpdateQuery>, res: Response, next: NextFunction) => {
+    update = async (req: Request<ParamsDictionary, any, ITaskUpdateQuery>, res: Response, next: NextFunction) => {
         try {
-            const {id, status} = await TasksUpdateSchema.validate(req.params, {abortEarly: false});
+            const {id, status} = await TasksUpdateSchema.validate({
+                id: req.params.id,
+                status: req.body.status
+            }, {abortEarly: false});
 
             const task = await TaskService.update({
                 id,
-                fields: {
-                    status: status ?? undefined,
-                }
+                status: status ?? undefined,
             });
 
             res.json(task);
