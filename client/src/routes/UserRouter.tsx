@@ -8,12 +8,13 @@ import VacationPage from '../pages/system/Vacation';
 import CalendarPage from '../pages/system/CalendarPage';
 import SettingsPage from '../pages/system/SettingsPage';
 import { SystemPage } from '../pages/system/SystemPage/SystemPage';
+import ErrorPage from '../pages/system/ErrorPage';
 
 
 const UserRouter = createBrowserRouter([
     {
         path: '/',
-        errorElement: '404',
+        errorElement: <ErrorPage title='Error' />,
         children: [
             { index: true, element: 'Promo page' },
             { path: 'login', element: <AuthPage /> },
