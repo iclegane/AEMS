@@ -46,6 +46,5 @@ export interface ITaskUpdateQuery {
     id: string;
     fields: {
         status?: string;
-        name?: string
     }
 }

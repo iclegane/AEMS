@@ -28,13 +28,13 @@ router.put('/profile', AuthMiddleware, ProfileController.updateProfileInfo);
 
 router.get('/tasks', AuthMiddleware,  TaskController.list);
 router.get('/tasks/:id', AuthMiddleware, TaskController.detail);
-router.post('/tasks/add', AuthMiddleware, TaskController.add);
 router.put('/tasks/:id', AuthMiddleware, TaskController.update);
+router.post('/tasks/add', AuthMiddleware, TaskController.add);
 
-router.get('/statuses',  TaskStatusController.list);
-
+ 
 router.get('/users/list', UserController.list);
 
+router.get('/statuses',  TaskStatusController.list);
 router.get('/underground', UndergroundController.list);
 router.get('/posts', PostController.getPosts);
 router.get('/skills', SkillController.getSkills);

@@ -8,45 +8,37 @@ import {
     ITaskUpdateQuery,
     Sort
 } from '../service/Task/types.js';
-import TokenService from '../service/TokenService.js';
 import io from '../index.js';
-
-
+import { TasksDetailSchema, TasksListSchema, TasksUpdateSchema } from '../utils/validations.js';
+ 
 class TaskController {
     list = async (req: Request<never, never, ITaskListParams>, res: Response, next: NextFunction) => {
-        const {
-            page = 1,
-            limit = 10,
-            sortJson = '{}',
-            filterJson = '{}'
-        } = req.query;
-
         try {
-            const {refreshToken} = req.cookies as { refreshToken?: string };
-            const userDto = TokenService.validateRefreshToken(refreshToken || '');
-            if (!userDto)  throw ApiError.BadRequest('Token is not valid');
+            const user = req.user!;
+
+            const { page = 1, limit = 10, sortJson = '{}', filterJson = '{}' } = await TasksListSchema.validate(req.query, {abortEarly: false});
 
             const parsedSort = JSON.parse(sortJson as string) as Sort;
             const parsedFilter = JSON.parse(filterJson as string) as ITaskListFilter;
 
             const { count, tasks } = await TaskService.list({
                 filter: {
-                    performer: userDto.id,
+                    performer: user.id,
                     ...parsedFilter,
                 },
                 options: {
-                    page: Number(page),
-                    limit: Number(limit),
+                    page: page,
+                    limit: limit,
                     sort: parsedSort,
                 },
             });
 
-            const totalPage = Math.ceil(count / Number(limit));
+            const totalPage = Math.ceil(count / limit);
 
             const total = {
                 tasks,
                 totalPage,
-                page: Number(page),
+                page: page,
                 count,
             };
 
@@ -58,10 +50,7 @@ class TaskController {
 
     detail = async (req: Request<never, never, { id: string }>, res: Response, next: NextFunction) => {
         try {
-            const {id} = req.params;
-            if (!id) {
-                throw ApiError.BadRequest('ID not found');
-            }
+            const {id} = await TasksDetailSchema.validate(req.params, {abortEarly: false});
 
             const taskData = await TaskService.detail(id);
 
@@ -94,13 +83,13 @@ class TaskController {
 
     update = async (req: Request<never, never, ITaskUpdateQuery>, res: Response, next: NextFunction) => {
         try {
-            const {id} = req.params;
+            const {id, status} = await TasksUpdateSchema.validate(req.params, {abortEarly: false});
 
             const task = await TaskService.update({
                 id,
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-ignore
-                fields: {...req.body}
+                fields: {
+                    status: status ?? undefined,
+                }
             });
 
             res.json(task);
