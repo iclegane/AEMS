@@ -7,16 +7,11 @@ import {ProfilePersonalSchema} from '../utils/validations.js';
 
 
 class ProfileController {
-    getProfileInfo = async (req: Request<never, never, never>, res: Response, next: NextFunction) => {
+    getProfileInfo = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const {refreshToken} = req.cookies as {refreshToken: string | undefined};
-            if (!refreshToken) throw ApiError.BadRequest('Token not found');
-
-            const userData = TokenService.validateRefreshToken(refreshToken);
-            if (!userData) throw ApiError.BadRequest('User id is empty');
-
-            const {id} = userData;
-            const info = await ProfileService.getProfileData(id);
+            const user = req.user!;
+ 
+            const info = await ProfileService.getProfileData(user.id);
 
             res.json(info);
         } catch (error) {
@@ -26,24 +21,18 @@ class ProfileController {
 
     updateProfileInfo = async (req: Request<never, never, {data: IUpdateProfileRequest}>, res: Response, next: NextFunction) => {
         try {
-            const {refreshToken} = req.cookies as {refreshToken: string | undefined};
-            if (!refreshToken) throw ApiError.BadRequest('Token not found');
-
-            const userData = TokenService.validateRefreshToken(refreshToken);
-            if (!userData) throw ApiError.BadRequest('User id is empty');
-            const {id} = userData;
-
+            const user = req.user!;
             const {data} = req.body;
             if (!data) throw ApiError.BadRequest('Nothing to update');
 
             await ProfilePersonalSchema.validate({
                 ...data.personal,
                 ...data.contacts
-            });
+            }, {abortEarly: false});
+ 
+            await ProfileService.updateProfileData(user.id, data);
 
-            await ProfileService.updateProfileData(id, data);
-
-            res.json(id);
+            res.json(user.id);
         } catch (error) {
             next(error);
         }
