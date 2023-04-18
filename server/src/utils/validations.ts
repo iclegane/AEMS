@@ -20,7 +20,9 @@ const nameSchema = Yup.string()
 
 const addressSchema = Yup.string().trim();
 
-const phoneSchema = Yup.string().trim();
+const phoneSchema = Yup.string().matches(/^[(]?7{1}[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/, {
+    message: 'от 10 до 15 символов, состоит из цифр, начинается с 7.'
+});
 
 const emailSchema = Yup.string().email();
 
@@ -33,23 +35,24 @@ const birthDateSchema = Yup.string()
 const workDateSchema = Yup.string().test((value) => moment(value, 'DD.MM.YYYY').isValid());
 
 export const ProfilePersonalSchema = Yup.object().shape({
-    name: Yup.string()
-        .trim()
-        .min(5, '2 символа минимально.')
-        .max(30, '30 символов максимум.')
-        .matches(/(?:[A-Za-z]+\s){2}[A-Za-z]+/, {
-            message: 'ФИО должно состоять из 3 частей'
-        }),
-    birth_date: Yup.date().min(new Date(1970, 0, 1)),
-    gender: Yup.string(),
-    address: Yup.string()
-        .trim()
-        .min(5, '5 символов минимально.')
-        .max(35, '35 cимволов максимально.'),
-    phone: Yup.string().matches(/^[(]?7{1}[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/, {
-        message: 'от 10 до 15 символов, состоит из цифр, начинается с 7.'
+    name: nameSchema.nullable().notRequired(),
+    birth_date: Yup.lazy((value) => {
+        return value !== undefined
+            ? birthDateSchema
+            : Yup.string().notRequired();
     }),
-    underground: Yup.string()
+    gender: Yup.lazy((value) => {
+        return value !== undefined
+            ? objectIdSchema
+            : Yup.string().notRequired()
+    }),
+    address: Yup.string().notRequired(),
+    phone: phoneSchema.nullable().notRequired(),
+    underground: Yup.lazy((value) => {
+        return value !== undefined
+            ? objectIdSchema
+            : Yup.string().notRequired()
+    })
 });
 
 export const AuthLoginSchema = Yup.object().shape({

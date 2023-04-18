@@ -1,9 +1,19 @@
-import {NextFunction, Request, Response} from 'express';
+import {NextFunction, Request, Response, RequestHandler} from 'express';
 import ApiError from '../exceptions/ApiError.js';
 import TokenService from '../service/TokenService.js';
+import { IUserDto } from 'src/dtos/UserDto.js';
 
 
-const AuthMiddleware = (req: Request, res: Response, next: NextFunction) => {
+// todo: replace
+declare global {
+    namespace Express {
+      interface Request {
+        user?: IUserDto;
+      }
+    }
+  }
+
+const AuthMiddleware: RequestHandler = (req: Request, res: Response, next: NextFunction) => {
     try {
         const authorizationHeader = req.headers.authorization;
 
@@ -21,8 +31,6 @@ const AuthMiddleware = (req: Request, res: Response, next: NextFunction) => {
             return next(ApiError.UnauthorizedError());
         }
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
         req.user = userData;
 
         next();

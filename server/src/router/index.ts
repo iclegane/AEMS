@@ -22,6 +22,7 @@ router.post('/auth/login', AuthController.login);
 router.post('/auth/logout', AuthController.logout);
 router.get('/auth/refresh', AuthController.refresh);
 
+
 router.post('/profile', AuthMiddleware, ProfileController.getProfileInfo);
 router.put('/profile', AuthMiddleware, ProfileController.updateProfileInfo);
 
