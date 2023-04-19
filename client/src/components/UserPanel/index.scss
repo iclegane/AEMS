@@ -6,7 +6,8 @@
   &__avatar {
     width: 40px;
     height: 40px;
-    background: #F7F7F8;
+    background-image: url('../../assets/images/profile/profile.png');
+    background-size: contain;
     margin-right: 12px;
     border-radius: 50%;
 
