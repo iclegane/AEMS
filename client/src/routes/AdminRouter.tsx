@@ -1,5 +1,5 @@
 import React from 'react';
-import { createBrowserRouter } from 'react-router-dom';
+import { createHashRouter } from 'react-router-dom';
 import TasksPage from '../pages/system/TasksPage';
 import TaskPage from '../pages/system/TaskPage';
 import AuthPage from '../pages/system/AuthPage';
@@ -14,7 +14,7 @@ import { SystemPage } from '../pages/system/SystemPage/SystemPage';
 import ErrorPage from '../pages/system/ErrorPage';
 
 
-const AdminRouter = createBrowserRouter([
+const AdminRouter = createHashRouter([
     {
         path: '/',
         errorElement: <ErrorPage title='Error' />,
