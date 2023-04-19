@@ -5,11 +5,14 @@ import TaskPage from '../pages/system/TaskPage';
 import AuthPage from '../pages/system/AuthPage';
 import ProfilePage from '../pages/system/ProfilePage';
 import VacationPage from '../pages/system/Vacation';
+import CalendarPage from '../pages/system/CalendarPage';
+import UsersPage from '../pages/system/UsersPage';
+import UserAdministrationPage from '../pages/system/UserAdministrationPage';
 import { SystemPage } from '../pages/system/SystemPage/SystemPage';
 import ErrorPage from '../pages/system/ErrorPage';
- 
- 
-export const UserRouter = () => (
+
+
+export const ManagerRouter = () => (
     <Routes>
       <Route path="/" element="Promo page" />
       <Route path="/login" element={<AuthPage />} />
@@ -18,9 +21,12 @@ export const UserRouter = () => (
             <Route path="tasks" element={<TasksPage title="Задачи"/>} />
             <Route path="tasks/:id" element={<TaskPage title="Задача"/>} />
             <Route path="vacation" element={<VacationPage title="Отпуск"/>} />
+            <Route path="calendar" element={<CalendarPage title="Календарь"/>} />
+            <Route path="users" element={<UsersPage title="Пользователи"/>} />
+            <Route path="users/:id" element={<UserAdministrationPage title="Пользователь"/>} />
         </Route>
       <Route path="*" element={<ErrorPage title="Page not found" />} />
     </Routes>
 );
 
-export default UserRouter;
+export default ManagerRouter;
