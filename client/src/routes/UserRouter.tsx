@@ -13,14 +13,12 @@ export const UserRouter = () => (
     <Routes>
       <Route path="/" element="Promo page" />
       <Route path="/login" element={<AuthPage />} />
-      <Route path="system/*" element={
-        <Routes>
+      <Route path="system" element={<SystemPage title="Главная страница"/>}>
             <Route path="profile" element={<ProfilePage title="Профиль"/>} />
             <Route path="tasks" element={<TasksPage title="Задачи"/>} />
             <Route path="tasks/:id" element={<TaskPage title="Задача"/>} />
             <Route path="vacation" element={<VacationPage title="Отпуск"/>} />
-        </Routes>
-      } />
+        </Route>
       <Route path="*" element={<ErrorPage title="Page not found" />} />
     </Routes>
 );
