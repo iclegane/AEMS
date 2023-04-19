@@ -1,53 +1,43 @@
 import React, { useState } from 'react';
 import './index.scss';
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
-import '../../../styles/utils/calendar.css';
-import moment from 'moment';
+import { DatePicker } from 'antd';
 import Page from '../../../components/Page';
 import { PageProps } from '../../../models/IPage';
+import dayjs from 'dayjs';
 
+
+const { RangePicker } = DatePicker;
 
 export const VacationPage: React.FC<React.PropsWithChildren<PageProps>> = ({ title }) => {
+    const limit = 5;
+    const [selectedDates, setSelectedDates] = useState();
 
-    const [date, setDate] = useState<string[]>([]);
+    const handleDateChange = (dates) => setSelectedDates(dates);
 
-    const handleOnChange = (dates: Date[]) => {
-        const range = dates.map((dateEL) => moment(dateEL).format('DD.MM.YYYY'));
+    const disabledDate = (currentDate: dayjs.Dayjs) => currentDate.isBefore(dayjs(), 'day');
 
-        setDate(range);
-    };
-
-    const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault();
-
-        if (date.length) {
-            console.log('sub');
-        }
-    };
+    const confirm = () => {
+        console.log(')');
+    }
 
     return (
         <Page title={title}>
             <div className="flex gap-30">
                 <div className="flex flex-column gap-30">
                     <div className="dashboard-content-block">
-                        <div className="dashboard-content-block__title">Календарь</div>
-                        <Calendar
-                            onChange={handleOnChange}
-                            selectRange
-                            returnValue="range"
-                            minDate={new Date()}
+                        <div className="dashboard-content-block__title">Выберите прериод отупуска</div>
+                        <RangePicker
+                            format='DD.MM.YYYY'
+                            value={selectedDates}
+                            disabledDate={disabledDate}
+                            onChange={handleDateChange}
                         />
-                    </div>
-                    <div className="dashboard-content-block">
-                        <div className="dashboard-content-block__title">Оформление</div>
-                        {date.length > 0 && (
-                            <div>c {date[0]} по {date[1]}</div>
+
+                        {selectedDates && (
+                            <div style={{ marginTop: 30 }}>
+                                <button onClick={confirm} type='button' className='button button--default'>Оформить</button>
+                            </div>
                         )}
-                        <small>После оформление документ будет передан менеджеру</small>
-                        <br/>
-                        <br/>
-                        <button onClick={onSubmit} type="button" className="button button--default">Оформить документ</button>
                     </div>
                 </div>
             </div>
