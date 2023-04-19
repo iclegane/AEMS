@@ -1,11 +1,10 @@
 import React from 'react';
-import { RouterProvider } from 'react-router-dom';
-import UserRouter from '../../routes/UserRouter';
-import '@styles/index.scss';
-import AdminRouter from '../../routes/AdminRouter';
-import UnauthorizedRouter from '../../routes/UnauthorizedRouter';
 import { useRefreshAuth } from '../../hooks/useRefreshAuth';
-import ManagerRouter from '../../routes/ManagerRouter.';
+import { UnauthorizedRouter } from '../../routes/UnauthorizedRouter';
+import { AdminRouter } from '../../routes/AdminRouter';
+import { ManagerRouter } from '../../routes/ManagerRouter';
+import { UserRouter } from '../../routes/UserRouter';
+import '@styles/index.scss';
 
  
 export const App: React.FC = () => {
@@ -16,22 +15,22 @@ export const App: React.FC = () => {
     }
 
     if (error) {
-        return null;
+        return <UnauthorizedRouter/>;
     }
 
     if (auth.user) {
         if (auth.user.role === 'Admin') {
-            return <RouterProvider router={AdminRouter} />;
-        }
+            return <AdminRouter/>;
+        }   
 
         if (auth.user.role === 'Manager') {
-            return <RouterProvider router={ManagerRouter} />;
-        }
+            return <ManagerRouter/>;
+        }    
 
         if (auth.user.role === 'User') {
-            return <RouterProvider router={UserRouter} />;
-        }
-    }
+            return <UserRouter/>;
+        }    
+    };
 
-    return <RouterProvider router={UnauthorizedRouter} />;
+    return <UnauthorizedRouter/>;
 };
