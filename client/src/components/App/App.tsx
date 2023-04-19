@@ -5,6 +5,7 @@ import '@styles/index.scss';
 import AdminRouter from '../../routes/AdminRouter';
 import UnauthorizedRouter from '../../routes/UnauthorizedRouter';
 import { useRefreshAuth } from '../../hooks/useRefreshAuth';
+import ManagerRouter from '../../routes/ManagerRouter.';
 
  
 export const App: React.FC = () => {
@@ -19,8 +20,17 @@ export const App: React.FC = () => {
     }
 
     if (auth.user) {
-        const Router = auth.user.role === 'Admin' ? AdminRouter : UserRouter;
-        return <RouterProvider router={Router} />;
+        if (auth.user.role === 'Admin') {
+            return <RouterProvider router={AdminRouter} />;
+        }
+
+        if (auth.user.role === 'Manager') {
+            return <RouterProvider router={ManagerRouter} />;
+        }
+
+        if (auth.user.role === 'User') {
+            return <RouterProvider router={UserRouter} />;
+        }
     }
 
     return <RouterProvider router={UnauthorizedRouter} />;
