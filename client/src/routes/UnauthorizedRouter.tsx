@@ -1,10 +1,10 @@
 import React from 'react';
-import { createBrowserRouter } from 'react-router-dom';
+import { createHashRouter } from 'react-router-dom';
 import AuthPage from '../pages/system/AuthPage';
 import ErrorPage from '../pages/system/ErrorPage';
 
 
-const UnauthorizedRouter = createBrowserRouter([
+const UnauthorizedRouter = createHashRouter([
     {
         path: '/',
         errorElement: <ErrorPage title='Error' />,
