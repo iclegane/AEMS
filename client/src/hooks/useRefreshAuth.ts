@@ -1,12 +1,15 @@
 import { useEffect, useRef } from 'react';
 import { checkAuth } from '../store/actions/AuthAction';
-import { useAppDispatch } from './redux';
+import { useAppDispatch, useAppSelector } from './redux';
 import { REFRESH_TIME } from '../utils/constants';
+import { RootState } from '../store/store';
 
 
 // todo: after change on interceptors
 export const useRefreshAuth = () => {
     const dispatch = useAppDispatch();
+    const { auth, isLoading, error } = useAppSelector((state: RootState) => state.authReducer);
+
     
     const didInitRef = useRef(false);
     const refreshTokenTimerRef = useRef<NodeJS.Timeout>();
@@ -27,4 +30,6 @@ export const useRefreshAuth = () => {
             clearInterval(refreshTokenTimerRef.current);
         };
     }, []);
+
+    return { auth, isLoading, error };
 };
