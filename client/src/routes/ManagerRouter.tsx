@@ -7,14 +7,12 @@ import ProfilePage from '../pages/system/ProfilePage';
 import VacationPage from '../pages/system/Vacation';
 import CalendarPage from '../pages/system/CalendarPage';
 import UsersPage from '../pages/system/UsersPage';
-import FilesPage from '../pages/system/FilesPage';
-import SettingsPage from '../pages/system/SettingsPage';
 import UserAdministrationPage from '../pages/system/UserAdministrationPage';
 import { SystemPage } from '../pages/system/SystemPage/SystemPage';
 import ErrorPage from '../pages/system/ErrorPage';
 
 
-export const AdminRouter = () => (
+export const ManagerRouter = () => (
     <Routes>
       <Route path="/" element="Promo page" />
       <Route path="/login" element={<AuthPage />} />
@@ -26,11 +24,9 @@ export const AdminRouter = () => (
             <Route path="calendar" element={<CalendarPage title="Календарь"/>} />
             <Route path="users" element={<UsersPage title="Пользователи"/>} />
             <Route path="users/:id" element={<UserAdministrationPage title="Пользователь"/>} />
-            <Route path="files" element={<FilesPage title="Файлы"/>} />
-            <Route path="settings" element={<SettingsPage title="Настройки"/>} />
         </Route>
       <Route path="*" element={<ErrorPage title="Page not found" />} />
     </Routes>
 );
 
-export default AdminRouter;
+export default ManagerRouter;
