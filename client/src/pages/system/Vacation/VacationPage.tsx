@@ -23,7 +23,7 @@ export const VacationPage: React.FC<React.PropsWithChildren<PageProps>> = ({
                             Выберите прериод отупуска
                         </div>
                         <RangePickerWithDisabledDate
-                            limit={10}
+                            limit={28}
                             onChange={onChangeHandler}
                         />
                         {vacantionDays.filter((el) => el === null).length ? null : (
