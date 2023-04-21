@@ -1,7 +1,7 @@
-import {NextFunction, Request, Response, RequestHandler} from 'express';
+import { NextFunction, Request, Response, RequestHandler } from 'express';
+import { IUserDto } from 'src/dtos/UserDto.js';
 import ApiError from '../exceptions/ApiError.js';
 import TokenService from '../service/TokenService.js';
-import { IUserDto } from 'src/dtos/UserDto.js';
 
 
 // todo: replace

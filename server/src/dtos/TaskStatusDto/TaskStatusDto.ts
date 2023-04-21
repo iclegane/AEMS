@@ -1,4 +1,4 @@
-import {ITaskStatusDocument} from '../../models/task/status/types';
+import { ITaskStatusDocument } from '../../models/task/status/types';
 
 
 class TaskStatusDto {

@@ -2,10 +2,10 @@ import React from 'react';
 import { useFormik } from 'formik';
 import { SignInSchema } from '@utils/validationSchemes';
 import { Form, Input, Spin } from 'antd';
+import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../../hooks/redux';
 import { login } from '../../../store/actions/AuthAction';
 import { RootState } from '../../../store/store';
-import { useSelector } from 'react-redux';
 
 
 export const AuthForm: React.FC = () => {

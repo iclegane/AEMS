@@ -1,6 +1,6 @@
-import {Model, Document, Types} from 'mongoose';
-import {ITaskStatusDB, ITaskStatusDocument} from './status/types.js';
-import {IUserDB, IUserDocument} from '../user/types.js';
+import { Model, Document, Types } from 'mongoose';
+import { ITaskStatusDB, ITaskStatusDocument } from './status/types.js';
+import { IUserDB, IUserDocument } from '../user/types.js';
 
 
 export interface ITaskDB {

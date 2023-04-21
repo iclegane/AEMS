@@ -1,9 +1,7 @@
 import React, { useCallback, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import ReactModal from 'react-modal';
 import { Skeleton } from 'antd';
-import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
-import { logout } from '../../../store/actions/AuthAction';
+import { useAppSelector } from '../../../hooks/redux';
 import Icon from '../../../components/Icon';
 import { useGetProfileQuery } from '../../../api/profile';
 import PersonalForm from '../../../components/Forms/Profile/PersonalForm';
@@ -14,22 +12,21 @@ import { profileFormatData } from '../../../utils/profileFormatData';
 import './index.scss';
 import Page from '../../../components/Page';
 import { PageProps } from '../../../models/IPage';
+import useLogout from '../../../hooks/useLogout';
 
 
-export const ProfilePage: React.FC<React.PropsWithChildren<PageProps>> = React.memo(({ title }) => {
+export const ProfilePage: React.FC<React.PropsWithChildren<PageProps>> = (({ title }) => {
 
     const { auth } = useAppSelector(state => state.authReducer);
 
     const [open, setOpen] = useState(false);
     const [type, setType] = useState<ProfileEditTypes>(null);
 
-    const dispatch = useAppDispatch();
-    const navigate = useNavigate();
+    const logout = useLogout();
 
-    const logoutHandler = useCallback(() => {
-        dispatch(logout());
-        navigate('/login');
-    }, [dispatch, navigate]);
+    const logoutHandler = () => {
+        logout();
+    };
 
     const onChangeBlock = useCallback((type: ProfileEditTypes) => {
         setType(type);

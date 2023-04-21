@@ -1,8 +1,8 @@
-import {NextFunction, Request, Response} from 'express';
+import { NextFunction, Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import UserAdminService from '../service/UserAdmin/UserAdminService.js';
-import {UserAdminCreateSchema, UserAdminGetSchema, UserAdminUpdateSchema} from '../utils/validations.js';
-import {ICreateUserRequestData, IUpdateUserRequestData} from '../types/IUserApi';
+import { UserAdminCreateSchema, UserAdminGetSchema, UserAdminUpdateSchema } from '../utils/validations.js';
+import { ICreateUserRequestData, IUpdateUserRequestData } from '../types/IUserApi';
 import ApiError from '../exceptions/ApiError.js';
 
 
@@ -29,7 +29,7 @@ class UserAdminController {
 
     createUser = async (req: Request<never, never, { data: ICreateUserRequestData }>, res: Response, next: NextFunction) => {
         try {
-            const {data} = req.body;
+            const { data } = req.body;
 
             const createData = await UserAdminCreateSchema.validate(data, { abortEarly: false });
 

@@ -1,7 +1,7 @@
 import moment from 'moment';
-import {Replace} from '../../types/utils.js';
-import {IUserDocument, IUserPopulated} from '../../models/user/types';
-import {DATE_FORMAT} from '../../utils/constants.js';
+import { Replace } from '../../types/utils.js';
+import { IUserDocument, IUserPopulated } from '../../models/user/types';
+import { DATE_FORMAT } from '../../utils/constants.js';
 
 
 type UserDtoPopulated = Replace<IUserDocument, {

@@ -1,4 +1,4 @@
-import {ValidationError} from 'yup';
+import { ValidationError } from 'yup';
 
 
 class ApiError extends Error {

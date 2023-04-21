@@ -1,4 +1,4 @@
-import {Request, Response} from 'express';
+import { Request, Response } from 'express';
 import * as Yup from 'yup';
 import ApiError from '../exceptions/ApiError.js';
 
@@ -17,9 +17,9 @@ export default function errorMiddleware (err: Error, req: Request, res: Response
     }
 
     if (err instanceof Yup.ValidationError) {
-        const errors = err.inner.map((e) => ({field: e.path, message: e.message}));
+        const errors = err.inner.map((e) => ({ field: e.path, message: e.message }));
 
-        return res.status(400).json({error: 'Validation error', errors});
+        return res.status(400).json({ error: 'Validation error', errors });
     }
 
     const errorResponse = {

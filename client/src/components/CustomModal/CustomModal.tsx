@@ -29,7 +29,9 @@ export const CustomModal: React.FC<React.PropsWithChildren<CustomModalProps>> = 
             contentLabel="Profile"
             appElement={document.getElementById('root') || undefined}
         >
-            {children}
+            <div style={{ maxHeight: '100vh', overflow: 'auto' }}>
+                {children}
+            </div>
         </ReactModal>
     );
 };

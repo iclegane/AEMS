@@ -1,4 +1,4 @@
-import {Router, Response, Request, NextFunction} from 'express';
+import { Router, Response, Request, NextFunction } from 'express';
 import PDFController from '../controllers/PDFController.js';
 import AuthController from '../controllers/AuthController.js';
 import UserController from '../controllers/UserController.js';

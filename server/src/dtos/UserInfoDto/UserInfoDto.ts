@@ -4,9 +4,9 @@ import RoleDto from '../RoleDto/RoleDto.js';
 import GenderDto from '../GenderDto/GenderDto.js';
 import SkillDto from '../SkillDto/SkillDto.js';
 import UndergroundDto from '../UndergroundDto/UndergroundDto.js';
-import {DATE_FORMAT} from '../../utils/constants.js';
-import {IUserDocument, IUserPopulated} from '../../models/user/types';
-import {Replace} from '../../types/utils.js';
+import { DATE_FORMAT } from '../../utils/constants.js';
+import { IUserDocument, IUserPopulated } from '../../models/user/types';
+import { Replace } from '../../types/utils.js';
 
 
 type UserInfoDtoPopulated = Replace<IUserDocument, {

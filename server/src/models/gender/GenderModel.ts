@@ -1,5 +1,5 @@
-import mongoose, {Schema} from 'mongoose';
-import {IGenderDB, IGenderDocument} from './types';
+import mongoose, { Schema } from 'mongoose';
+import { IGenderDB, IGenderDocument } from './types';
 
 
 const GenderSchema = new Schema<IGenderDB>({

@@ -1,4 +1,4 @@
-import {IPostDocument} from '../../models/post/types';
+import { IPostDocument } from '../../models/post/types';
 
 
 class PostDto {

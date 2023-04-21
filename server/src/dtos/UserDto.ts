@@ -1,7 +1,7 @@
-import {IUserDocument, IUserPopulated} from '../models/user/types';
-import {IRoleDocument} from '../models/role/types';
-import {IPostDocument} from '../models/post/types';
-import {Replace} from '../types/utils';
+import { IUserDocument, IUserPopulated } from '../models/user/types';
+import { IRoleDocument } from '../models/role/types';
+import { IPostDocument } from '../models/post/types';
+import { Replace } from '../types/utils';
 
 
 export interface IUserDto {

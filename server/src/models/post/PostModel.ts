@@ -1,5 +1,5 @@
-import mongoose, {Schema} from 'mongoose';
-import {IPostDocument, IPostDB} from './types';
+import mongoose, { Schema } from 'mongoose';
+import { IPostDocument, IPostDB } from './types';
 
 
 const PostSchema = new Schema<IPostDB>({

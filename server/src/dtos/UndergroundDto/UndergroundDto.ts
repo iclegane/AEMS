@@ -1,4 +1,4 @@
-import {IUndergroundDocument} from '../../models/underground/types.js';
+import { IUndergroundDocument } from '../../models/underground/types.js';
 
 
 class UndergroundDto {

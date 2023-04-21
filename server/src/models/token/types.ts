@@ -1,4 +1,4 @@
-import {Types, Model, Document} from 'mongoose';
+import { Types, Model, Document } from 'mongoose';
 
 
 export interface ITokenDB {

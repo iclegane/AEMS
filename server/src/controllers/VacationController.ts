@@ -1,4 +1,4 @@
-import {NextFunction, Request, Response} from 'express';
+import { NextFunction, Request, Response } from 'express';
 import PDF, { EPDFTemplateNames } from '../modules/pdf.js';
 import { VacationCreateSchema } from '../utils/validations.js';
 
@@ -8,7 +8,7 @@ class VacationController {
         try {
             const user = req.user!;
  
-            const {start, end, days} = await VacationCreateSchema.validate(req.body, {abortEarly: false});
+            const { start, end, days } = await VacationCreateSchema.validate(req.body, { abortEarly: false });
 
             const templateData = {
                 name: user.name,

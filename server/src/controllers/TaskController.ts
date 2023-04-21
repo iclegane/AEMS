@@ -1,4 +1,5 @@
-import {NextFunction, Request, Response} from 'express';
+import { NextFunction, Request, Response } from 'express';
+import { ParamsDictionary } from 'express-serve-static-core';
 import TaskService from '../service/Task/TaskService.js';
 import ApiError from '../exceptions/ApiError.js';
 import {
@@ -10,7 +11,6 @@ import {
 } from '../service/Task/types.js';
 import io from '../index.js';
 import { TasksDetailSchema, TasksListSchema, TasksUpdateSchema } from '../utils/validations.js';
-import { ParamsDictionary } from 'express-serve-static-core';
 
 
 class TaskController {
@@ -18,10 +18,10 @@ class TaskController {
         try {
             const user = req.user!;
 
-            const { page = 1, limit = 10, sortJson = '{}', filterJson = '{}' } = await TasksListSchema.validate(req.query, {abortEarly: false});
+            const { page = 1, limit = 10, sortJson = '{}', filterJson = '{}' } = await TasksListSchema.validate(req.query, { abortEarly: false });
 
-            const parsedSort = JSON.parse(sortJson as string) as Sort;
-            const parsedFilter = JSON.parse(filterJson as string) as ITaskListFilter;
+            const parsedSort = JSON.parse(sortJson ) as Sort;
+            const parsedFilter = JSON.parse(filterJson ) as ITaskListFilter;
 
             const { count, tasks } = await TaskService.list({
                 filter: {
@@ -29,8 +29,8 @@ class TaskController {
                     ...parsedFilter,
                 },
                 options: {
-                    page: page,
-                    limit: limit,
+                    page,
+                    limit,
                     sort: parsedSort,
                 },
             });
@@ -40,7 +40,7 @@ class TaskController {
             const total = {
                 tasks,
                 totalPage,
-                page: page,
+                page,
                 count,
             };
 
@@ -52,7 +52,7 @@ class TaskController {
 
     detail = async (req: Request<never, never, { id: string }>, res: Response, next: NextFunction) => {
         try {
-            const {id} = await TasksDetailSchema.validate(req.params, {abortEarly: false});
+            const { id } = await TasksDetailSchema.validate(req.params, { abortEarly: false });
 
             const taskData = await TaskService.detail(id);
 
@@ -64,7 +64,7 @@ class TaskController {
 
     add = async (req: Request<never, never, ITaskAddQuery>, res: Response, next: NextFunction) => {
         try {
-            const {managerID, performerID, deadline, name, description, body} = req.body;
+            const { managerID, performerID, deadline, name, description, body } = req.body;
 
             const task = await TaskService.add({
                 managerID,
@@ -85,10 +85,10 @@ class TaskController {
 
     update = async (req: Request<ParamsDictionary, any, ITaskUpdateQuery>, res: Response, next: NextFunction) => {
         try {
-            const {id, status} = await TasksUpdateSchema.validate({
+            const { id, status } = await TasksUpdateSchema.validate({
                 id: req.params.id,
                 status: req.body.status
-            }, {abortEarly: false});
+            }, { abortEarly: false });
 
             const task = await TaskService.update({
                 id,
