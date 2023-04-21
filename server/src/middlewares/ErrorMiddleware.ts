@@ -4,7 +4,7 @@ import ApiError from '../exceptions/ApiError.js';
 
 
 export default function errorMiddleware (err: Error, req: Request, res: Response) {
-    // console.log(err);
+    console.log(err);
 
     if (err instanceof ApiError) {
         const errorResponse = {
