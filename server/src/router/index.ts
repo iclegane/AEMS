@@ -13,7 +13,7 @@ import GenderController from '../controllers/GenderController.js';
 import UserAdminController from '../controllers/UserAdminController.js';
 import ApiError from '../exceptions/ApiError.js';
 import errorMiddleware from '../middlewares/ErrorMiddleware.js';
-import VacationController from 'src/controllers/VacationController.js';
+import VacationController from '../controllers/VacationController.js';
 
 
 const router = Router();
@@ -31,7 +31,7 @@ router.get('/tasks', AuthMiddleware,  TaskController.list);
 router.get('/tasks/:id', AuthMiddleware, TaskController.detail);
 router.put('/tasks/:id', AuthMiddleware, TaskController.update);
 
-router.get('/vacation/create', AuthMiddleware, VacationController.create);
+router.post('/vacation/create',AuthMiddleware, VacationController.create);
 
 router.get('/statuses',  TaskStatusController.list);
 router.get('/underground', UndergroundController.list);
