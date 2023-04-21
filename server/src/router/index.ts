@@ -1,4 +1,5 @@
 import {Router, Response, Request, NextFunction} from 'express';
+import PDFController from '../controllers/PDFController.js';
 import AuthController from '../controllers/AuthController.js';
 import UserController from '../controllers/UserController.js';
 import AuthMiddleware from '../middlewares/AuthMiddleware.js';
@@ -18,11 +19,9 @@ import VacationController from '../controllers/VacationController.js';
 
 const router = Router();
 
-
 router.post('/auth/login', AuthController.login);
 router.post('/auth/logout', AuthController.logout);
 router.get('/auth/refresh', AuthController.refresh);
-
 
 router.post('/profile', AuthMiddleware, ProfileController.getProfileInfo);
 router.put('/profile', AuthMiddleware, ProfileController.updateProfileInfo);
@@ -32,6 +31,8 @@ router.get('/tasks/:id', AuthMiddleware, TaskController.detail);
 router.put('/tasks/:id', AuthMiddleware, TaskController.update);
 
 router.post('/vacation/create',AuthMiddleware, VacationController.create);
+
+router.get('/pdf/:name', PDFController.getFile);
 
 router.get('/statuses',  TaskStatusController.list);
 router.get('/underground', UndergroundController.list);
