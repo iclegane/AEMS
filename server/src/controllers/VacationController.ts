@@ -15,16 +15,16 @@ class VacationController {
                 start,
                 end,
                 days,
-            }
+            };
 
             const pdf = new PDF(EPDFTemplateNames.VACATION, user.id, templateData);
-            const pdf_src = await pdf.create();
+            const pdfSrc = await pdf.create();
  
-            res.download(pdf_src, 'document.pdf');
+            res.json(pdfSrc);
         } catch (e) {
             next(e);
         }
-    }
+    };
 }
 
 export default new VacationController();

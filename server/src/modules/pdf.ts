@@ -41,6 +41,8 @@ class PDF {
 
     create = async () => {
         try {
+            const pdfName = `${this.name}.pdf`;
+
             const browser = await puppeteer.launch();
             const page = await browser.newPage();
     
@@ -51,18 +53,18 @@ class PDF {
             const html = template(this.templateData);
     
             await page.setContent(html, { waitUntil: 'networkidle0' });
-    
-            const pdfPath = path.join(this.documentsPath,`${this.name}.pdf`);
-    
+
+            const pdfPath = this.documentsPath + pdfName;
+            
             await page.pdf({ path: pdfPath, format: 'A4' });
             
             await browser.close();
 
-            return pdfPath;
+            return pdfName;
         } catch(e) {
             throw ApiError.InternalServer('PDF creation failed');
         }
-    }
+    };
 }
 
 export default PDF;
