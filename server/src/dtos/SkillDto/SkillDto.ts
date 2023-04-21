@@ -1,4 +1,4 @@
-import {ISkillDocument} from '../../models/skill/types';
+import { ISkillDocument } from '../../models/skill/types';
 
 
 class SkillDto {

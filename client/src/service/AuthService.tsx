@@ -18,7 +18,7 @@ export default class AuthService {
 
     // to avoid using TRANSPORT.interceptors
     static async refresh(): Promise<AxiosResponse<IAuthResponse>>{
-        return await axios.get<IAuthResponse>(`${API_URL}/auth/refresh`, {
+        return axios.get<IAuthResponse>(`${API_URL}/auth/refresh`, {
             withCredentials: true,
         });
     }

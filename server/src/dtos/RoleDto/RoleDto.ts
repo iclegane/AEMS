@@ -1,4 +1,4 @@
-import {IRoleDocument} from '../../models/role/types.js';
+import { IRoleDocument } from '../../models/role/types.js';
 
 
 class RoleDto {

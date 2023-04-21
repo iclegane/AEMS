@@ -16,8 +16,7 @@ import ErrorPage from '../pages/system/ErrorPage';
 
 export const AdminRouter = () => (
     <Routes>
-      <Route path="/" element="Promo page" />
-      <Route path="/login" element={<AuthPage />} />
+      <Route path="/" element={<AuthPage />} />
       <Route path="system" element={<SystemPage title="Главная страница"/>}>
             <Route path="profile" element={<ProfilePage title="Профиль"/>} />
             <Route path="tasks" element={<TasksPage title="Задачи"/>} />

@@ -13,10 +13,9 @@ const nameSchema = Yup.string()
     .trim()
     .min(5, '2 символа минимально.')
     .max(30, '30 символов максимум.')
-    .matches(/(?:[A-Za-z]+\s){2}[A-Za-z]+/, {
+    .matches(/^(?:[А-Яа-яA-Za-z]+\s){2}[А-Яа-яA-Za-z]+$/, {
         message: 'ФИО должно состоять из 3 частей'
-    }
-    );
+    });
 
 const addressSchema = Yup.string().trim();
 
@@ -38,23 +37,17 @@ const DateSchema = Yup.string().test((value) => moment(value, 'DD.MM.YYYY').isVa
 
 export const ProfilePersonalSchema = Yup.object().shape({
     name: nameSchema.nullable().notRequired(),
-    birth_date: Yup.lazy((value) => {
-        return value !== undefined
+    birth_date: Yup.lazy((value) => value !== undefined
             ? birthDateSchema
-            : Yup.string().notRequired();
-    }),
-    gender: Yup.lazy((value) => {
-        return value !== undefined
+            : Yup.string().notRequired()),
+    gender: Yup.lazy((value) => value !== undefined
             ? objectIdSchema
-            : Yup.string().notRequired()
-    }),
+            : Yup.string().notRequired()),
     address: Yup.string().notRequired(),
     phone: phoneSchema.nullable().notRequired(),
-    underground: Yup.lazy((value) => {
-        return value !== undefined
+    underground: Yup.lazy((value) => value !== undefined
             ? objectIdSchema
-            : Yup.string().notRequired()
-    })
+            : Yup.string().notRequired())
 });
 
 export const AuthLoginSchema = Yup.object().shape({
@@ -94,20 +87,18 @@ export const TasksListSchema = Yup.object().shape({
     limit: Yup.number().integer().min(1),
     sortJson: Yup.string(),
     filterJson: Yup.string(),
-})
+});
 
 export const TasksDetailSchema = Yup.object().shape({
     id: objectIdSchema.required()
-})
+});
 
 export const TasksUpdateSchema = Yup.object().shape({
     id: objectIdSchema.required(),
-    status: Yup.lazy((value) => {
-        return value !== undefined
+    status: Yup.lazy((value) => value !== undefined
         ? objectIdSchema
-        : Yup.string().notRequired()
-    })
-})
+        : Yup.string().notRequired())
+});
 
 export const VacationCreateSchema = Yup.object().shape({
     start: DateSchema.required(),

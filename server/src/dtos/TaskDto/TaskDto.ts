@@ -1,7 +1,7 @@
 import moment from 'moment';
-import {Replace} from '../../types/utils';
-import {ITaskDocument, ITaskPopulate} from '../../models/task/types';
-import {DATE_FORMAT, DATETIME_FORMAT} from '../../utils/constants.js';
+import { Replace } from '../../types/utils';
+import { ITaskDocument, ITaskPopulate } from '../../models/task/types';
+import { DATE_FORMAT, DATETIME_FORMAT } from '../../utils/constants.js';
 
 
 type TaskDtoPopulated = Replace<ITaskDocument, {

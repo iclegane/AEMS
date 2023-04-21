@@ -1,4 +1,4 @@
-import {NextFunction, Request, Response} from 'express';
+import { NextFunction, Request, Response } from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -6,7 +6,7 @@ import { fileURLToPath } from 'url';
 class PDFController {
     getFile = (req: Request, res: Response, next: NextFunction) => {
         try {
-            const {name} = req.params;
+            const { name } = req.params;
  
             const __filename = fileURLToPath(import.meta.url);
             const __dirname = path.dirname(__filename);

@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import { IUserDto } from 'src/dtos/UserDto.js';
+import { IUserDto } from '../dtos/UserDto.js';
 
 
 export interface RequestWithCookie extends Request {

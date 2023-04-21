@@ -1,5 +1,5 @@
-import mongoose, {Schema} from 'mongoose';
-import {IEmploymentDB, IEmploymentDocument} from './types';
+import mongoose, { Schema } from 'mongoose';
+import { IEmploymentDB, IEmploymentDocument } from './types';
 
 
 const EmploymentSchema = new Schema<IEmploymentDB>({

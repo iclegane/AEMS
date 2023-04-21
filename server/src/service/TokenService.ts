@@ -1,9 +1,9 @@
 import jwt from 'jsonwebtoken';
-import {Document, Query} from 'mongoose';
-import {DeleteResult} from 'mongodb';
+import { Document, Query } from 'mongoose';
+import { DeleteResult } from 'mongodb';
 import TokenModel from '../models/token/TokenModel.js';
-import {IUserDto} from '../dtos/UserDto';
-import {ITokenDB} from '../models/token/types';
+import { IUserDto } from '../dtos/UserDto';
+import { ITokenDB } from '../models/token/types';
 
 
 class TokenService {
@@ -54,7 +54,7 @@ class TokenService {
     }
 
     async saveToken(userId: string, refreshToken: string): Promise<Document<ITokenDB>> {
-        const tokenData = await TokenModel.findOne({user: userId});
+        const tokenData = await TokenModel.findOne({ user: userId });
 
         if (tokenData) {
             tokenData.refreshToken = refreshToken;
@@ -62,18 +62,18 @@ class TokenService {
             return tokenData.save();
         }
 
-        return TokenModel.create({user: userId, refreshToken});
+        return TokenModel.create({ user: userId, refreshToken });
     }
 
     // todo: change any type on real
     async removeToken(refreshToken: string):  Promise<Query<DeleteResult, any>> {
-        const tokenData = await TokenModel.deleteOne({refreshToken});
+        const tokenData = await TokenModel.deleteOne({ refreshToken });
 
         return tokenData;
     }
 
     async findToken(refreshToken: string): Promise<Query<Document, ITokenDB> | null> {
-        const tokenData = await TokenModel.findOne({refreshToken});
+        const tokenData = await TokenModel.findOne({ refreshToken });
 
         return tokenData;
     }

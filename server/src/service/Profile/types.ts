@@ -1,5 +1,5 @@
-import {IUserDocument, IUserPopulated} from '../../models/user/types';
-import {ISkillDB} from '../../models/skill/types';
+import { IUserDocument, IUserPopulated } from '../../models/user/types';
+import { ISkillDB } from '../../models/skill/types';
 
 
 export interface IUserProfile extends IUserPopulated {

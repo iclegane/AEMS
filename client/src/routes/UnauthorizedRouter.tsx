@@ -6,8 +6,7 @@ import ErrorPage from '../pages/system/ErrorPage';
  
 export const UnauthorizedRouter = () => (
     <Routes>
-      <Route path="/" element="Promo page" />
-      <Route path="/login" element={<AuthPage />} />
+      <Route path="/" element={<AuthPage />} />
       <Route path="*" element={<ErrorPage title="Page not found" />} />
     </Routes>
 );

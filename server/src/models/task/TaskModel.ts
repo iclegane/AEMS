@@ -1,5 +1,5 @@
-import mongoose, {Schema} from 'mongoose';
-import {ITaskDB, ITaskDocument} from './types';
+import mongoose, { Schema } from 'mongoose';
+import { ITaskDB, ITaskDocument } from './types';
 
 
 const TaskSchema = new Schema<ITaskDB>({

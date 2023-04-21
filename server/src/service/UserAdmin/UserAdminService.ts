@@ -5,24 +5,24 @@ import RoleModel from '../../models/role/RoleModel.js';
 import SkillModel from '../../models/skill/SkillModel.js';
 import GenderModel from '../../models/gender/GenderModel.js';
 import UndergroundModel from '../../models/underground/UndergroundModel.js';
-import {IRoleDocument} from '../../models/role/types';
-import {IPostDocument} from '../../models/post/types';
-import {ISkillDocument} from '../../models/skill/types';
-import {IGenderDocument} from '../../models/gender/types';
-import {IUndergroundDocument} from '../../models/underground/types';
+import { IRoleDocument } from '../../models/role/types';
+import { IPostDocument } from '../../models/post/types';
+import { ISkillDocument } from '../../models/skill/types';
+import { IGenderDocument } from '../../models/gender/types';
+import { IUndergroundDocument } from '../../models/underground/types';
 import UserInfoDto from '../../dtos/UserInfoDto/UserInfoDto.js';
-import {ICreateUserRequestData, IUpdateUserRequestData} from '../../types/IUserApi';
+import { ICreateUserRequestData, IUpdateUserRequestData } from '../../types/IUserApi';
 
 
 
 class UserAdminService {
     getUserByID = async (id: string): Promise<UserInfoDto> => {
         const user = await UserModel.findById(id)
-            .populate<{role_id: IRoleDocument}>({path: 'role_id', model: RoleModel})
-            .populate<{post: IPostDocument}>({path: 'post', model: PostModel})
+            .populate<{role_id: IRoleDocument}>({ path: 'role_id', model: RoleModel })
+            .populate<{post: IPostDocument}>({ path: 'post', model: PostModel })
             .populate<{skill: ISkillDocument[]}>({ path: 'skill', model: SkillModel })
-            .populate<{gender: IGenderDocument}>({path: 'gender', model: GenderModel})
-            .populate<{underground: IUndergroundDocument}>({path: 'underground', model: UndergroundModel})
+            .populate<{gender: IGenderDocument}>({ path: 'gender', model: GenderModel })
+            .populate<{underground: IUndergroundDocument}>({ path: 'underground', model: UndergroundModel })
             .exec();
         ;
 
@@ -32,7 +32,7 @@ class UserAdminService {
     };
 
     updateUserByID = async (id: string, data: IUpdateUserRequestData): Promise<UserInfoDto> => {
-        const {post, role, gender, skill, underground} = data;
+        const { post, role, gender, skill, underground } = data;
 
         const [postExists, roleExists, genderExists, skillExists, undergroundExists] = await Promise.all([
             PostModel.exists({ _id: post }),
@@ -63,12 +63,12 @@ class UserAdminService {
         }
 
         const updatedData = await UserModel
-            .findByIdAndUpdate({_id: id}, data,{ strict: true, new: true })
-            .populate<{role_id: IRoleDocument}>({path: 'role_id', model: RoleModel})
-            .populate<{post: IPostDocument}>({path: 'post', model: PostModel})
+            .findByIdAndUpdate({ _id: id }, data,{ strict: true, new: true })
+            .populate<{role_id: IRoleDocument}>({ path: 'role_id', model: RoleModel })
+            .populate<{post: IPostDocument}>({ path: 'post', model: PostModel })
             .populate<{skill: ISkillDocument[]}>({ path: 'skill', model: SkillModel })
-            .populate<{gender: IGenderDocument}>({path: 'gender', model: GenderModel})
-            .populate<{underground: IUndergroundDocument}>({path: 'underground', model: UndergroundModel})
+            .populate<{gender: IGenderDocument}>({ path: 'gender', model: GenderModel })
+            .populate<{underground: IUndergroundDocument}>({ path: 'underground', model: UndergroundModel })
             .exec();
 
         if (!updatedData) {
@@ -79,7 +79,7 @@ class UserAdminService {
     };
 
     createUser = async (data: ICreateUserRequestData): Promise<UserInfoDto> => {
-        const {name, email, password, post, role, skill} = data;
+        const { name, email, password, post, role, skill } = data;
 
         const [emailExist, postExists, roleExists, skillExists] = await Promise.all([
             UserModel.exists({ email }),

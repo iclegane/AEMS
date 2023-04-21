@@ -1,8 +1,8 @@
 import React from 'react';
 import './index.scss';
+import { Button, Result } from 'antd';
 import Page from '../../../components/Page';
 import { PageProps } from '../../../models/IPage';
-import { Button, Result } from 'antd';
 
 
 export const ErrorPage: React.FC<React.PropsWithChildren<PageProps>> = ({ title }) => (

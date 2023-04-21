@@ -1,5 +1,5 @@
-import mongoose, {Schema} from 'mongoose';
-import {IUndergroundDB, IUndergroundDocument} from './types';
+import mongoose, { Schema } from 'mongoose';
+import { IUndergroundDB, IUndergroundDocument } from './types';
 
 
 const UndergroundSchema = new Schema<IUndergroundDB>({

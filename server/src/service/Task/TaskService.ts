@@ -1,16 +1,16 @@
-import {SortOrder, Types} from 'mongoose';
+import { SortOrder, Types } from 'mongoose';
 import TaskModel from '../../models/task/TaskModel.js';
 import TaskStatusModel from '../../models/task/status/TaskStatusModel.js';
 import UserModel from '../../models/user/UserModel.js';
 import ApiError from '../../exceptions/ApiError.js';
-import {ITaskPopulate} from '../../models/task/types.js';
-import {ITaskAddQuery, ITaskListQuery, ITaskListResponse, ITaskUpdateQuery} from './types.js';
+import { ITaskPopulate } from '../../models/task/types.js';
+import { ITaskAddQuery, ITaskListQuery, ITaskListResponse, ITaskUpdateQuery } from './types.js';
 import TaskDto from '../../dtos/TaskDto/TaskDto.js';
 
 
 class TaskService {
     async list(query: ITaskListQuery): Promise<ITaskListResponse> {
-        const {filter = {}, options} = query;
+        const { filter = {}, options } = query;
 
         const statusNames = (filter.status?.length && filter.status);
         const statusIds = await TaskStatusModel.find({ name: { $in: statusNames } }).distinct('_id');
@@ -43,7 +43,7 @@ class TaskService {
     }
 
     async add(query: ITaskAddQuery) {
-        const taskStatus = await TaskStatusModel.findOne({name: 'Инициализация'});
+        const taskStatus = await TaskStatusModel.findOne({ name: 'Инициализация' });
         if (!taskStatus) {
             throw ApiError.BadRequest('Невозможно инициализировать статус задачи');
         }
@@ -75,17 +75,17 @@ class TaskService {
     }
 
     async update(query: ITaskUpdateQuery) {
-        const {status} = query;
+        const { status } = query;
         const update: {
             status?: string;
         } = {};
 
         if (status) {
-            const statusIsExists = await TaskStatusModel.exists({_id: status});
+            const statusIsExists = await TaskStatusModel.exists({ _id: status });
             update.status = status;
         }
 
-        const updatedData = await TaskModel.findByIdAndUpdate({_id: query.id}, {
+        const updatedData = await TaskModel.findByIdAndUpdate({ _id: query.id }, {
             ...update
         },{
             strict: true,
@@ -103,7 +103,7 @@ class TaskService {
     }
 
     async detail(id: string): Promise<TaskDto | null> {
-        const task = await TaskModel.findById({_id: id})
+        const task = await TaskModel.findById({ _id: id })
             .populate<{status: ITaskPopulate['status']}>('status', 'id name')
             .populate<{manager: ITaskPopulate['manager']}>('manager', 'id name')
             .populate<{performer: ITaskPopulate['performer']}>('performer', 'id name')

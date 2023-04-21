@@ -1,4 +1,4 @@
-import {IGenderDocument} from '../../models/gender/types';
+import { IGenderDocument } from '../../models/gender/types';
 
 
 class GenderDto {

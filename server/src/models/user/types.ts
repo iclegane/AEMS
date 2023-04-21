@@ -1,10 +1,10 @@
-import {Types, Model, Document} from 'mongoose';
-import {IRoleDocument} from '../role/types';
-import {IEmploymentDocument} from '../employment/types';
-import {IUndergroundDocument} from '../underground/types';
-import {IGenderDocument} from '../gender/types';
-import {IPostDocument} from '../post/types';
-import {ISkillDocument} from '../skill/types';
+import { Types, Model, Document } from 'mongoose';
+import { IRoleDocument } from '../role/types';
+import { IEmploymentDocument } from '../employment/types';
+import { IUndergroundDocument } from '../underground/types';
+import { IGenderDocument } from '../gender/types';
+import { IPostDocument } from '../post/types';
+import { ISkillDocument } from '../skill/types';
 
 
 export interface IUserDB {
