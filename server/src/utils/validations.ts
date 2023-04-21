@@ -34,6 +34,8 @@ const birthDateSchema = Yup.string()
 
 const workDateSchema = Yup.string().test((value) => moment(value, 'DD.MM.YYYY').isValid());
 
+const DateSchema = Yup.string().test((value) => moment(value, 'DD.MM.YYYY').isValid());
+
 export const ProfilePersonalSchema = Yup.object().shape({
     name: nameSchema.nullable().notRequired(),
     birth_date: Yup.lazy((value) => {
@@ -106,3 +108,9 @@ export const TasksUpdateSchema = Yup.object().shape({
         : Yup.string().notRequired()
     })
 })
+
+export const VacationCreateSchema = Yup.object().shape({
+    start: DateSchema.required(),
+    end: DateSchema.required(),
+    days: Yup.number().required()
+});
