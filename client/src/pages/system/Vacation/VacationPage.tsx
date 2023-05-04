@@ -5,7 +5,7 @@ import { Spin } from 'antd';
 import { Link } from 'react-router-dom';
 import Page from '../../../components/Page';
 import { PageProps } from '../../../models/IPage';
-import { RangePickerWithDisabledDate } from '../../../components/RangePickerWithDisabledDate /RangePickerWithDisabledDate';
+import { RangePickerWithDisabledDate } from '../../../components/RangePickerWithDisabledDate/RangePickerWithDisabledDate';
 import { useCreateVacationPdfMutation } from '../../../api/vacation';
 import { API_URL } from '../../../utils/constants';
 
