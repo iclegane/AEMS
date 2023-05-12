@@ -1,0 +1,37 @@
+{
+  "include": [
+    "./**/*",
+    "./**/.*",
+  ],
+  "exclude": ["./dist/**/*"],
+  "compilerOptions": {
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "typeRoots": ["./node_modules/@types"],
+    /* Project */
+    "target": "ESNext",
+    "module": "ESNext",
+    /* Build */
+    "declaration": true,
+    "declarationMap": true,
+    /* Imports */
+    "moduleResolution": "node",
+    "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    /* Additional */
+    "strict": true,
+    "paths": {},
+    "allowJs": true,
+    "types": ["node", "moment"]
+  },
+  "ts-node": {
+    "esm": true,
+    "files": true,
+    "require": [
+      "tsconfig-paths/register"
+    ]
+  }
+}

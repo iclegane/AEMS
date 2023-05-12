@@ -1,0 +1,41 @@
+.user-panel {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  &__avatar {
+    width: 40px;
+    height: 40px;
+    background-image: url('../../assets/images/profile/profile.png');
+    background-size: contain;
+    margin-right: 12px;
+    border-radius: 50%;
+
+    img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
+  }
+
+  &__info {}
+
+  &__name {
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  &__position {
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 14px;
+    color: #00000080;
+  }
+
+  &__btn {
+    margin-left: 16px;
+    width: 14px;
+    height: 14px;
+  }
+}
